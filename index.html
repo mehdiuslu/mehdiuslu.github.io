@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mehdi Uslu</title>
-<meta name="description" content="Mehdi Uslu — fizik, kod ve notlar. Karanlık bir piksel-art çalışma odası: fişi robot Kuark'a tak, ışıklar yansın, her eşya GitHub, Medium, Instagram ve LinkedIn'e açılan bir kapıya dönüşsün.">
+<meta name="description" content="Mehdi Uslu — fizik, kod ve notlar. Piksel-art bir gece çalışma odası: fişi küçük osiloskop Osi'ye tak, ışıklar yansın; projeler dolabın çekmecelerinde, linkler odanın eşyalarında.">
 <meta name="theme-color" content="#1b1a3a">
 <meta property="og:title" content="Mehdi Uslu">
-<meta property="og:description" content="Fizik, kod ve notlar. Odadaki eşyaya bas, kapı açılsın.">
+<meta property="og:description" content="Fizik, kod ve notlar. Fişi tak, çekmeceleri aç.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%231b1a3a'/%3E%3Crect x='3' y='1' width='2' height='1' fill='%23f2c14e'/%3E%3Crect x='2' y='2' width='4' height='2' fill='%23f2c14e'/%3E%3Crect x='3' y='4' width='2' height='1' fill='%23f3e6c4'/%3E%3Crect x='1' y='6' width='6' height='1' fill='%238a5a3b'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%231b1a3a'/%3E%3Crect x='1' y='1' width='6' height='5' fill='%23f3e6c4'/%3E%3Crect x='2' y='2' width='4' height='3' fill='%232f6b4f'/%3E%3Crect x='2' y='4' width='1' height='1' fill='%237fd18b'/%3E%3Crect x='3' y='3' width='1' height='1' fill='%237fd18b'/%3E%3Crect x='4' y='4' width='1' height='1' fill='%237fd18b'/%3E%3Crect x='5' y='3' width='1' height='1' fill='%237fd18b'/%3E%3Crect x='2' y='6' width='1' height='1' fill='%23f3e6c4'/%3E%3Crect x='5' y='6' width='1' height='1' fill='%23f3e6c4'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&family=Silkscreen&display=swap" rel="stylesheet">
@@ -19,8 +19,8 @@
     --ink:#0e0d22;   /* kontur / en koyu */
     --navy:#1b1a3a;  /* gece */
     --wall:#2d2b5a;  /* duvar */
-    --cream:#f3e6c4; /* kağıt, çerçeve, tebeşir */
-    --yellow:#f2c14e;/* ışık, yıldız */
+    --cream:#f3e6c4; /* kağıt, çerçeve */
+    --yellow:#f2c14e;/* ışık, pirinç */
     --wood-l:#b77b4f;
     --wood:#8a5a3b;
     --wood-d:#5e3b27;
@@ -63,7 +63,7 @@
     line-height:1;
     letter-spacing:.02em;
     color:var(--cream);
-    text-shadow:4px 4px 0 var(--ink), 4px 4px 0 var(--ink);
+    text-shadow:4px 4px 0 var(--ink);
   }
   .sub{
     margin:16px auto 0;
@@ -76,18 +76,18 @@
   /* SAHNE */
   .frame{
     border:6px solid var(--cream);
-    box-shadow:
-      0 0 0 4px var(--ink),
-      10px 10px 0 4px var(--ink);
+    box-shadow:0 0 0 4px var(--ink), 10px 10px 0 4px var(--ink);
     background:var(--ink);
   }
   .scene{
     position:relative;
     width:100%;
-    aspect-ratio:320 / 200;
+    aspect-ratio:320 / 224;
     container-type:inline-size;
     overflow:hidden;
     image-rendering:pixelated;
+    -webkit-user-select:none;
+    user-select:none;
   }
   .scene svg{
     display:block;
@@ -104,15 +104,19 @@
   .wl{fill:var(--wood-l)} .wm{fill:var(--wood)} .wd{fill:var(--wood-d)}
   .gd{fill:var(--green-d)} .gl{fill:var(--green-l)}
   .r{fill:var(--red)} .b{fill:var(--blue)}
+  .lbl{font-family:"Silkscreen", monospace;font-size:4.6px;fill:var(--ink);text-anchor:middle}
 
   /* EŞYALAR (kapılar) */
   .item{
     position:absolute;
     left:calc(var(--x) / 320 * 100%);
-    top:calc(var(--y) / 200 * 100%);
+    top:calc(var(--y) / 224 * 100%);
     width:calc(var(--w) / 320 * 100%);
-    height:calc(var(--h) / 200 * 100%);
+    height:calc(var(--h) / 224 * 100%);
     display:block;
+    margin:0;padding:0;border:0;
+    background:none;
+    font:inherit;
     cursor:pointer;
     color:inherit;
     text-decoration:none;
@@ -132,13 +136,11 @@
     white-space:nowrap;
     color:var(--ink);
     background:var(--yellow);
-    box-shadow:
-      0 0 0 2px var(--ink),
-      3px 3px 0 2px var(--ink);
+    box-shadow:0 0 0 2px var(--ink), 3px 3px 0 2px var(--ink);
     opacity:0;
     pointer-events:none;
     transition:opacity .1s steps(1);
-    z-index:2;
+    z-index:6;
   }
   .tag::after{ /* küçük piksel ok */
     content:"";
@@ -150,17 +152,18 @@
     margin-top:2px;
     background:var(--ink);
   }
-  .tag{z-index:6}
+  .tag.below{bottom:auto;top:100%;transform:translate(-50%, .45em)}
+  .tag.below::after{top:auto;bottom:100%;margin:0 0 2px -.25em}
+  .tag.side{left:auto;right:100%;bottom:auto;top:50%;transform:translate(-.55em,-50%)}
+  .tag.side::after{left:100%;top:50%;width:.35em;height:.5em;margin:-.25em 0 0 2px}
+  .tag.rside{left:100%;bottom:auto;top:50%;transform:translate(.55em,-50%)}
+  .tag.rside::after{left:auto;right:100%;top:50%;width:.35em;height:.5em;margin:-.25em 2px 0 0}
   @media (hover:hover){
     .scene:not(.off) .item:hover svg{transform:translateY(-2px);filter:brightness(1.18)}
     .scene:not(.off) .item:hover .tag{opacity:1}
   }
   .item:focus{outline:none}
-  .item:focus-visible{
-    outline:3px dashed var(--yellow);
-    outline-offset:3px;
-    z-index:7;
-  }
+  .item:focus-visible{outline:3px dashed var(--yellow);outline-offset:3px;z-index:7}
   .item:focus-visible svg{transform:translateY(-2px);filter:brightness(1.18)}
   .item:focus-visible .tag{opacity:1}
   @media (hover:none){
@@ -169,10 +172,28 @@
   .scene.reveal .tag{opacity:1;transition-delay:var(--d,0s)}
   .off .item{pointer-events:none;cursor:default}
 
+  /* ÇEKMECELER */
+  .drawer .fr{transform-box:fill-box;transform-origin:50% 50%;transition:transform .14s steps(3)}
+  .drawer .in{visibility:hidden}
+  .drawer .kin{visibility:hidden}
+  .drawer.unlocked .kin{visibility:visible}
+  .drawer.open{z-index:1}
+  .drawer.open .in{visibility:visible}
+  .drawer.open .fr{transform:translateY(4px) scale(1.07)}
+  .drawer.open .ftabs{animation:rise .45s steps(4) both}
+  @keyframes rise{from{transform:translateY(6px)}to{transform:translateY(-3px)}}
+  .drawer.jig .fr{animation:jig .36s steps(1)}
+  @keyframes jig{0%,50%{transform:translateX(-1.5px)}25%,75%{transform:translateX(1.5px)}100%{transform:none}}
+  @media (hover:hover){
+    .scene:not(.off) .drawer:hover svg{transform:none;filter:brightness(1.15)}
+    .scene:not(.off) .drawer:not(.open):hover .fr{transform:translateY(1px)}
+  }
+  .drawer:focus-visible svg{transform:none;filter:brightness(1.15)}
+
   /* Elektrik kesik: karanlık oda */
   .shade{
     position:absolute;inset:0;z-index:2;pointer-events:none;
-    background:radial-gradient(circle at 15% 22%,
+    background:radial-gradient(circle at 12.5% 16%,
       rgba(9,8,24,.30) 0 8%, rgba(9,8,24,.52) 8% 13%,
       rgba(9,8,24,.68) 13% 19%, rgba(9,8,24,.80) 19%);
     display:none;
@@ -188,24 +209,31 @@
   .on .scr{animation:boot 1.2s steps(10) both}
   @keyframes boot{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
 
-  #fx{
-    position:absolute;inset:0;z-index:3;
+  canvas.layer{
+    position:absolute;inset:0;
     width:100%;height:100%;
     image-rendering:pixelated;
     pointer-events:none;
     display:none;
   }
+  #bgfx{z-index:1}
+  #fx{z-index:3}
   .hit{
     position:absolute;z-index:4;
     left:calc(var(--x) / 320 * 100%);
-    top:calc(var(--y) / 200 * 100%);
+    top:calc(var(--y) / 224 * 100%);
     width:calc(var(--w) / 320 * 100%);
-    height:calc(var(--h) / 200 * 100%);
+    height:calc(var(--h) / 224 * 100%);
     margin:0;padding:0;border:0;
     background:transparent;
     cursor:pointer;
     display:none;
     -webkit-tap-highlight-color:transparent;
+  }
+  .hit.cen{
+    transform:translate(-50%,-50%);
+    width:max(36px, calc(var(--w) / 320 * 100%));
+    height:max(36px, calc(var(--h) / 224 * 100%));
   }
   #plug{
     z-index:5;
@@ -218,8 +246,9 @@
   #plug.grab{cursor:grabbing}
   .hit:focus{outline:none}
   .hit:focus-visible{outline:3px dashed var(--yellow);outline-offset:-3px}
-  .js #fx,.js .hit{display:block}
-  .scene{-webkit-user-select:none;user-select:none}
+  .js canvas.layer,.js .hit{display:block}
+  .off .deco{display:none!important}
+  .hit[hidden]{display:none!important}
 
   /* Diyalog kutusu (RPG) */
   .dialog{
@@ -236,10 +265,10 @@
   }
   .dname{
     position:absolute;
-    left:14px;top:-14px;
-    padding:3px 8px 2px;
-    font-family:"Silkscreen", monospace;
-    font-size:12px;
+    left:14px;top:-15px;
+    padding:3px 9px 2px;
+    font-weight:700;
+    font-size:14px;
     letter-spacing:.12em;
     color:var(--ink);
     background:var(--yellow);
@@ -260,19 +289,81 @@
   }
   .controls[hidden]{display:none}
   .btn{
+    display:inline-block;
     font:inherit;
     font-size:15px;
+    line-height:1.2;
     padding:8px 14px 7px;
     color:var(--cream);
     background:var(--wall);
     border:0;
     box-shadow:0 0 0 2px var(--cream), 4px 4px 0 2px var(--ink);
     cursor:pointer;
+    text-decoration:none;
   }
+  .btn[hidden]{display:none}
   .btn:hover{background:#3a3872}
   .btn:active{transform:translate(2px,2px);box-shadow:0 0 0 2px var(--cream), 2px 2px 0 2px var(--ink)}
   .btn:focus{outline:none}
   .btn:focus-visible{outline:3px dashed var(--yellow);outline-offset:5px}
+
+  /* PROJE DOSYASI (çekmeceden çıkan) */
+  dialog.folder{
+    padding:0 12px 12px 0;
+    border:0;
+    background:transparent;
+    color:var(--ink);
+    width:min(640px, calc(100vw - 24px));
+    max-width:none;
+    max-height:calc(100dvh - 24px);
+    overflow:auto;
+  }
+  dialog.folder::backdrop{background:rgba(14,13,34,.8)}
+  .fwrap{
+    position:relative;
+    margin-top:34px;
+    padding:22px 20px 20px;
+    background:var(--cream);
+    border:4px solid var(--ink);
+    box-shadow:8px 8px 0 0 var(--ink);
+  }
+  dialog[open] .fwrap{animation:pop .32s steps(4) both}
+  @keyframes pop{from{transform:translateY(60px) scale(.5);opacity:0}to{transform:none;opacity:1}}
+  .ftab{
+    position:absolute;
+    left:-4px;bottom:100%;
+    padding:6px 14px 4px;
+    font-weight:700;
+    font-size:15px;
+    line-height:1;
+    letter-spacing:.06em;
+    white-space:nowrap;
+    background:var(--yellow);
+    border:4px solid var(--ink);
+    border-bottom:0;
+  }
+  .fbody{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:20px;align-items:start}
+  @media (max-width:560px){.fbody{grid-template-columns:minmax(0,1fr)}}
+  #fprev{
+    display:block;width:100%;height:auto;
+    aspect-ratio:160 / 96;
+    image-rendering:pixelated;
+    background:var(--navy);
+    border:4px solid var(--ink);
+  }
+  .ftext h2{margin:0 0 8px;font-size:clamp(24px,4vw,32px);line-height:1.05}
+  .ftext p{margin:0 0 12px;font-size:16px;line-height:1.45;color:#2a2440}
+  .ftext ul{margin:0 0 14px;padding:0;list-style:none;font-size:15px;line-height:1.45;color:#2a2440}
+  .ftext li{position:relative;padding-left:16px}
+  .ftext li::before{content:"";position:absolute;left:2px;top:.55em;width:6px;height:6px;background:var(--red)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+  .chips span{font-family:"Silkscreen", monospace;font-size:11px;letter-spacing:.06em;padding:4px 7px 3px;background:var(--navy);color:var(--cream)}
+  .factions{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+  .folder .btn{color:var(--ink);background:var(--yellow);box-shadow:0 0 0 2px var(--ink), 4px 4px 0 2px var(--ink)}
+  .folder .btn.alt{background:var(--cream)}
+  .folder .btn:hover{filter:brightness(1.07)}
+  .folder .btn:active{box-shadow:0 0 0 2px var(--ink), 2px 2px 0 2px var(--ink)}
+  .folder .btn:focus-visible{outline-color:var(--ink)}
 
   /* ANİMASYONLAR */
   .star{animation:twinkle 3.2s steps(1) infinite}
@@ -288,9 +379,9 @@
   .cursor{animation:blink 1.1s steps(1) infinite}
   @keyframes blink{50%{opacity:0}}
   @media (prefers-reduced-motion:reduce){
-    .star,.glow,.cursor,.more,.on .scr{animation:none}
+    .star,.glow,.cursor,.more,.on .scr,dialog[open] .fwrap,.drawer.open .ftabs,.drawer.jig .fr{animation:none}
     .flick .shade{animation:none;opacity:0}
-    .item svg{transition:none}
+    .item svg,.drawer .fr{transition:none}
   }
 
   /* ALT KISIM */
@@ -318,295 +409,437 @@
   <header>
     <p class="eyebrow">GECE ÇALIŞMA ODASI</p>
     <h1>Mehdi Uslu</h1>
-    <p class="sub">Fizik, kod ve notlar. Odada elektrik yok: fişi Kuark'a tak, kapılar açılsın.</p>
+    <p class="sub">Fizik, kod ve notlar. Odada elektrik yok: fişi Osi'ye tak, ışıklar yansın, çekmeceler açılsın.</p>
   </header>
 
   <div class="frame">
-    <div class="scene" id="scene" role="group" aria-label="Piksel-art gece çalışma odası: eşyalar bağlantıdır">
+    <div class="scene" id="scene" role="group" aria-label="Piksel-art gece çalışma odası: eşyalar ve dolabın çekmeceleri bağlantıdır">
 
-      <!-- ===== ARKA PLAN: duvar, pencere, zemin, masa, lamba (dekor) ===== -->
-      <svg class="bg" viewBox="0 0 320 200" aria-hidden="true" focusable="false">
+      <!-- ===== ARKA PLAN (dekor) ===== -->
+      <svg class="bg" viewBox="0 0 320 224" aria-hidden="true" focusable="false">
         <defs>
           <pattern id="wp" width="16" height="16" patternUnits="userSpaceOnUse">
             <rect class="n" x="0" y="0" width="1" height="1"/>
             <rect class="n" x="8" y="8" width="1" height="1"/>
           </pattern>
+          <pattern id="cork" width="6" height="5" patternUnits="userSpaceOnUse">
+            <rect class="wm" x="1" y="1" width="1" height="1"/>
+            <rect class="wd" x="4" y="3" width="1" height="1"/>
+          </pattern>
         </defs>
 
         <!-- duvar -->
-        <rect class="w" x="0" y="0" width="320" height="151"/>
-        <rect fill="url(#wp)" x="0" y="0" width="320" height="148"/>
+        <rect class="w" x="0" y="0" width="320" height="158"/>
+        <rect fill="url(#wp)" x="0" y="0" width="320" height="156"/>
         <rect class="o" x="0" y="0" width="320" height="3" opacity=".35"/>
 
         <!-- pencere -->
-        <rect class="wd" x="16" y="16" width="64" height="56"/>
-        <rect class="wm" x="18" y="18" width="60" height="52"/>
-        <rect class="n"  x="21" y="21" width="54" height="46"/>
+        <rect class="wd" x="12" y="12" width="56" height="48"/>
+        <rect class="wm" x="14" y="14" width="52" height="44"/>
+        <rect class="n"  x="17" y="17" width="46" height="38"/>
         <g>
-          <rect class="y star" x="26" y="26" width="1" height="1"/>
-          <path class="c star" d="M38 30h1v1h1v1h-1v1h-1v-1h-1v-1h1z"/>
-          <rect class="y star" x="55" y="24" width="1" height="1"/>
-          <rect class="c star" x="70" y="38" width="1" height="1"/>
-          <path class="y star" d="M30 51h1v1h1v1h-1v1h-1v-1h-1v-1h1z"/>
-          <rect class="c star" x="60" y="56" width="1" height="1"/>
-          <rect class="y star" x="40" y="61" width="1" height="1"/>
-          <rect class="c star" x="69" y="51" width="1" height="1"/>
-          <rect class="y star" x="25" y="38" width="1" height="1"/>
-          <rect class="c star" x="44" y="24" width="1" height="1"/>
+          <rect class="y star" x="21" y="21" width="1" height="1"/>
+          <path class="c star" d="M30 23h1v1h1v1h-1v1h-1v-1h-1v-1h1z"/>
+          <rect class="y star" x="46" y="20" width="1" height="1"/>
+          <rect class="c star" x="58" y="41" width="1" height="1"/>
+          <path class="y star" d="M23 44h1v1h1v1h-1v1h-1v-1h-1v-1h1z"/>
+          <rect class="c star" x="52" y="49" width="1" height="1"/>
+          <rect class="y star" x="33" y="50" width="1" height="1"/>
+          <rect class="c star" x="60" y="47" width="1" height="1"/>
+          <rect class="y star" x="20" y="30" width="1" height="1"/>
+          <rect class="c star" x="36" y="21" width="1" height="1"/>
         </g>
-        <!-- hilal -->
-        <path class="c" d="M67 25h3v1h-3zM65 26h2v1h-2zM64 27h2v4h-2zM65 31h2v1h-2zM67 32h3v1h-3z"/>
-        <!-- cam yansıması -->
-        <rect class="c" x="52" y="48" width="1" height="3" opacity=".25"/>
-        <rect class="c" x="53" y="46" width="1" height="2" opacity=".25"/>
-        <!-- kayıt (kayıt çıtaları) -->
-        <rect class="wm" x="47" y="21" width="2" height="46"/>
-        <rect class="wm" x="21" y="43" width="54" height="2"/>
-        <rect class="wl" x="18" y="18" width="60" height="1"/>
-        <!-- denizlik -->
-        <rect class="wl" x="13" y="72" width="70" height="3"/>
-        <rect class="wd" x="13" y="75" width="70" height="2"/>
+        <path class="c" d="M54 21h3v1h-3zM52 22h2v1h-2zM51 23h2v4h-2zM52 27h2v1h-2zM54 28h3v1h-3z"/>
+        <rect class="c" x="45" y="44" width="1" height="3" opacity=".25"/>
+        <rect class="c" x="46" y="42" width="1" height="2" opacity=".25"/>
+        <rect class="wm" x="39" y="17" width="2" height="38"/>
+        <rect class="wm" x="17" y="35" width="46" height="2"/>
+        <rect class="wl" x="14" y="14" width="52" height="1"/>
+        <rect class="wl" x="9" y="60" width="62" height="3"/>
+        <rect class="wd" x="9" y="63" width="62" height="2"/>
+
+        <!-- sarkaçlı duvar saati (kadran ve sarkaç tuvalde) -->
+        <rect class="o" x="84" y="8" width="16" height="4"/>
+        <rect class="wl" x="85" y="9" width="14" height="1"/>
+        <rect class="o" x="80" y="11" width="24" height="61"/>
+        <rect class="wm" x="81" y="12" width="22" height="59"/>
+        <rect class="wl" x="81" y="12" width="1" height="59"/>
+        <rect class="wd" x="102" y="12" width="1" height="59"/>
+        <rect class="o" x="85" y="36" width="13" height="32"/>
+        <rect class="n" x="86" y="37" width="11" height="30"/>
+        <rect class="o" x="88" y="71" width="8" height="3"/>
+        <rect class="wd" x="89" y="71" width="6" height="2"/>
+
+        <!-- mantar pano -->
+        <rect class="o" x="112" y="10" width="86" height="58"/>
+        <rect class="wd" x="113" y="11" width="84" height="56"/>
+        <rect class="wl" x="115" y="13" width="80" height="52"/>
+        <rect fill="url(#cork)" x="115" y="13" width="80" height="52"/>
+        <rect class="o" x="186" y="44" width="9" height="9" opacity=".4"/>
+        <rect class="y" x="185" y="43" width="9" height="9"/>
+        <path class="wm" d="M186 46h7v1h-7zM186 48h6v1h-6zM186 50h4v1h-4z"/>
+
+        <!-- raf, kitaplar, saksı -->
+        <rect class="o" x="204" y="46" width="108" height="4"/>
+        <rect class="wl" x="205" y="46" width="106" height="1"/>
+        <rect class="wm" x="205" y="47" width="106" height="2"/>
+        <rect class="o" x="212" y="50" width="3" height="7"/>
+        <rect class="o" x="300" y="50" width="3" height="7"/>
+        <path class="o" d="M208 30h5v16h-5zM213 27h5v19h-5zM218 32h6v14h-6zM224 28h5v18h-5zM229 31h4v15h-4zM233 26h6v20h-6zM239 29h5v17h-5zM244 33h4v13h-4zM248 28h7v18h-7zM255 30h5v16h-5zM260 27h4v19h-4zM264 31h6v15h-6z"/>
+        <path class="b"  d="M209 31h3v15h-3zM240 30h3v16h-3z"/>
+        <path class="r"  d="M214 28h3v18h-3zM249 29h5v17h-5z"/>
+        <path class="gd" d="M219 33h4v13h-4zM265 32h4v14h-4z"/>
+        <path class="y"  d="M225 29h3v17h-3zM261 28h2v18h-2z"/>
+        <path class="c"  d="M230 32h2v14h-2z"/>
+        <path class="wd" d="M234 27h4v19h-4z"/>
+        <path class="gl" d="M245 34h2v12h-2z"/>
+        <path class="w"  d="M256 31h3v15h-3z"/>
+        <path class="c" opacity=".5" d="M209 33h3v1h-3zM214 30h3v1h-3zM219 35h4v1h-4zM225 31h3v1h-3zM234 29h4v1h-4zM240 32h3v1h-3zM249 31h5v1h-5zM256 33h3v1h-3zM261 30h2v1h-2zM265 34h4v1h-4z"/>
+        <path class="o" d="M272 42h20v4h-20zM274 38h16v4h-16zM276 34h12v4h-12z"/>
+        <rect class="b" x="273" y="43" width="18" height="2"/>
+        <rect class="r" x="275" y="39" width="14" height="2"/>
+        <rect class="c" x="277" y="35" width="10" height="2"/>
+        <rect class="o" x="294" y="35" width="14" height="3"/>
+        <rect class="o" x="295" y="37" width="12" height="9"/>
+        <rect class="wl" x="296" y="38" width="10" height="7"/>
+        <rect class="wm" x="295" y="36" width="12" height="1"/>
+        <path class="gl" d="M297 29h2v6h-2zM300 26h2v9h-2zM303 30h2v5h-2zM306 46h1v6h-1zM307 50h2v1h-2zM306 56h2v1h-2z"/>
+        <path class="gd" d="M296 31h2v4h-2zM302 28h2v4h-2zM305 52h1v5h-1z"/>
 
         <!-- süpürgelik + zemin -->
-        <rect class="wd" x="0" y="147" width="320" height="4"/>
-        <rect class="wl" x="0" y="147" width="320" height="1"/>
-        <rect class="wm" x="0" y="151" width="320" height="49"/>
-        <path class="wl" d="M0 151h320v1H0zM0 158h320v1H0zM0 165h320v1H0zM0 172h320v1H0zM0 179h320v1H0zM0 186h320v1H0zM0 193h320v1H0z" opacity=".55"/>
-        <path class="wd" d="M0 157h320v1H0zM0 164h320v1H0zM0 171h320v1H0zM0 178h320v1H0zM0 185h320v1H0zM0 192h320v1H0zM0 199h320v1H0z"/>
-        <path class="wd" d="M40 152h1v5h-1zM130 152h1v5h-1zM210 152h1v5h-1zM290 152h1v5h-1zM80 159h1v5h-1zM170 159h1v5h-1zM250 159h1v5h-1zM20 166h1v5h-1zM110 166h1v5h-1zM200 166h1v5h-1zM280 166h1v5h-1zM60 173h1v5h-1zM150 173h1v5h-1zM235 173h1v5h-1zM30 180h1v5h-1zM120 180h1v5h-1zM215 180h1v5h-1zM300 180h1v5h-1zM75 187h1v5h-1zM165 187h1v5h-1zM255 187h1v5h-1zM45 194h1v5h-1zM140 194h1v5h-1zM225 194h1v5h-1z"/>
-        <rect class="o" x="0" y="151" width="320" height="6" opacity=".35"/>
+        <rect class="wd" x="0" y="156" width="320" height="4"/>
+        <rect class="wl" x="0" y="156" width="320" height="1"/>
+        <rect class="wm" x="0" y="160" width="320" height="64"/>
+        <path class="wl" opacity=".55" d="M0 160h320v1H0zM0 167h320v1H0zM0 174h320v1H0zM0 181h320v1H0zM0 188h320v1H0zM0 195h320v1H0zM0 202h320v1H0zM0 209h320v1H0zM0 216h320v1H0zM0 223h320v1H0z"/>
+        <path class="wd" d="M0 166h320v1H0zM0 173h320v1H0zM0 180h320v1H0zM0 187h320v1H0zM0 194h320v1H0zM0 201h320v1H0zM0 208h320v1H0zM0 215h320v1H0zM0 222h320v1H0z"/>
+        <path class="wd" d="M40 161h1v5h-1zM130 161h1v5h-1zM210 161h1v5h-1zM290 161h1v5h-1zM80 168h1v5h-1zM170 168h1v5h-1zM250 168h1v5h-1zM20 175h1v5h-1zM110 175h1v5h-1zM200 175h1v5h-1zM280 175h1v5h-1zM60 182h1v5h-1zM150 182h1v5h-1zM235 182h1v5h-1zM30 189h1v5h-1zM120 189h1v5h-1zM215 189h1v5h-1zM300 189h1v5h-1zM75 196h1v5h-1zM165 196h1v5h-1zM255 196h1v5h-1zM45 203h1v5h-1zM140 203h1v5h-1zM225 203h1v5h-1zM90 210h1v5h-1zM185 210h1v5h-1zM270 210h1v5h-1zM15 217h1v5h-1zM105 217h1v5h-1zM240 217h1v5h-1z"/>
+        <rect class="o" x="0" y="160" width="320" height="6" opacity=".35"/>
+
+        <!-- halı -->
+        <rect class="o" x="104" y="211" width="100" height="11"/>
+        <rect class="r" x="105" y="212" width="98" height="9"/>
+        <path class="c" d="M108 214h92v1h-92zM108 218h92v1h-92z"/>
+        <path class="y" d="M114 216h4v1h-4zM130 216h4v1h-4zM146 216h4v1h-4zM162 216h4v1h-4zM178 216h4v1h-4zM194 216h4v1h-4z"/>
+        <path class="c" d="M102 212h2v1h-2zM102 215h2v1h-2zM102 218h2v1h-2zM204 212h2v1h-2zM204 215h2v1h-2zM204 218h2v1h-2z"/>
 
         <!-- masa -->
-        <rect class="o" x="12" y="196" width="14" height="3" opacity=".4"/>
-        <rect class="o" x="294" y="196" width="14" height="3" opacity=".4"/>
-        <rect class="wd" x="14" y="147" width="10" height="50"/>
-        <rect class="wm" x="15" y="147" width="7" height="50"/>
-        <rect class="wl" x="15" y="147" width="1" height="50"/>
-        <rect class="wd" x="296" y="147" width="10" height="50"/>
-        <rect class="wm" x="297" y="147" width="7" height="50"/>
-        <rect class="wl" x="297" y="147" width="1" height="50"/>
-        <rect class="wl" x="0" y="138" width="320" height="2"/>
-        <rect class="wm" x="0" y="140" width="320" height="6"/>
-        <rect class="wd" x="0" y="146" width="320" height="2"/>
-        <path class="wd" d="M60 142h18v1H60zM150 143h24v1h-24zM230 141h14v1h-14z" opacity=".6"/>
+        <rect class="o" x="22" y="129" width="204" height="5" opacity=".3"/>
+        <rect class="o" x="10" y="195" width="14" height="3" opacity=".4"/>
+        <rect class="o" x="224" y="195" width="14" height="3" opacity=".4"/>
+        <rect class="wd" x="12" y="129" width="10" height="67"/>
+        <rect class="wm" x="13" y="129" width="7" height="67"/>
+        <rect class="wl" x="13" y="129" width="1" height="67"/>
+        <rect class="wd" x="226" y="129" width="10" height="67"/>
+        <rect class="wm" x="227" y="129" width="7" height="67"/>
+        <rect class="wl" x="227" y="129" width="1" height="67"/>
+        <rect class="wl" x="6" y="118" width="236" height="2"/>
+        <rect class="wm" x="6" y="120" width="236" height="7"/>
+        <rect class="wd" x="6" y="127" width="236" height="2"/>
+        <path class="wd" opacity=".6" d="M40 122h18v1H40zM120 123h24v1h-24zM200 121h14v1h-14z"/>
 
-        <!-- lamba: sıcak ışık -->
-        <g class="glow">
-          <rect class="y" x="249" y="84" width="40" height="28" opacity=".07"/>
-          <rect class="y" x="253" y="80" width="32" height="36" opacity=".07"/>
-          <rect class="y" x="259" y="108" width="20" height="6" opacity=".16"/>
-          <rect class="y" x="255" y="114" width="28" height="6" opacity=".14"/>
-          <rect class="y" x="251" y="120" width="36" height="6" opacity=".12"/>
-          <rect class="y" x="247" y="126" width="44" height="6" opacity=".10"/>
-          <rect class="y" x="243" y="132" width="52" height="6" opacity=".09"/>
-          <rect class="y" x="240" y="138" width="58" height="2" opacity=".35"/>
-          <rect class="c" x="263" y="106" width="12" height="2"/>
+        <!-- proje dolabı -->
+        <rect class="o" x="242" y="195" width="70" height="3" opacity=".4"/>
+        <rect class="o" x="244" y="93" width="66" height="97"/>
+        <rect class="wd" x="245" y="94" width="64" height="95"/>
+        <rect class="o" x="242" y="89" width="70" height="5"/>
+        <rect class="wl" x="243" y="90" width="68" height="2"/>
+        <rect class="wm" x="243" y="92" width="68" height="1"/>
+        <rect class="o" x="244" y="189" width="66" height="7"/>
+        <rect class="wm" x="245" y="189" width="64" height="5"/>
+        <rect class="wl" x="245" y="189" width="64" height="1"/>
+
+        <!-- Newton beşiği (bilyeler tuvalde) -->
+        <rect class="o" x="142" y="93" width="32" height="2"/>
+        <rect class="c" x="143" y="93" width="30" height="1" opacity=".5"/>
+        <rect class="o" x="142" y="93" width="2" height="20"/>
+        <rect class="o" x="172" y="93" width="2" height="20"/>
+        <rect class="o" x="140" y="113" width="36" height="5"/>
+        <rect class="wd" x="141" y="114" width="34" height="3"/>
+        <rect class="wl" x="141" y="114" width="34" height="1"/>
+
+        <!-- kupa -->
+        <rect class="o" x="180" y="107" width="9" height="11"/>
+        <rect class="c" x="181" y="108" width="7" height="10"/>
+        <rect class="wd" x="181" y="108" width="7" height="1"/>
+        <rect class="r" x="181" y="111" width="7" height="2"/>
+        <path class="o" d="M189 109h3v1h-3zM191 110h1v4h-1zM189 114h3v1h-3z"/>
+
+        <!-- masa lambası -->
+        <g transform="translate(-62 -20)">
+          <g class="glow">
+            <rect class="y" x="249" y="84" width="40" height="28" opacity=".07"/>
+            <rect class="y" x="253" y="80" width="32" height="36" opacity=".07"/>
+            <rect class="y" x="259" y="108" width="20" height="6" opacity=".16"/>
+            <rect class="y" x="255" y="114" width="28" height="6" opacity=".14"/>
+            <rect class="y" x="251" y="120" width="36" height="6" opacity=".12"/>
+            <rect class="y" x="247" y="126" width="44" height="6" opacity=".10"/>
+            <rect class="y" x="243" y="132" width="52" height="6" opacity=".09"/>
+            <rect class="y" x="240" y="138" width="58" height="2" opacity=".35"/>
+            <rect class="c" x="263" y="106" width="12" height="2"/>
+          </g>
+          <rect class="o" x="264" y="134" width="26" height="4"/>
+          <rect class="w" x="265" y="134" width="24" height="1"/>
+          <path class="o" d="M277 132h2v2h-2zM278 130h2v2h-2zM279 128h2v2h-2zM280 126h2v2h-2zM281 124h2v2h-2zM282 122h2v2h-2zM283 120h2v2h-2zM284 118h2v2h-2zM285 116h2v2h-2zM286 114h2v2h-2zM287 112h2v2h-2z"/>
+          <path class="o" d="M286 110h2v2h-2zM284 109h2v2h-2zM282 107h2v2h-2zM280 106h2v2h-2zM278 104h2v2h-2zM276 103h2v2h-2zM274 101h2v2h-2zM272 100h2v2h-2z"/>
+          <rect class="o" x="285" y="109" width="4" height="4"/>
+          <rect class="c" x="286" y="110" width="2" height="2"/>
+          <path class="o" d="M263 94h12v2h2v3h2v3h2v4h-24v-4h2v-3h2v-3h2z"/>
+          <path class="y" d="M264 95h10v1h2v3h2v3h2v3h-22v-3h2v-3h2v-3h2z"/>
+          <rect class="c" x="265" y="96" width="4" height="1"/>
+          <rect class="c" x="262" y="99" width="2" height="1"/>
         </g>
-        <!-- lamba gövdesi -->
-        <rect class="o" x="264" y="134" width="26" height="4"/>
-        <rect class="w" x="265" y="134" width="24" height="1"/>
-        <path class="o" d="M277 132h2v2h-2zM278 130h2v2h-2zM279 128h2v2h-2zM280 126h2v2h-2zM281 124h2v2h-2zM282 122h2v2h-2zM283 120h2v2h-2zM284 118h2v2h-2zM285 116h2v2h-2zM286 114h2v2h-2zM287 112h2v2h-2z"/>
-        <path class="o" d="M286 110h2v2h-2zM284 109h2v2h-2zM282 107h2v2h-2zM280 106h2v2h-2zM278 104h2v2h-2zM276 103h2v2h-2zM274 101h2v2h-2zM272 100h2v2h-2z"/>
-        <rect class="o" x="285" y="109" width="4" height="4"/>
-        <rect class="c" x="286" y="110" width="2" height="2"/>
-        <path class="o" d="M263 94h12v2h2v3h2v3h2v4h-24v-4h2v-3h2v-3h2z"/>
-        <path class="y" d="M264 95h10v1h2v3h2v3h2v3h-22v-3h2v-3h2v-3h2z"/>
-        <rect class="c" x="265" y="96" width="4" height="1"/>
-        <rect class="c" x="262" y="99" width="2" height="1"/>
 
         <!-- uzatma kablosu (priz) -->
-        <rect class="o" x="306" y="192" width="14" height="2"/>
-        <rect class="o" x="284" y="189" width="24" height="9"/>
-        <rect class="c" x="285" y="190" width="22" height="7"/>
-        <rect class="wl" x="285" y="195" width="22" height="2"/>
-        <rect class="o" x="298" y="191" width="4" height="4"/>
-        <rect class="r" x="303" y="191" width="3" height="3"/>
-        <rect class="o" x="291" y="185" width="6" height="6"/>
-        <rect class="c" x="292" y="186" width="4" height="4"/>
+        <rect class="o" x="306" y="213" width="14" height="2"/>
+        <rect class="o" x="284" y="208" width="24" height="10"/>
+        <rect class="c" x="285" y="209" width="22" height="8"/>
+        <rect class="wl" x="285" y="215" width="22" height="2"/>
+        <rect class="o" x="293" y="209" width="6" height="6"/>
+        <rect class="c" x="294" y="210" width="4" height="4"/>
+        <rect class="o" x="301" y="210" width="4" height="4"/>
+        <rect class="r" x="302" y="211" width="2" height="2"/>
       </svg>
 
-      <!-- ===== 2. KARA TAHTA → SymPhys ===== -->
-      <a class="item" style="--x:110;--y:16;--w:100;--h:72;--d:0s" data-say="Kara tahta → SymPhys: tarayıcıda çalışan 3B fizik simülasyonu. Sarkaç oradan kaçtı."
-         href="https://github.com/mehdiuslu/symphys-3d" target="_blank" rel="noopener"
-         aria-label="SymPhys 3D fizik simülasyonu – GitHub (yeni sekmede açılır)">
-        <svg viewBox="110 16 100 72" aria-hidden="true" focusable="false">
-          <rect class="wd" x="112" y="18" width="96" height="64"/>
-          <rect class="wm" x="113" y="19" width="94" height="62"/>
-          <rect class="wl" x="113" y="19" width="94" height="1"/>
-          <rect class="gd" x="116" y="22" width="88" height="56"/>
-          <rect class="o" x="116" y="22" width="88" height="1" opacity=".35"/>
-          <!-- silinmiş tebeşir izleri -->
-          <path class="c" d="M120 44h10v1h-10zM186 28h12v1h-12zM190 31h8v1h-8z" opacity=".12"/>
-          <!-- sarkaç -->
-          <path class="c" d="M124 28h32v1h-32zM126 26h1v2h-1zM130 26h1v2h-1zM134 26h1v2h-1zM138 26h1v2h-1zM142 26h1v2h-1zM146 26h1v2h-1zM150 26h1v2h-1zM154 26h1v2h-1z"/>
-          <path class="c" d="M140 33h1v2h-1zM140 37h1v2h-1zM140 41h1v2h-1zM140 45h1v2h-1zM140 49h1v2h-1zM140 53h1v2h-1zM140 57h1v2h-1z" opacity=".7"/>
-          <path class="c" d="M140 29h1v3h-1zM141 32h1v3h-1zM142 35h1v3h-1zM143 38h1v3h-1zM144 41h1v3h-1zM145 44h1v3h-1zM146 47h1v3h-1zM147 50h1v3h-1zM148 53h1v3h-1zM149 56h1v3h-1z"/>
-          <path class="c" d="M141 38h1v1h-1zM142 37h1v1h-1z"/>
-          <path class="c" d="M123 58h1v1h-1zM128 61h1v1h-1zM134 62h1v1h-1zM140 63h1v1h-1z" opacity=".7"/>
-          <path class="r" d="M149 59h4v1h1v1h1v4h-1v1h-1v1h-4v-1h-1v-1h-1v-4h1v-1h1z"/>
-          <rect class="c" x="149" y="60" width="2" height="1"/>
-          <!-- eğik düzlem -->
-          <path class="c" d="M164 70h31v1h-31zM194 50h1v20h-1z"/>
-          <path class="c" d="M164 69h2v1h-2zM166 68h1v1h-1zM167 67h2v1h-2zM169 66h1v1h-1zM170 65h2v1h-2zM172 64h1v1h-1zM173 63h2v1h-2zM175 62h1v1h-1zM176 61h2v1h-2zM178 60h1v1h-1zM179 59h2v1h-2zM181 58h1v1h-1zM182 57h2v1h-2zM184 56h1v1h-1zM185 55h2v1h-2zM187 54h1v1h-1zM188 53h2v1h-2zM190 52h1v1h-1zM191 51h2v1h-2zM193 50h1v1h-1z"/>
-          <path class="c" d="M171 56h2v1h1v2h-1v1h-2v-1h-1v-2h1z"/>
-          <path class="c" d="M170 67h1v2h-1zM169 66h1v1h-1z" opacity=".8"/>
-          <text x="121" y="76" font-family="Silkscreen, monospace" font-size="6" class="c" opacity=".85">F=ma</text>
-          <!-- tebeşir rafı -->
-          <rect class="wd" x="110" y="82" width="100" height="4"/>
-          <rect class="wl" x="110" y="82" width="100" height="1"/>
-          <rect class="c" x="128" y="80" width="8" height="2"/>
-          <rect class="c" x="140" y="81" width="4" height="1"/>
-          <rect class="o" x="186" y="79" width="12" height="3"/>
-          <rect class="wl" x="187" y="79" width="10" height="2"/>
+      <!-- ===== KİMLİK KARTI → LinkedIn ===== -->
+      <a class="item" style="--x:116;--y:12;--w:34;--h:50;--d:.3s" data-say="Panodaki kimlik kartı → LinkedIn. Odanın resmî köşesi."
+         href="https://www.linkedin.com/in/mehdi-uslu-0988b8347/" target="_blank" rel="noopener"
+         aria-label="LinkedIn profilim (yeni sekmede açılır)">
+        <svg viewBox="116 12 34 50" aria-hidden="true" focusable="false">
+          <rect class="o" x="121" y="20" width="27" height="40" opacity=".45"/>
+          <rect class="c" x="119" y="18" width="27" height="40"/>
+          <rect class="o" x="122" y="21" width="10" height="12"/>
+          <rect class="b" x="123" y="22" width="8" height="10"/>
+          <rect class="wl" x="125" y="25" width="4" height="4"/>
+          <rect class="o" x="124" y="23" width="6" height="2"/>
+          <rect class="o" x="126" y="26" width="1" height="1"/>
+          <rect class="o" x="128" y="26" width="1" height="1"/>
+          <rect class="r" x="124" y="29" width="6" height="3"/>
+          <rect class="o" x="134" y="22" width="9" height="2"/>
+          <path class="w" d="M134 26h10v1h-10zM134 29h8v1h-8zM122 37h21v1h-21zM122 40h18v1h-18zM122 43h21v1h-21zM122 51h15v1h-15zM122 54h12v1h-12z"/>
+          <rect class="y" x="134" y="32" width="6" height="2"/>
+          <rect class="o" x="122" y="47" width="9" height="2"/>
+          <rect class="b" x="139" y="49" width="6" height="6"/>
+          <path class="c" d="M140 50h1v1h-1zM140 52h1v2h-1zM142 52h1v2h-1zM143 51h1v1h-1zM144 52h1v2h-1z"/>
+          <rect class="o" x="130" y="14" width="6" height="6"/>
+          <rect class="r" x="131" y="15" width="4" height="4"/>
+          <rect class="c" x="131" y="15" width="1" height="1"/>
         </svg>
-        <span class="tag" aria-hidden="true">SYMPHYS</span>
+        <span class="tag below" aria-hidden="true">LINKEDIN</span>
       </a>
 
-      <!-- ===== 3. MONİTÖR → GitHub ===== -->
-      <a class="item" style="--x:18;--y:84;--w:68;--h:54;--d:.15s" data-say="Monitör → GitHub. Mehdi’nin bütün kodları orada."
+      <!-- ===== POLAROID → Instagram ===== -->
+      <a class="item" style="--x:152;--y:12;--w:34;--h:40;--d:.4s" data-say="Polaroid → Instagram. Gülümse!"
+         href="https://www.instagram.com/mehdiuslw/" target="_blank" rel="noopener"
+         aria-label="Instagram hesabım (yeni sekmede açılır)">
+        <svg viewBox="152 12 34 40" aria-hidden="true" focusable="false">
+          <rect class="o" x="158" y="18" width="26" height="33" opacity=".45"/>
+          <rect class="c" x="155" y="15" width="26" height="33"/>
+          <rect class="b" x="158" y="18" width="20" height="12"/>
+          <rect class="y" x="170" y="21" width="5" height="4"/>
+          <rect class="y" x="171" y="20" width="3" height="6"/>
+          <rect class="gd" x="160" y="26" width="7" height="4"/>
+          <rect class="gd" x="162" y="24" width="3" height="2"/>
+          <rect class="n" x="158" y="30" width="20" height="7"/>
+          <rect class="y" x="170" y="32" width="5" height="1"/>
+          <rect class="y" x="171" y="34" width="3" height="1"/>
+          <path class="r" d="M165 40h2v1h-2zM168 40h2v1h-2zM165 41h5v1h-5zM166 42h3v1h-3zM167 43h1v1h-1z"/>
+          <rect class="y" x="162" y="12" width="12" height="5" opacity=".85"/>
+        </svg>
+        <span class="tag rside" aria-hidden="true">INSTA</span>
+      </a>
+
+      <!-- ===== MONİTÖR → GitHub ===== -->
+      <a class="item" style="--x:18;--y:62;--w:66;--h:56;--d:.1s" data-say="Monitör → GitHub. Mehdi’nin bütün kodları orada."
          href="https://github.com/mehdiuslu" target="_blank" rel="noopener"
          aria-label="GitHub profilim (yeni sekmede açılır)">
-        <svg viewBox="18 84 68 54" aria-hidden="true" focusable="false">
-          <rect class="o" x="20" y="86" width="64" height="44"/>
-          <rect class="c" x="21" y="87" width="62" height="42"/>
-          <rect class="o" x="25" y="90" width="54" height="33"/>
-          <rect class="n" x="26" y="91" width="52" height="31"/>
+        <svg viewBox="18 62 66 56" aria-hidden="true" focusable="false">
+          <rect class="o" x="20" y="64" width="62" height="42"/>
+          <rect class="c" x="21" y="65" width="60" height="40"/>
+          <rect class="o" x="24" y="68" width="54" height="32"/>
+          <rect class="n" x="25" y="69" width="52" height="30"/>
           <g class="scr">
-            <path class="gl" d="M28 93h18v1H28zM31 96h26v1H31zM45 99h14v1H45zM34 102h20v1H34zM44 105h16v1H44zM31 108h22v1H31zM28 111h6v1h-6z"/>
-            <path class="y"  d="M31 99h12v1H31zM28 114h14v1H28z"/>
-            <path class="c"  d="M34 105h8v1h-8z"/>
-            <rect class="gl cursor" x="28" y="117" width="3" height="2"/>
-            <rect class="c" x="27" y="92" width="6" height="1" opacity=".18"/>
-            <rect class="gl" x="76" y="125" width="2" height="1"/>
+            <path class="gl" d="M27 71h10v1H27z"/>
+            <path class="c" d="M39 71h6v1h-6z"/>
+            <path class="y" d="M47 71h8v1h-8z"/>
+            <g id="contrib"></g>
+            <rect class="gl cursor" x="27" y="95" width="3" height="2"/>
           </g>
-          <rect class="wl" x="23" y="125" width="10" height="1" opacity=".6"/>
-          <!-- ayak -->
-          <rect class="o" x="47" y="130" width="10" height="5"/>
-          <rect class="c" x="48" y="130" width="8" height="5"/>
-          <rect class="o" x="38" y="134" width="28" height="4"/>
-          <rect class="c" x="39" y="134" width="26" height="3"/>
+          <rect class="gl" x="74" y="102" width="3" height="1"/>
+          <rect class="o" x="45" y="106" width="12" height="6"/>
+          <rect class="c" x="46" y="106" width="10" height="6"/>
+          <rect class="o" x="36" y="112" width="30" height="6"/>
+          <rect class="c" x="37" y="112" width="28" height="5"/>
         </svg>
         <span class="tag" aria-hidden="true">GITHUB</span>
       </a>
 
-      <!-- ===== 4. DEFTER → Medium ===== -->
-      <a class="item" style="--x:94;--y:122;--w:56;--h:26;--d:.3s" data-say="Defter → Medium. Fizik ve kod üzerine yazılar."
+      <!-- ===== DEFTER → Medium ===== -->
+      <a class="item" style="--x:88;--y:100;--w:48;--h:18;--d:.2s" data-say="Defter → Medium. Fizik ve kod üzerine yazılar."
          href="https://medium.com/@mehdiphysics" target="_blank" rel="noopener"
          aria-label="Medium yazılarım (yeni sekmede açılır)">
-        <svg viewBox="94 122 56 26" aria-hidden="true" focusable="false">
-          <rect class="o" x="95" y="133" width="54" height="5"/>
-          <rect class="b" x="96" y="134" width="52" height="3"/>
-          <path class="o" d="M99 125h46v1h1v10H98v-10h1z"/>
-          <path class="c" d="M100 126h21v1h-21zM99 127h22v8H99zM123 126h21v1h-21zM123 127h22v8h-22z"/>
-          <rect class="o" x="121" y="125" width="2" height="11"/>
-          <path class="w" d="M101 129h17v1h-17zM101 131h18v1h-18zM101 133h12v1h-12zM126 129h17v1h-17zM126 131h15v1h-15zM126 133h17v1h-17z"/>
-          <rect class="r" x="124" y="133" width="2" height="12"/>
-          <rect class="r" x="124" y="145" width="1" height="1"/>
-          <rect class="r" x="125" y="146" width="1" height="1"/>
-          <!-- kalem -->
-          <path class="y" d="M131 127h9v2h-9z"/>
-          <rect class="r" x="140" y="127" width="2" height="2"/>
-          <rect class="c" x="129" y="127" width="2" height="2"/>
-          <rect class="o" x="128" y="128" width="1" height="1"/>
+        <svg viewBox="88 100 48 18" aria-hidden="true" focusable="false">
+          <rect class="o" x="89" y="110" width="46" height="5"/>
+          <rect class="b" x="90" y="111" width="44" height="3"/>
+          <rect class="o" x="92" y="102" width="40" height="10"/>
+          <rect class="c" x="93" y="103" width="18" height="8"/>
+          <rect class="c" x="113" y="103" width="18" height="8"/>
+          <rect class="o" x="111" y="102" width="2" height="10"/>
+          <path class="w" d="M95 105h14v1H95zM95 107h15v1H95zM95 109h10v1H95zM115 107h14v1h-14zM115 109h12v1h-12z"/>
+          <rect class="y" x="118" y="104" width="9" height="2"/>
+          <rect class="r" x="127" y="104" width="2" height="2"/>
+          <rect class="c" x="116" y="104" width="2" height="2"/>
+          <rect class="o" x="115" y="104" width="1" height="1"/>
+          <rect class="r" x="114" y="110" width="2" height="7"/>
+          <rect class="r" x="114" y="117" width="1" height="1"/>
         </svg>
         <span class="tag" aria-hidden="true">MEDIUM</span>
       </a>
 
-      <!-- ===== 5. FOTOĞRAF + KİLİT → Stego ===== -->
-      <a class="item" style="--x:152;--y:98;--w:48;--h:40;--d:.45s" data-say="Kilit → STEGO: resimlerin içine gizli mesaj saklayan proje. Şşş."
-         href="https://github.com/mehdiuslu/ENCRYPT-TEXT" target="_blank" rel="noopener"
-         aria-label="ENCRYPT-TEXT: resme metin gizleme (steganografi) projesi – GitHub (yeni sekmede açılır)">
-        <svg viewBox="152 98 48 40" aria-hidden="true" focusable="false">
-          <rect class="wd" x="166" y="134" width="8" height="4"/>
-          <rect class="o" x="156" y="100" width="28" height="34"/>
-          <rect class="wm" x="157" y="101" width="26" height="32"/>
-          <rect class="wl" x="157" y="101" width="26" height="1"/>
-          <rect class="o" x="159" y="103" width="22" height="24"/>
-          <rect class="b" x="160" y="104" width="20" height="22"/>
-          <path class="y" d="M174 107h3v3h-3z"/>
-          <path class="c" d="M163 109h4v1h-4zM165 108h3v1h-3z" opacity=".8"/>
-          <path class="gd" d="M168 116h12v10h-12zM170 114h6v2h-6zM172 113h2v1h-2z"/>
-          <path class="c" d="M172 113h2v1h-2zM171 114h1v1h-1z"/>
-          <path class="gl" d="M160 119h9v7h-9zM162 117h5v2h-5z"/>
-          <path class="b" d="M163 124h9v1h-9z" opacity=".9"/>
-          <!-- kilit -->
-          <path class="c" d="M188 120h6v2h1v6h-2v-6h-4v6h-2v-6h1z"/>
-          <rect class="o" x="184" y="126" width="14" height="12"/>
-          <rect class="y" x="185" y="127" width="12" height="10"/>
-          <rect class="c" x="186" y="128" width="1" height="4"/>
-          <rect class="o" x="190" y="130" width="2" height="2"/>
-          <rect class="o" x="190" y="132" width="2" height="3"/>
-          <rect class="wd" x="185" y="136" width="12" height="1" opacity=".5"/>
-        </svg>
-        <span class="tag" aria-hidden="true">STEGO</span>
-      </a>
-
-      <!-- ===== 6. FOTOĞRAF MAKİNESİ → Instagram ===== -->
-      <a class="item" style="--x:204;--y:112;--w:40;--h:26;--d:.6s" data-say="Fotoğraf makinesi → Instagram. Gülümse!"
-         href="https://www.instagram.com/mehdiuslw/" target="_blank" rel="noopener"
-         aria-label="Instagram hesabım (yeni sekmede açılır)">
-        <svg viewBox="204 112 40 26" aria-hidden="true" focusable="false">
-          <rect class="o" x="211" y="113" width="12" height="6"/>
-          <rect class="w" x="212" y="114" width="10" height="4"/>
-          <rect class="c" x="214" y="115" width="4" height="2"/>
-          <rect class="o" x="229" y="115" width="7" height="4"/>
-          <rect class="r" x="230" y="116" width="5" height="2"/>
-          <rect class="o" x="206" y="118" width="34" height="20"/>
-          <rect class="w" x="207" y="119" width="32" height="18"/>
-          <rect class="n" x="207" y="124" width="32" height="9"/>
-          <path class="o" d="M209 125h1v1h-1zM211 127h1v1h-1zM209 129h1v1h-1zM211 131h1v1h-1zM235 125h1v1h-1zM237 127h1v1h-1zM235 129h1v1h-1zM237 131h1v1h-1z"/>
-          <rect class="c" x="207" y="119" width="32" height="1" opacity=".25"/>
-          <rect class="r" x="234" y="121" width="2" height="2"/>
-          <path class="o" d="M220 120h8v1h2v2h1v8h-1v2h-2v1h-8v-1h-2v-2h-1v-8h1v-2h2z"/>
-          <path class="c" d="M221 121h6v1h2v2h1v6h-1v2h-2v1h-6v-1h-2v-2h-1v-6h1v-2h2z"/>
-          <path class="o" d="M221 123h6v1h1v1h1v4h-1v1h-1v1h-6v-1h-1v-1h-1v-4h1v-1h1z"/>
-          <path class="b" d="M222 124h4v1h1v4h-1v1h-4v-1h-1v-4h1z"/>
-          <rect class="c" x="222" y="125" width="2" height="1"/>
-          <rect class="c" x="222" y="126" width="1" height="1"/>
-        </svg>
-        <span class="tag" aria-hidden="true">INSTA</span>
-      </a>
-
-      <!-- ===== 8. KİMLİK KARTI → LinkedIn ===== -->
-      <a class="item" style="--x:236;--y:20;--w:56;--h:70;--d:.75s" data-say="Kimlik kartı → LinkedIn. Odanın resmî köşesi."
-         href="https://www.linkedin.com/in/mehdi-uslu-0988b8347/" target="_blank" rel="noopener"
-         aria-label="LinkedIn profilim (yeni sekmede açılır)">
-        <svg viewBox="236 20 56 70" aria-hidden="true" focusable="false"><g transform="translate(0 8)">
-          <rect class="o" x="242" y="20" width="46" height="58" opacity=".45"/>
-          <rect class="c" x="240" y="18" width="46" height="58"/>
-          <path class="wl" d="M281 71h5v5h-5z"/>
-          <rect class="o" x="243" y="25" width="16" height="18"/>
-          <rect class="b" x="244" y="26" width="14" height="16"/>
-          <rect class="wl" x="248" y="30" width="6" height="6"/>
-          <rect class="o" x="247" y="28" width="8" height="3"/>
-          <rect class="o" x="249" y="32" width="1" height="1"/>
-          <rect class="o" x="252" y="32" width="1" height="1"/>
-          <rect class="r" x="246" y="37" width="10" height="5"/>
-          <rect class="o" x="262" y="27" width="20" height="2"/>
-          <path class="w" d="M262 31h16v1h-16zM262 34h18v1h-18zM262 37h12v1h-12z"/>
-          <rect class="y" x="262" y="40" width="10" height="2"/>
-          <rect class="o" x="244" y="47" width="14" height="2"/>
-          <path class="w" d="M244 51h38v1h-38zM244 54h34v1h-34zM244 57h38v1h-38zM244 60h26v1h-26z"/>
-          <rect class="o" x="244" y="64" width="16" height="2"/>
-          <path class="w" d="M244 68h30v1h-30zM244 71h34v1h-34z"/>
-          <!-- raptiye -->
-          <rect class="o" x="260" y="13" width="6" height="6"/>
-          <rect class="r" x="261" y="14" width="4" height="4"/>
-          <rect class="c" x="261" y="14" width="1" height="1"/>
-          <rect class="o" x="262" y="19" width="2" height="1" opacity=".5"/>
+      <!-- ===== ÇEKMECE 1 → SymPhys ===== -->
+      <a class="item drawer" data-p="symphys" style="--x:248;--y:97;--w:58;--h:21;--d:.55s" data-say="1. çekmece: SymPhys 3D. Koluna bas, dosyası çıksın."
+         href="https://github.com/mehdiuslu/symphys-3d" target="_blank" rel="noopener"
+         aria-label="1. çekmece: SymPhys 3D projesinin dosyasını aç">
+        <svg viewBox="248 97 58 21" aria-hidden="true" focusable="false"><g>
+          <g class="in">
+            <rect class="o" x="248" y="91" width="58" height="10"/>
+            <rect class="n" x="249" y="92" width="56" height="9"/>
+            <g class="ftabs">
+              <rect class="o" x="253" y="92" width="16" height="9"/><rect class="y" x="254" y="93" width="14" height="8"/>
+              <rect class="o" x="271" y="94" width="16" height="7"/><rect class="c" x="272" y="95" width="14" height="6"/>
+              <rect class="o" x="289" y="93" width="12" height="8"/><rect class="b" x="290" y="94" width="10" height="7"/>
+            </g>
+          </g>
+          <g class="fr">
+            <rect class="o" x="248" y="97" width="58" height="21"/>
+            <rect class="wm" x="249" y="98" width="56" height="19"/>
+            <rect class="wl" x="249" y="98" width="56" height="1"/>
+            <rect class="wd" x="249" y="116" width="56" height="1"/>
+            <rect class="o" x="262" y="100" width="30" height="8"/>
+            <rect class="c" x="263" y="101" width="28" height="6"/>
+            <text class="lbl" x="277" y="106">SYMPHYS</text>
+            <rect class="o" x="269" y="110" width="16" height="5"/>
+            <rect class="y" x="270" y="111" width="14" height="3"/>
+            <rect class="c" x="271" y="111" width="4" height="1"/>
+          </g>
         </g></svg>
-        <span class="tag" aria-hidden="true">LINKEDIN</span>
+        <span class="tag side" aria-hidden="true">SYMPHYS</span>
       </a>
 
-      <!-- karanlık, efekt katmanı, robot ve fiş -->
+      <!-- ===== ÇEKMECE 2 → Stego ===== -->
+      <a class="item drawer" data-p="stego" style="--x:248;--y:120;--w:58;--h:21;--d:.65s" data-say="2. çekmece: ENCRYPT-TEXT. İçinde gizli mesajlar var, şşş."
+         href="https://github.com/mehdiuslu/ENCRYPT-TEXT" target="_blank" rel="noopener"
+         aria-label="2. çekmece: ENCRYPT-TEXT steganografi projesinin dosyasını aç">
+        <svg viewBox="248 120 58 21" aria-hidden="true" focusable="false"><g transform="translate(0 23)">
+          <g class="in">
+            <rect class="o" x="248" y="91" width="58" height="10"/>
+            <rect class="n" x="249" y="92" width="56" height="9"/>
+            <g class="ftabs">
+              <rect class="o" x="255" y="93" width="14" height="8"/><rect class="b" x="256" y="94" width="12" height="7"/>
+              <rect class="o" x="273" y="92" width="18" height="9"/><rect class="y" x="274" y="93" width="16" height="8"/>
+              <rect class="o" x="293" y="94" width="9" height="7"/><rect class="c" x="294" y="95" width="7" height="6"/>
+            </g>
+          </g>
+          <g class="fr">
+            <rect class="o" x="248" y="97" width="58" height="21"/>
+            <rect class="wm" x="249" y="98" width="56" height="19"/>
+            <rect class="wl" x="249" y="98" width="56" height="1"/>
+            <rect class="wd" x="249" y="116" width="56" height="1"/>
+            <rect class="o" x="262" y="100" width="30" height="8"/>
+            <rect class="c" x="263" y="101" width="28" height="6"/>
+            <text class="lbl" x="277" y="106">STEGO</text>
+            <rect class="o" x="269" y="110" width="16" height="5"/>
+            <rect class="y" x="270" y="111" width="14" height="3"/>
+            <rect class="c" x="271" y="111" width="4" height="1"/>
+          </g>
+        </g></svg>
+        <span class="tag side" aria-hidden="true">STEGO</span>
+      </a>
+
+      <!-- ===== ÇEKMECE 3 → Bütün repolar ===== -->
+      <a class="item drawer" data-p="repos" style="--x:248;--y:143;--w:58;--h:21;--d:.75s" data-say="3. çekmece: bütün repolar. Biraz dağınık, idare et."
+         href="https://github.com/mehdiuslu?tab=repositories" target="_blank" rel="noopener"
+         aria-label="3. çekmece: bütün GitHub repolarımın dosyasını aç">
+        <svg viewBox="248 143 58 21" aria-hidden="true" focusable="false"><g transform="translate(0 46)">
+          <g class="in">
+            <rect class="o" x="248" y="91" width="58" height="10"/>
+            <rect class="n" x="249" y="92" width="56" height="9"/>
+            <g class="ftabs">
+              <rect class="o" x="251" y="94" width="12" height="7"/><rect class="r" x="252" y="95" width="10" height="6"/>
+              <rect class="o" x="261" y="92" width="14" height="9"/><rect class="c" x="262" y="93" width="12" height="8"/>
+              <rect class="o" x="276" y="93" width="12" height="8"/><rect class="gl" x="277" y="94" width="10" height="7"/>
+              <rect class="o" x="289" y="92" width="14" height="9"/><rect class="y" x="290" y="93" width="12" height="8"/>
+            </g>
+          </g>
+          <g class="fr">
+            <rect class="o" x="248" y="97" width="58" height="21"/>
+            <rect class="wm" x="249" y="98" width="56" height="19"/>
+            <rect class="wl" x="249" y="98" width="56" height="1"/>
+            <rect class="wd" x="249" y="116" width="56" height="1"/>
+            <rect class="o" x="262" y="100" width="30" height="8"/>
+            <rect class="c" x="263" y="101" width="28" height="6"/>
+            <text class="lbl" x="277" y="106">REPOLAR</text>
+            <rect class="o" x="269" y="110" width="16" height="5"/>
+            <rect class="y" x="270" y="111" width="14" height="3"/>
+            <rect class="c" x="271" y="111" width="4" height="1"/>
+          </g>
+        </g></svg>
+        <span class="tag side" aria-hidden="true">REPOLAR</span>
+      </a>
+
+      <!-- ===== ÇEKMECE 4 → kilitli (gizli) ===== -->
+      <button class="item drawer" id="secret" type="button" data-p="secret" style="--x:248;--y:166;--w:58;--h:21;--d:.85s"
+         data-say="4. çekmece kilitli. Anahtar bu odada bir yerde… Dolabın üstünde uyuyan biri bir şey biliyor olabilir."
+         aria-label="4. çekmece: kilitli">
+        <svg viewBox="248 166 58 21" aria-hidden="true" focusable="false"><g transform="translate(0 69)">
+          <g class="in">
+            <rect class="o" x="248" y="91" width="58" height="10"/>
+            <rect class="n" x="249" y="92" width="56" height="9"/>
+            <g class="ftabs">
+              <rect class="o" x="268" y="91" width="18" height="10"/><rect class="y" x="269" y="92" width="16" height="9"/>
+              <rect class="c" x="271" y="93" width="2" height="1"/><rect class="c" x="282" y="95" width="1" height="1"/>
+            </g>
+          </g>
+          <g class="fr">
+            <rect class="o" x="248" y="97" width="58" height="21"/>
+            <rect class="wm" x="249" y="98" width="56" height="19"/>
+            <rect class="wl" x="249" y="98" width="56" height="1"/>
+            <rect class="wd" x="249" y="116" width="56" height="1"/>
+            <rect class="o" x="262" y="100" width="30" height="8"/>
+            <rect class="c" x="263" y="101" width="28" height="6"/>
+            <text class="lbl" id="slbl" x="277" y="106">???</text>
+            <rect class="o" x="269" y="110" width="16" height="5"/>
+            <rect class="y" x="270" y="111" width="14" height="3"/>
+            <rect class="c" x="271" y="111" width="4" height="1"/>
+            <rect class="o" x="295" y="101" width="6" height="8"/>
+            <rect class="y" x="296" y="102" width="4" height="6"/>
+            <path class="o" d="M297 103h2v2h-2zM297 105h1v2h-1z"/>
+            <g class="kin">
+              <rect class="o" x="298" y="103" width="5" height="3"/>
+              <rect class="y" x="298" y="104" width="4" height="1"/>
+              <rect class="o" x="302" y="101" width="5" height="6"/>
+              <rect class="y" x="303" y="102" width="3" height="4"/>
+              <rect class="o" x="304" y="103" width="1" height="2"/>
+            </g>
+          </g>
+        </g></svg>
+        <span class="tag side" id="stag" aria-hidden="true">???</span>
+      </button>
+
+      <!-- karanlık, efekt katmanları, robot, fiş ve dekor düğmeleri -->
+      <canvas class="layer" id="bgfx" width="320" height="224" aria-hidden="true"></canvas>
       <div class="shade" aria-hidden="true"></div>
-      <canvas id="fx" width="320" height="200" aria-hidden="true"></canvas>
-      <button class="hit" id="bot" type="button" style="--x:130;--y:128;--w:56;--h:71" aria-label="Kuark ile konuş"></button>
-      <button class="hit" id="plug" type="button" aria-label="Fişi Kuark'a tak, odanın ışıklarını aç"></button>
+      <canvas class="layer" id="fx" width="320" height="224" aria-hidden="true"></canvas>
+      <button class="hit" id="bot" type="button" style="--x:118;--y:160;--w:66;--h:62" aria-label="Osi ile konuş"></button>
+      <button class="hit" id="plug" type="button" aria-label="Fişi Osi'ye tak, odanın ışıklarını aç"></button>
+      <button class="hit cen deco" id="cat" type="button" aria-label="Dolabın üstünde uyuyan kediyi uyandır"></button>
+      <button class="hit cen deco" id="key" type="button" aria-label="Anahtarı al" hidden></button>
+      <button class="hit deco" id="cradle" type="button" style="--x:138;--y:90;--w:40;--h:28" aria-label="Newton beşiğini salla"></button>
+      <button class="hit deco" id="clock" type="button" style="--x:80;--y:8;--w:24;--h:66" aria-label="Duvar saatine bak"></button>
+      <button class="hit deco" id="shelf" type="button" style="--x:206;--y:24;--w:86;--h:24" aria-label="Raftan bir kitap seç"></button>
     </div>
   </div>
 
-  <section class="dialog" id="dialog" aria-label="Kuark ile konuşma">
+  <section class="dialog" id="dialog" aria-label="Osi ile konuşma">
     <span class="dname" id="dname">???</span>
     <p class="dtext"><span id="dtext" aria-hidden="true">Odadaki her eşya bir kapı.</span><span class="more" aria-hidden="true"></span></p>
     <p class="sr-only" id="dlive" aria-live="polite"></p>
@@ -617,14 +850,34 @@
     <button class="btn" id="mute" type="button" aria-pressed="false">♪ Ses: Açık</button>
   </div>
 
-  <p class="foot">Odadaki her eşya bir kapı.</p>
+  <p class="foot">Odadaki her eşya bir kapı. Bazı çekmeceler kilitli.</p>
+
+  <dialog class="folder" id="folder" aria-labelledby="ftitle" aria-describedby="fdesc">
+    <div class="fwrap">
+      <div class="ftab" id="ftab">ÇEKMECE</div>
+      <div class="fbody">
+        <canvas id="fprev" width="160" height="96" aria-hidden="true"></canvas>
+        <div class="ftext">
+          <h2 id="ftitle">Proje</h2>
+          <p id="fdesc"></p>
+          <ul id="flist"></ul>
+          <p class="chips" id="fchips"></p>
+        </div>
+      </div>
+      <div class="factions">
+        <a class="btn" id="flink" href="https://github.com/mehdiuslu" target="_blank" rel="noopener">GitHub’da aç ↗</a>
+        <button class="btn alt" id="fclose" type="button">Çekmeceyi kapat ✕</button>
+      </div>
+    </div>
+  </dialog>
 
   <nav class="sr-only" aria-label="Bağlantılar (metin listesi)">
     <ul>
-      <li><a href="https://github.com/mehdiuslu/symphys-3d" target="_blank" rel="noopener">SymPhys 3D fizik simülasyonu – GitHub</a></li>
+      <li><a href="https://github.com/mehdiuslu/symphys-3d" target="_blank" rel="noopener">SymPhys 3D klasik mekanik simülatörü – GitHub</a></li>
+      <li><a href="https://github.com/mehdiuslu/ENCRYPT-TEXT" target="_blank" rel="noopener">ENCRYPT-TEXT steganografi projesi – GitHub</a></li>
+      <li><a href="https://github.com/mehdiuslu?tab=repositories" target="_blank" rel="noopener">Bütün repolarım – GitHub</a></li>
       <li><a href="https://github.com/mehdiuslu" target="_blank" rel="noopener">GitHub profilim</a></li>
       <li><a href="https://medium.com/@mehdiphysics" target="_blank" rel="noopener">Medium yazılarım</a></li>
-      <li><a href="https://github.com/mehdiuslu/ENCRYPT-TEXT" target="_blank" rel="noopener">ENCRYPT-TEXT steganografi projesi – GitHub</a></li>
       <li><a href="https://www.instagram.com/mehdiuslw/" target="_blank" rel="noopener">Instagram hesabım</a></li>
       <li><a href="https://www.linkedin.com/in/mehdi-uslu-0988b8347/" target="_blank" rel="noopener">LinkedIn profilim</a></li>
     </ul>
@@ -633,22 +886,20 @@
 <script>
 (() => {
   'use strict';
-  const scene = document.getElementById('scene');
-  const cv = document.getElementById('fx');
-  const ctx = cv.getContext('2d');
-  if (!ctx) return;
+  const $ = (id) => document.getElementById(id);
+  const scene = $('scene');
+  const cv = $('fx'), bgc = $('bgfx');
+  const ctx = cv.getContext('2d'), bg = bgc.getContext('2d');
+  if (!ctx || !bg) return;
   scene.classList.add('js', 'off');
 
   const items = [...scene.querySelectorAll('.item')];
-  const plugBtn = document.getElementById('plug');
-  const botBtn = document.getElementById('bot');
-  const dialog = document.getElementById('dialog');
-  const nameEl = document.getElementById('dname');
-  const textEl = document.getElementById('dtext');
-  const liveEl = document.getElementById('dlive');
-  const controls = document.getElementById('controls');
-  const autoBtn = document.getElementById('auto');
-  const muteBtn = document.getElementById('mute');
+  const drawers = [...scene.querySelectorAll('.drawer')];
+  const plugBtn = $('plug'), botBtn = $('bot'), catBtn = $('cat'), keyBtn = $('key');
+  const secretEl = $('secret');
+  const dialog = $('dialog'), nameEl = $('dname'), textEl = $('dtext'), liveEl = $('dlive');
+  const controls = $('controls'), autoBtn = $('auto'), muteBtn = $('mute');
+  const folder = $('folder'), fprev = $('fprev'), pg = fprev.getContext('2d');
   controls.hidden = false;
   items.forEach(a => a.tabIndex = -1);
 
@@ -658,18 +909,33 @@
     woodL:'#b77b4f', wood:'#8a5a3b', woodD:'#5e3b27', greenD:'#2f6b4f', greenL:'#7fd18b',
     red:'#d9473f', blue:'#4a7fb5'
   };
-  const W = 320, H = 200;
+  const W = 320, H = 224;
+  const NAME = 'OSİ';
+
+  /* ---------- Monitörde katkı grafiği ---------- */
+  (() => {
+    const g = $('contrib'), NS = 'http://www.w3.org/2000/svg';
+    let s = 11;
+    const rnd = () => (s = s * 16807 % 2147483647) / 2147483647;
+    for (let r = 0; r < 5; r++) for (let c = 0; c < 12; c++) {
+      const e = document.createElementNS(NS, 'rect'), v = rnd();
+      e.setAttribute('x', 27 + c * 4); e.setAttribute('y', 74 + r * 4);
+      e.setAttribute('width', 3); e.setAttribute('height', 3);
+      e.setAttribute('class', v < .3 ? 'w' : v < .72 ? 'gd' : 'gl');
+      g.appendChild(e);
+    }
+  })();
 
   /* ---------- Robot & priz geometrisi (sahne birimi) ---------- */
-  const RX = 134, RY = 139;                 // robot sol-üst (gövde kutusu)
+  const RX = 130, RY = 174;                 // Osi'nin kasası (sol-üst)
   const ATT = {x:12, y:3};                  // fiş görselinde kablonun bağlandığı nokta
-  const PORT_O = {x:RX + 41, y:RY + 41};    // fiş takılıyken fişin orijini
-  const PORT_C = {x:RX + 42, y:RY + 44};    // priz ağzı
-  const ANCHOR = {x:294, y:188};            // uzatma kablosundaki uç
+  const PORT_O = {x:RX + 45, y:RY + 21};    // fiş takılıyken fişin orijini
+  const PORT_C = {x:RX + 46, y:RY + 24};    // priz ağzı
+  const ANCHOR = {x:296, y:212};            // uzatma kablosundaki uç
 
   /* ---------- Halat (Verlet) ---------- */
-  const N = 28, SEG = 5, G = 0.2, DAMP = 0.985, ITER = 14;
-  const FLOOR = 198, END_FLOOR = 195;
+  const N = 30, SEG = 5, G = 0.2, DAMP = 0.985, ITER = 14;
+  const FLOOR = 222, END_FLOOR = 219;
   const pts = [];
   for (let i = 0; i < N; i++) {
     const x = i === 0 ? ANCHOR.x : ANCHOR.x - 4 - i * SEG * 0.6;
@@ -681,8 +947,8 @@
   let held = false, plugged = false, tween = null, target = {x:end.x, y:end.y};
   let on = false, charge = 0, touched = false, nearPort = false;
   let jy = 0, jv = 0, waveUntil = 0, happy = false, lookLock = false;
-  let look = {x:RX + 24, y:RY + 40};
-  let pulses = [], sparks = [], zs = [], lastZ = 0, lastPulse = 0;
+  let look = {x:RX + 17, y:RY + 15};
+  let pulses = [], sparks = [], zs = [], hearts = [], lastZ = 0, lastPulse = 0;
   let typing = false;
 
   const maxReach = (N - 1) * SEG * 0.97;
@@ -690,7 +956,7 @@
     let dx = x - ANCHOR.x, dy = y - ANCHOR.y;
     const d = Math.hypot(dx, dy);
     if (d > maxReach) { dx *= maxReach / d; dy *= maxReach / d; }
-    return {x:Math.max(14, Math.min(W - 2, ANCHOR.x + dx)), y:Math.max(6, Math.min(END_FLOOR, ANCHOR.y + dy))};
+    return {x:Math.max(4, Math.min(W - 2, ANCHOR.x + dx)), y:Math.max(6, Math.min(END_FLOOR, ANCHOR.y + dy))};
   }
   const pluggedEnd = () => ({x:PORT_O.x + ATT.x, y:PORT_O.y + ATT.y + Math.round(jy)});
 
@@ -745,7 +1011,7 @@
 
   /* ---------- Ses (Web Audio, küçük çiptün sesler) ---------- */
   let AC = null, sound = true;
-  try { sound = localStorage.getItem('kuark-ses') !== '0'; } catch (e) {}
+  try { sound = localStorage.getItem('osi-ses') !== '0'; } catch (e) {}
   function audio() {
     if (!sound) return;
     try {
@@ -772,14 +1038,14 @@
   setMute();
   muteBtn.addEventListener('click', () => {
     sound = !sound;
-    try { localStorage.setItem('kuark-ses', sound ? '1' : '0'); } catch (e) {}
+    try { localStorage.setItem('osi-ses', sound ? '1' : '0'); } catch (e) {}
     setMute();
     if (sound) { audio(); tone(880, .06); }
   });
 
   /* ---------- Diyalog (daktilo efekti) ---------- */
   let typeTimer = null, sayId = 0;
-  function say(text, name = 'KUARK') {
+  function say(text, name = NAME) {
     sayId++;
     clearInterval(typeTimer);
     nameEl.textContent = name;
@@ -800,17 +1066,31 @@
   dialog.addEventListener('click', () => {
     if (typing) { clearInterval(typeTimer); textEl.textContent = liveEl.textContent; typing = false; dialog.classList.remove('typing'); }
   });
+  const pick = (arr, i) => arr[i % arr.length];
 
   const jokes = [
+    "Ben bir osiloskobum: duygularımı dalga formuyla gösteririm. Şu an sinüs, yani keyfim yerinde.",
     "Bir nötron kafede hesabı sorar. Garson: “Sizden ücret yok, sizde yük yok.”",
-    "Schrödinger'in kedisini gördün mü? Ben hem gördüm hem görmedim.",
     "Heisenberg'i trafikte durdurmuşlar: “Ne kadar hızlı gittiğinizi biliyor musunuz?” — “Hayır, ama tam olarak nerede olduğumu biliyorum.”",
-    "Sarkaç sallanıyorsa suçlu ben değilim. Yerçekimi.",
+    "Kalp atışım 50 Hz. Şehir şebekesi kadar sakinim.",
     "Bana çok dokunursan entropim artar. Geri dönüşü yok, bilirsin.",
-    "F = ma. Ben de az önce epey ivmelendim.",
-    "İpucu: monitör GitHub'a, defter Medium'a, kimlik kartı LinkedIn'e açılıyor."
+    "Dolabın 4. çekmecesi kilitli. Anahtarın yerini biliyorum ama söyleyemem. Mırr… yani, hiç.",
+    "İpucu: monitör GitHub'a, defter Medium'a, panodaki kart LinkedIn'e, polaroid Instagram'a açılıyor."
   ];
-  let jokeI = 0;
+  const catLines = [
+    "Schrödinger: Mrrrr.",
+    "Kediyi sevdin; kuantum durumu çöktü. Artık kesinlikle uyanık.",
+    "Schrödinger kutuları sever. Çekmeceler de bir çeşit kutu, dikkat et.",
+    "Schrödinger sana göz kırptı. Bu bir onur."
+  ];
+  const books = [
+    "Raftaki kitap: Feynman Fizik Dersleri. Cilt 1’in kenarları not dolu.",
+    "Raftaki kitap: Griffiths, Kuantum Mekaniğine Giriş. Kapağındaki kediyi Schrödinger’e gösterme.",
+    "Raftaki kitap: K&R, The C Programming Language. SymPhys’in gizli kahramanı.",
+    "Raftaki kitap: Goldstein, Klasik Mekanik. Ağırlığı Lagrange denklemleriyle hesaplanıyor.",
+    "Raftaki kitap: Otostopçunun Galaksi Rehberi. Cevap 42, soru hâlâ aranıyor."
+  ];
+  let jokeI = 0, catI = 0, bookI = 0;
 
   /* ---------- Etkileşim: fiş ---------- */
   function toScene(e) {
@@ -821,7 +1101,7 @@
   const portDist = (o) => Math.hypot(o.x - PORT_C.x, o.y + 3 - PORT_C.y);
 
   function updatePlugLabel() {
-    plugBtn.setAttribute('aria-label', plugged ? 'Fişi Kuark’tan çek' : 'Fişi Kuark’a tak, odanın ışıklarını aç');
+    plugBtn.setAttribute('aria-label', plugged ? 'Fişi Osi’den çek' : 'Fişi Osi’ye tak, odanın ışıklarını aç');
   }
 
   function plugIn() {
@@ -832,14 +1112,14 @@
       x:PORT_C.x + 1, y:PORT_C.y, vx:(Math.random() - .3) * 2.2, vy:-Math.random() * 2.4 - .3,
       life:22 + Math.random() * 12, c:Math.random() < .5 ? C.yellow : C.cream
     });
-    if (!on) say(charge > 0.05 ? 'Hah, geri geldi! Elektronlar akmaya devam ediyor…' : 'Bzzt! Elektronlar akıyor… şarj oluyorum.');
-    else say('Ooh, ekstra enerji. Teşekkürler!');
+    if (!on) say(charge > 0.05 ? 'Hah, geri geldi! Sinyal yeniden akıyor…' : 'Bzzt! Ekranımda bir şeyler kıpırdıyor… şarj oluyorum.', '???');
+    else say('Ooh, ekstra enerji. Dalga boyum uzadı, teşekkürler!');
   }
   function unplug() {
     plugged = false;
     updatePlugLabel();
     tone(330, .09, 'square', .05, .5);
-    if (!on) say('Hey! Daha dolmamıştı (%' + Math.round(charge / 5 * 100) + '). Tekrar tak lütfen.');
+    if (!on) say('Hey! Daha dolmamıştı (%' + Math.round(charge / 5 * 100) + '). Tekrar tak lütfen.', '???');
     else say('Fiş çıktı ama merak etme, bataryam dolu.');
   }
   function autoPlug() {
@@ -894,11 +1174,11 @@
       const s = Math.hypot(d.vx, d.vy), k = s > 6 ? 6 / s : 1;
       end.px = end.x - d.vx * k; end.py = end.y - d.vy * k;
       if (!d.moved) {
-        end.py = end.y + 3;                          // küçük zıplama
-        say('Fişe dokunmak yetmez, sürüklemen lazım! Kuark’ın sağ yanındaki prize götür.', on ? 'KUARK' : '???');
+        end.py = end.y + 3;
+        say('Fişe dokunmak yetmez, sürüklemen lazım! Robotun sağ yanındaki prize götür.', on ? NAME : '???');
       }
     } else if (plugged && !d.moved) {
-      say(on ? 'Fiş takılı. Çekmek istersen sürükle.' : 'Şarj oluyorum… biraz sabır.');
+      say(on ? 'Fiş takılı. Çekmek istersen sürükle.' : 'Şarj oluyorum… biraz sabır.', on ? NAME : '???');
     }
   }
   plugBtn.addEventListener('pointerup', release);
@@ -911,13 +1191,13 @@
   });
   autoBtn.addEventListener('click', () => { audio(); autoPlug(); });
 
-  /* ---------- Etkileşim: robot & eşyalar ---------- */
+  /* ---------- Etkileşim: Osi & eşyalar ---------- */
   botBtn.addEventListener('click', () => {
     audio();
     jv = -1.9;
     tone(660, .05); tone(990, .06, 'square', .04, 1, .06);
-    if (!on) say(charge > 0 ? 'Mmh… biraz daha enerji lazım.' : 'Zzz… zzz… (Önce şarj etmen lazım. Fişi tak!)', '???');
-    else { say(jokes[jokeI++ % jokes.length]); waveUntil = performance.now() + 900; }
+    if (!on) say(charge > 0 ? 'Mmh… sinyal zayıf. Biraz daha enerji lazım.' : 'Zzz… (Ekranında dümdüz bir çizgi var. Önce şarj etmen lazım: fişi tak!)', '???');
+    else { say(pick(jokes, jokeI++)); waveUntil = performance.now() + 900; }
   });
   items.forEach((a) => {
     const enter = () => {
@@ -925,7 +1205,7 @@
       happy = true; lookLock = true;
       const r = a.getBoundingClientRect(), s = scene.getBoundingClientRect();
       look = {x:(r.left + r.width / 2 - s.left) / s.width * W, y:(r.top + r.height / 2 - s.top) / s.height * H};
-      if (liveEl.textContent !== a.dataset.say) say(a.dataset.say);
+      if (!folder.open && liveEl.textContent !== a.dataset.say) say(a.dataset.say);
     };
     const leave = () => { happy = false; lookLock = false; };
     a.addEventListener('mouseenter', enter);
@@ -935,12 +1215,165 @@
   });
   window.addEventListener('pointermove', (e) => { if (!lookLock) look = toScene(e); }, {passive:true});
 
+  /* ---------- Çekmeceler ve proje dosyaları ---------- */
+  const PROJ = {
+    symphys:{
+      tab:'ÇEKMECE 1 · SYMPHYS', title:'SymPhys 3D',
+      desc:'C ve raylib ile yazılmış, etkileşimli bir 3B klasik mekanik simülatörü. Duvar tabanlı sahnede makaralar, rampalar, yuvarlanma ve sürtünme; her duvar için ayrı kuvvet okuması.',
+      list:['XPBD tabanlı fizik motoru', 'Makara, rampa, yuvarlanma ve sürtünme', 'Türkçe / İngilizce arayüz'],
+      chips:['C', 'raylib', 'XPBD', 'Windows'],
+      href:'https://github.com/mehdiuslu/symphys-3d', cta:'GitHub’da aç ↗',
+      say:'SymPhys’in dosyası! Rampadan yuvarlanan top, sallanan sarkaç… Mehdi bunları C ile sıfırdan yazdı.'
+    },
+    stego:{
+      tab:'ÇEKMECE 2 · STEGO', title:'ENCRYPT-TEXT',
+      desc:'Metni AES-256 ile şifreleyip bir PNG resmin piksellerine saklıyor (LSB steganografi). Resim gözle aynı görünür; mesajı yalnızca şifreyi bilen okur.',
+      list:['AES-256 şifreleme', 'LSB steganografi: her pikselin son biti', 'tkinter ile sade bir masaüstü arayüzü'],
+      chips:['Python', 'AES-256', 'LSB', 'tkinter'],
+      href:'https://github.com/mehdiuslu/ENCRYPT-TEXT', cta:'GitHub’da aç ↗',
+      say:'Şşş… Bu resmin piksellerinde gizli bir mesaj var. Son bitlere bakmayı bilene.'
+    },
+    repos:{
+      tab:'ÇEKMECE 3 · TÜMÜ', title:'Bütün repolar',
+      desc:'Denemeler, oyun dosyaları ve şu an içinde durduğun bu oda. Dolabın en kalabalık çekmecesi.',
+      list:['mehdiuslu.github.io: bu odanın kaynak kodu', 'symphys-3d ve ENCRYPT-TEXT', 've yarım kalmış nice deneme'],
+      chips:['C', 'Python', 'HTML'],
+      href:'https://github.com/mehdiuslu?tab=repositories', cta:'Repoları gör ↗',
+      say:'Burası biraz dağınık. Mehdi buna “düzenli kaos” diyor.'
+    },
+    secret:{
+      tab:'ÇEKMECE 4 · SIR', title:'Gizli çekmeceyi buldun!',
+      desc:'Schrödinger’i uyandırıp anahtarı bulan çok az kişi var. Bana LinkedIn’den “Schrödinger uyandı” yaz; kimin bulduğunu bileyim.',
+      list:['Ödül: dedektif rozeti (hayali ama parlak)', 'Kedi artık seni tanıyor'],
+      chips:['EASTER EGG', 'DEDEKTIF'],
+      href:'https://www.linkedin.com/in/mehdi-uslu-0988b8347/', cta:'LinkedIn’den yaz ↗',
+      say:'Vay be, gizli çekmece! Bunu bulan pek olmadı.'
+    }
+  };
+  const canModal = typeof folder.showModal === 'function';
+  let openEl = null, busy = false, pvKey = null, pvT0 = 0, unlocked = false;
+
+  function fillFolder(k) {
+    const p = PROJ[k];
+    $('ftab').textContent = p.tab;
+    $('ftitle').textContent = p.title;
+    $('fdesc').textContent = p.desc;
+    $('flist').replaceChildren(...p.list.map(s => { const li = document.createElement('li'); li.textContent = s; return li; }));
+    $('fchips').replaceChildren(...p.chips.map(s => { const sp = document.createElement('span'); sp.textContent = s; return sp; }));
+    const a = $('flink'); a.href = p.href; a.textContent = p.cta;
+  }
+  drawers.forEach(d => d.addEventListener('click', (e) => {
+    if (!canModal) return;
+    if (d.tagName === 'A' && (e.ctrlKey || e.metaKey || e.shiftKey)) return;
+    e.preventDefault();
+    if (!on || busy || folder.open) return;
+    audio();
+    const k = d.dataset.p;
+    if (k === 'secret' && !unlocked) {
+      d.classList.remove('jig'); void d.getBoundingClientRect(); d.classList.add('jig');
+      tone(190, .05, 'square', .05); tone(150, .06, 'square', .05, 1, .09);
+      say(d.dataset.say);
+      return;
+    }
+    busy = true; openEl = d;
+    d.classList.add('open');
+    tone(210, .16, 'sawtooth', .035, .55); tone(1250, .05, 'triangle', .03, 1, .3);
+    setTimeout(() => {
+      fillFolder(k);
+      pvKey = k; pvT0 = performance.now();
+      folder.showModal();
+      busy = false;
+      waveUntil = performance.now() + 1200;
+      say(PROJ[k].say);
+    }, reduce ? 0 : 430);
+  }));
+  folder.addEventListener('close', () => {
+    pvKey = null;
+    if (openEl) { openEl.classList.remove('open'); tone(170, .12, 'sawtooth', .03, .6); openEl = null; }
+    happy = false; lookLock = false;
+  });
+  folder.addEventListener('click', (e) => { if (e.target === folder) folder.close(); });
+  $('fclose').addEventListener('click', () => folder.close());
+
+  /* ---------- Kedi, anahtar ve gizli çekmece ---------- */
+  const CAT_SLEEP = {x:286, y:79}, CAT_SIT = {x:250, y:72}, KEY_AT = {x:292, y:83};
+  const KEYHOLE = {x:291, y:170};
+  const cat = {st:'sleep', t0:0};
+  let keySt = 'hidden', keyT0 = 0;
+  function placeHit(el, cx, cy, w, h) {
+    el.style.left = (cx / W * 100) + '%'; el.style.top = (cy / H * 100) + '%';
+    el.style.setProperty('--w', w); el.style.setProperty('--h', h);
+  }
+  placeHit(catBtn, 296, 84, 22, 12);
+  placeHit(keyBtn, 298, 86, 14, 8);
+  catBtn.addEventListener('click', () => {
+    if (!on) return;
+    audio();
+    if (cat.st === 'sleep') {
+      cat.st = 'jump'; cat.t0 = performance.now();
+      tone(760, .2, 'triangle', .05, .62);
+      catBtn.setAttribute('aria-label', 'Kedi Schrödinger’i sev');
+      say('Bu Schrödinger. Uyuyor muydu, uyanık mıydı? Sen bakınca karar verdi. Aa, altında bir anahtar parlıyor!');
+      setTimeout(() => {
+        cat.st = 'sit';
+        placeHit(catBtn, 256, 80, 16, 20);
+        keySt = 'shown'; keyBtn.hidden = false;
+      }, reduce ? 0 : 520);
+    } else if (cat.st === 'sit') {
+      [0, .09, .18].forEach(d => tone(70 + Math.random() * 10, .08, 'sawtooth', .03, 1, d));
+      for (let i = 0; i < 3; i++) hearts.push({x:CAT_SIT.x + 3 + i * 3, y:CAT_SIT.y - 3, t:-i * 12});
+      say(pick(catLines, catI++));
+    }
+  });
+  keyBtn.addEventListener('click', () => {
+    if (keySt !== 'shown') return;
+    audio();
+    keySt = 'fly'; keyT0 = performance.now();
+    keyBtn.hidden = true;
+    tone(1320, .06, 'square', .03); tone(1760, .06, 'square', .03, 1, .07);
+    say('Anahtar! Bakalım hangi kilide uyuyor…');
+  });
+  function unlock() {
+    keySt = 'used'; unlocked = true;
+    secretEl.classList.add('unlocked');
+    $('slbl').textContent = 'SIR'; $('stag').textContent = 'SIR';
+    secretEl.setAttribute('aria-label', '4. çekmece: gizli dosyayı aç (kilit açıldı)');
+    secretEl.dataset.say = '4. çekmecenin kilidi açık. İçinde ne var, bir bak!';
+    for (let i = 0; i < 16; i++) sparks.push({
+      x:KEYHOLE.x + 6, y:KEYHOLE.y + 1, vx:(Math.random() - .5) * 2.4, vy:-Math.random() * 2.2 - .2,
+      life:20 + Math.random() * 14, c:Math.random() < .5 ? C.yellow : C.cream
+    });
+    [523, 784, 1047].forEach((f, i) => tone(f, .1, 'square', .04, 1, i * .08));
+    say('Klik! Anahtar 4. çekmeceye uydu. Kilit açıldı; içinde ne var bakalım?');
+    jv = -2.2; waveUntil = performance.now() + 1400;
+    if (document.activeElement === document.body || document.activeElement === keyBtn) secretEl.focus({preventScroll:true});
+  }
+
+  /* ---------- Dekor: beşik, saat, raf ---------- */
+  let crT0 = -1, crSign = 0;
+  $('cradle').addEventListener('click', () => {
+    audio();
+    crT0 = performance.now(); crSign = 0;
+    say('Newton beşiği: momentum da enerji de korunur. Benim sabrım korunmaz, o ayrı.');
+  });
+  $('clock').addEventListener('click', () => {
+    audio();
+    tone(1100, .03, 'square', .03); tone(800, .03, 'square', .03, 1, .25);
+    const d = new Date(), hh = String(d.getHours()).padStart(2, '0'), mm = String(d.getMinutes()).padStart(2, '0');
+    say(`Saat ${hh}:${mm}. Sarkacın periyodu T = 2π√(L/g); yani bu saat Ay’da yaklaşık 2,5 kat yavaş çalışırdı.`);
+  });
+  $('shelf').addEventListener('click', () => {
+    audio();
+    tone(300, .05, 'triangle', .04); tone(420, .05, 'triangle', .04, 1, .06);
+    say(pick(books, bookI++));
+  });
+
   /* ---------- Elektrik geldi ---------- */
   function powerOn(now) {
     on = true; charge = 5;
     jv = -2.6; waveUntil = now + 2200;
     [523, 659, 784, 1047].forEach((f, i) => tone(f, .12, 'square', .045, 1, i * .09));
-    const id = say('Şarj tamam! Merhaba, ben Kuark: Mehdi’nin gece çalışma odasının bekçisi.');
+    const id = say('Sinyal geldi! Merhaba, ben Osi: Mehdi’nin odasındaki küçük osiloskop. Yüzüm bir dalga formu, gülüşüm sinüs.');
     const t1 = reduce ? 0 : 1000, t2 = reduce ? 0 : 1900;
     setTimeout(() => {
       scene.classList.add('flick');
@@ -952,116 +1385,21 @@
       items.forEach(a => a.removeAttribute('tabindex'));
       tone(1568, .08, 'triangle', .04);
       autoBtn.hidden = true;
-      setTimeout(() => scene.classList.remove('reveal'), reduce ? 4000 : 3600);
+      setTimeout(() => scene.classList.remove('reveal'), reduce ? 4000 : 3800);
     }, t2);
     setTimeout(() => {
-      if (sayId === id) say('Işıkları açtım. Odadaki her eşya artık bir kapı: birine dokun, seni oraya götüreyim.');
+      if (sayId === id) say('Işıklar açık! Projeler sağdaki dolapta: bir çekmecenin koluna bas, dosyası çıksın. Panodaki kart, polaroid, monitör ve defter de birer kapı. Bir de… 4. çekmece kilitli.');
     }, t2 + 1500);
   }
 
   /* ---------- Çizim yardımcıları ---------- */
-  const RC = document.createElement('canvas');
-  RC.width = 64; RC.height = 84;
-  const rg = RC.getContext('2d');
-  const OX = 8, OY = 14;
-
-  function disc(g, cx, cy, r, col, dx, dy) {
+  function disc(g, cx, cy, r, col) {
     g.fillStyle = col;
     for (let y = -r; y < r; y++) {
       const w = Math.round(Math.sqrt(r * r - (y + .5) * (y + .5)));
-      g.fillRect(cx - w + dx, cy + y + dy, w * 2, 1);
+      g.fillRect(cx - w, cy + y, w * 2, 1);
     }
   }
-
-  function drawRobot(now) {
-    rg.clearRect(0, 0, RC.width, RC.height);
-    const awake = on;
-    const hy = awake ? (Math.floor(now / 520) % 2 ? 0 : -1) : (Math.floor(now / 1300) % 2);
-    const R = (x, y, w, h, c) => { rg.fillStyle = c; rg.fillRect(x + OX, y + OY, w, h); };
-    const Hd = (x, y, w, h, c) => { rg.fillStyle = c; rg.fillRect(x + OX, y + OY + hy, w, h); };
-    const waving = awake && (happy || now < waveUntil);
-    const wf = Math.floor(now / 180) % 2;
-
-    // paletler
-    R(4, 50, 40, 10, C.ink); R(5, 51, 38, 8, C.wall); R(5, 58, 38, 1, C.navy);
-    for (let x = 6; x < 43; x += 3) R(x, 51, 1, 1, C.ink);
-    for (const wx of [8, 16, 24, 32]) { R(wx, 53, 6, 4, C.ink); R(wx + 1, 54, 4, 2, C.cream); R(wx + 2, 54, 2, 2, C.woodD); }
-    // gövde
-    R(6, 25, 36, 26, C.ink); R(7, 26, 34, 24, C.yellow); R(34, 26, 7, 24, C.woodL);
-    R(8, 27, 2, 9, C.cream); R(7, 48, 27, 2, C.woodL);
-    R(9, 46, 1, 1, C.woodD); R(32, 46, 1, 1, C.woodD); R(9, 27, 1, 1, C.woodD);
-    // panel
-    R(12, 29, 20, 14, C.ink); R(13, 30, 18, 12, C.navy);
-    for (let i = 0; i < 5; i++) R(15 + i * 3, 32, 2, 8, C.wall);
-    R(13, 44, 5, 4, C.ink); R(14, 45, 3, 2, C.woodD);
-    R(21, 45, 10, 1, C.woodD); R(21, 47, 10, 1, C.woodD);
-    // priz
-    R(39, 40, 5, 9, C.ink); R(40, 41, 3, 7, C.navy); R(41, 42, 1, 1, C.ink); R(41, 45, 1, 1, C.ink);
-    // kollar
-    R(1, 31, 6, 4, C.ink); R(2, 32, 5, 2, C.wall);
-    R(-3, 33, 5, 6, C.ink); R(-2, 34, 3, 4, C.woodL);
-    if (waving) {
-      const s = wf ? 2 : 0;
-      R(41, 28, 5, 5, C.ink); R(41, 29, 4, 3, C.wall);
-      R(43, 19, 5, 11, C.ink); R(44, 20, 3, 9, C.wall);
-      R(41 + s, 13, 7, 7, C.ink); R(42 + s, 14, 5, 5, C.woodL);
-    } else {
-      R(41, 31, 6, 4, C.ink); R(41, 32, 5, 2, C.wall);
-      R(45, 33, 5, 6, C.ink); R(46, 34, 3, 4, C.woodL);
-    }
-    // boyun
-    R(20, 20, 8, 6, C.ink); R(21, 20, 6, 5, C.wall);
-    // kafa: cam kubbe
-    disc(rg, 24 + OX, 9 + OY, 12, C.ink, 0, hy);
-    disc(rg, 24 + OX, 9 + OY, 11, awake ? C.wall : C.navy, 0, hy);
-    Hd(10, 17, 28, 4, C.ink); Hd(11, 18, 26, 1, C.yellow); Hd(11, 19, 26, 1, C.woodL);
-    Hd(15, 0, 3, 1, C.cream); Hd(13, 1, 2, 1, C.cream); Hd(12, 2, 1, 2, C.cream);
-    // anten
-    Hd(23, -6, 2, 4, C.ink); Hd(22, -10, 4, 4, C.ink); Hd(23, -9, 2, 2, C.woodD);
-
-    // karanlıkta robot da loş
-    if (!on) {
-      rg.globalCompositeOperation = 'source-atop';
-      rg.fillStyle = 'rgba(9,8,24,.45)';
-      rg.fillRect(0, 0, RC.width, RC.height);
-      rg.globalCompositeOperation = 'source-over';
-    }
-
-    // ---- ışık katmanı (karartılmaz) ----
-    const full = Math.floor(charge);
-    const chargingNow = plugged && !on;
-    if (chargingNow && Math.floor(now / 250) % 2) { R(12, 29, 20, 1, C.yellow); R(12, 42, 20, 1, C.yellow); R(12, 29, 1, 14, C.yellow); R(31, 29, 1, 14, C.yellow); }
-    for (let i = 0; i < 5; i++) {
-      if (i < full) R(15 + i * 3, 32, 2, 8, full === 1 && !on ? C.red : C.greenL);
-      else if (i === full && chargingNow && Math.floor(now / 200) % 2) R(15 + i * 3, 32, 2, 8, C.greenD);
-    }
-    if (nearPort) { R(39, 40, 5, 1, C.yellow); R(39, 48, 5, 1, C.yellow); R(39, 40, 1, 9, C.yellow); R(43, 40, 1, 9, C.yellow); }
-    if (on) {
-      R(14, 45, 3, 2, C.red);
-      Hd(23, -9, 2, 2, C.red);
-      const a = now / 170;
-      for (const ph of [0, Math.PI]) {
-        const ex = Math.round(24 + Math.cos(a + ph) * 5) - 1, ey = Math.round(-8 + Math.sin(a + ph) * 2);
-        Hd(ex, ey, 1, 1, C.yellow);
-      }
-      // gözler
-      const hx = RX + 24, hyG = RY + 9 + jy;
-      const dx = look.x - hx, dy = look.y - hyG;
-      const lx = dx > 12 ? 1 : dx < -12 ? -1 : 0, ly = dy > 14 ? 1 : dy < -14 ? -1 : 0;
-      const blink = now % 4200 < 130;
-      for (const ex of [17, 27]) {
-        if (happy) { Hd(ex, 9, 1, 1, C.greenL); Hd(ex + 1, 8, 2, 1, C.greenL); Hd(ex + 3, 9, 1, 1, C.greenL); }
-        else if (blink) Hd(ex, 9, 4, 1, C.greenL);
-        else { Hd(ex, 7, 4, 4, C.greenL); Hd(ex + 1 + lx, 8 + ly, 2, 2, C.ink); }
-      }
-      if (happy || now < waveUntil) { Hd(21, 13, 1, 1, C.greenL); Hd(22, 14, 4, 1, C.greenL); Hd(26, 13, 1, 1, C.greenL); }
-      else Hd(22, 14, 4, 1, C.greenD);
-    } else {
-      Hd(17, 10, 4, 1, C.wall); Hd(27, 10, 4, 1, C.wall);
-    }
-    ctx.drawImage(RC, RX - OX, RY - OY + Math.round(jy));
-  }
-
   function bres(x0, y0, x1, y1, plot) {
     x0 = Math.round(x0); y0 = Math.round(y0); x1 = Math.round(x1); y1 = Math.round(y1);
     const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
@@ -1074,6 +1412,125 @@
       if (e2 <= dx) { err += dx; y0 += sy; }
     }
   }
+  const line = (g, x0, y0, x1, y1, col) => { g.fillStyle = col; bres(x0, y0, x1, y1, (x, y) => g.fillRect(x, y, 1, 1)); };
+  function keySprite(g, x, y, s = 1) {
+    const P = (a, b, w, h, c) => { g.fillStyle = c; g.fillRect(x + a * s, y + b * s, w * s, h * s); };
+    P(0, 0, 5, 5, C.ink); P(1, 1, 3, 3, C.yellow); P(2, 2, 1, 1, C.ink);
+    P(4, 1, 8, 3, C.ink); P(5, 2, 6, 1, C.yellow);
+    P(8, 4, 1, 2, C.ink); P(10, 4, 1, 2, C.ink);
+  }
+
+  /* ---------- Osi (özgün karakter: yürüyen küçük osiloskop) ---------- */
+  const RC = document.createElement('canvas');
+  RC.width = 72; RC.height = 70;
+  const rg = RC.getContext('2d');
+  const OX = 10, OY = 12;
+
+  function drawRobot(now) {
+    rg.clearRect(0, 0, RC.width, RC.height);
+    const hy = on ? (Math.floor(now / 520) % 2 ? 0 : -1) : 0;
+    const R = (x, y, w, h, c) => { rg.fillStyle = c; rg.fillRect(x + OX, y + OY, w, h); };
+    const B = (x, y, w, h, c) => { rg.fillStyle = c; rg.fillRect(x + OX, y + OY + hy, w, h); };
+    const waving = on && (happy || now < waveUntil);
+    const s = Math.floor(now / 180) % 2 ? 2 : 0;
+
+    // bacaklar
+    R(10, 36, 5, 8, C.ink); R(11, 36, 3, 7, C.wall); R(29, 36, 5, 8, C.ink); R(30, 36, 3, 7, C.wall);
+    R(7, 43, 10, 4, C.ink); R(8, 44, 8, 2, C.woodD); R(27, 43, 10, 4, C.ink); R(28, 44, 8, 2, C.woodD);
+    // sol kol (prob kablosu gibi)
+    B(-4, 17, 5, 3, C.ink); B(-3, 18, 4, 1, C.wall);
+    B(-6, 17, 3, 10, C.ink); B(-5, 18, 1, 8, C.wall);
+    B(-8, 26, 6, 5, C.ink); B(-7, 27, 4, 3, C.cream);
+    // sağ kol
+    if (waving) {
+      B(43, 8, 5, 3, C.ink); B(44, 9, 4, 1, C.wall);
+      B(46, -2, 3, 11, C.ink); B(47, -1, 1, 9, C.wall);
+      B(45 + s, -7, 6, 6, C.ink); B(46 + s, -6, 4, 4, C.cream);
+    } else {
+      B(43, 8, 5, 3, C.ink); B(44, 9, 4, 1, C.wall);
+      B(46, 8, 3, 8, C.ink); B(47, 9, 1, 6, C.wall);
+      B(45, 14, 6, 5, C.ink); B(46, 15, 4, 3, C.cream);
+    }
+    // taşıma sapı
+    B(9, -8, 26, 3, C.ink); B(9, -8, 3, 8, C.ink); B(32, -8, 3, 8, C.ink);
+    B(10, -7, 24, 1, C.wall); B(10, -7, 1, 7, C.wall); B(33, -7, 1, 7, C.wall);
+    // kasa
+    B(0, 0, 44, 36, C.ink); B(1, 1, 42, 34, C.cream);
+    B(40, 1, 3, 32, C.woodL); B(1, 33, 42, 2, C.woodL);
+    // ekran
+    B(3, 3, 28, 24, C.ink); B(4, 4, 26, 22, on ? C.greenD : C.navy);
+    // düğmeler
+    for (const ky of [8, 17]) { B(33, ky - 2, 5, 5, C.ink); B(34, ky - 1, 3, 3, C.wall); }
+    B(33, 23, 5, 4, C.ink); B(34, 24, 3, 2, C.woodD);
+    // batarya göstergesi
+    B(4, 28, 26, 5, C.ink);
+    for (let i = 0; i < 5; i++) B(5 + i * 5, 29, 4, 3, C.wall);
+    // priz (sağ yan)
+    B(43, 20, 5, 9, C.ink); B(44, 21, 3, 7, C.navy); B(45, 22, 1, 1, C.ink); B(45, 26, 1, 1, C.ink);
+
+    // karanlıkta Osi de loş
+    if (!on) {
+      rg.globalCompositeOperation = 'source-atop';
+      rg.fillStyle = 'rgba(9,8,24,.45)';
+      rg.fillRect(0, 0, RC.width, RC.height);
+      rg.globalCompositeOperation = 'source-over';
+    }
+
+    // ---- ışık katmanı (karartılmaz) ----
+    const full = Math.floor(charge);
+    const chargingNow = plugged && !on;
+    for (let i = 0; i < 5; i++) {
+      if (i < full) B(5 + i * 5, 29, 4, 3, full === 1 && !on ? C.red : C.greenL);
+      else if (i === full && chargingNow && Math.floor(now / 200) % 2) B(5 + i * 5, 29, 4, 3, C.greenD);
+    }
+    if (nearPort) { B(43, 20, 5, 1, C.yellow); B(43, 28, 5, 1, C.yellow); B(43, 20, 1, 9, C.yellow); B(47, 20, 1, 9, C.yellow); }
+    // ekran içeriği: x 4..29, y 4..25
+    const S = (x, y, c) => B(x, y, 1, 1, c);
+    if (!on && !chargingNow) {
+      B(5, 15, 24, 1, C.greenD);                                     // düz çizgi: sinyal yok
+    } else if (chargingNow) {
+      const px = 5 + Math.floor(now / 45) % 21;                      // kalp atışı gibi darbe
+      for (let x = 5; x < 29; x++) if (x < px || x > px + 3) S(x, 15, C.greenL);
+      let prev = null;
+      [[px, 15], [px + 1, 10], [px + 2, 20], [px + 3, 15]].forEach(([x, y]) => {
+        if (prev) bres(prev[0], prev[1], x, y, (a, b) => S(a, b, C.greenL));
+        prev = [x, y];
+      });
+    } else {
+      rg.fillStyle = 'rgba(127,209,139,.28)';
+      for (let x = 6; x < 29; x += 4) for (let y = 6; y < 26; y += 4) rg.fillRect(x + OX, y + OY + hy, 1, 1);
+      const hx = RX + 17, hyG = RY + 15 + jy;
+      const dx = look.x - hx, dy = look.y - hyG;
+      const lx = dx > 14 ? 1 : dx < -14 ? -1 : 0, ly = dy > 16 ? 1 : dy < -16 ? -1 : 0;
+      const blink = now % 4200 < 130;
+      const glad = happy || now < waveUntil;
+      for (const ex of [9, 21]) {
+        if (glad) { S(ex, 11, C.greenL); S(ex + 1, 10, C.greenL); S(ex + 2, 10, C.greenL); S(ex + 3, 11, C.greenL); }
+        else if (blink) B(ex + lx, 11, 4, 1, C.greenL);
+        else B(ex + lx, 8 + ly, 4, 5, C.greenL);
+      }
+      // ağız: dalga formu
+      let py = null;
+      for (let x = 10; x <= 24; x++) {
+        let y;
+        if (typing) y = 20 + Math.round(Math.sin(x * 1.3 + now / 55) * (1 + Math.abs(Math.sin(now / 110)) * 2));
+        else if (glad) y = 18 + Math.round(3 - (x - 17) * (x - 17) / 16);
+        else y = 20 + Math.round(Math.sin(x * .8 + now / 300) * .9);
+        y = Math.max(16, Math.min(24, y));
+        if (py === null) S(x, y, C.greenL);
+        else for (let k = Math.min(py, y); k <= Math.max(py, y); k++) S(x, k, C.greenL);
+        py = y;
+      }
+      rg.fillStyle = 'rgba(243,230,196,.35)';
+      rg.fillRect(5 + OX, 5 + OY + hy, 4, 1);
+      // düğme işaretleri ve ışık
+      const a = now / (typing ? 160 : 900);
+      for (const ky of [8, 17]) S(35 + Math.round(Math.cos(a + ky)), ky + Math.round(Math.sin(a + ky)), C.yellow);
+      B(34, 24, 3, 2, C.red);
+    }
+    ctx.drawImage(RC, RX - OX, RY - OY + Math.round(jy));
+  }
+
   function drawRope() {
     ctx.fillStyle = C.ink;
     for (let i = 0; i < N - 1; i++) bres(pts[i].x, pts[i].y, pts[i + 1].x, pts[i + 1].y, (x, y) => ctx.fillRect(x - 1, y - 1, 4, 4));
@@ -1094,6 +1551,221 @@
     ctx.fillRect(x, y + s - 1, s, 1);
   }
 
+  /* ---------- Arka plan katmanı (karanlıkta loşlaşır) ---------- */
+  let star = null, nextStar = performance.now() + 3500;
+  function drawBg(now) {
+    bg.clearRect(0, 0, W, H);
+    const P = (x, y, w, h, c) => { bg.fillStyle = c; bg.fillRect(x, y, w, h); };
+
+    // kayan yıldız
+    if (!reduce && !star && now > nextStar) { star = {t0:now}; nextStar = now + 7000 + Math.random() * 9000; }
+    if (star) {
+      const k = (now - star.t0) / 650;
+      if (k > 1) star = null;
+      else {
+        bg.save(); bg.beginPath(); bg.rect(17, 17, 46, 38); bg.clip();
+        const hx = 60 - k * 40, hy = 19 + k * 22;
+        for (let j = 0; j < 7; j++) { bg.globalAlpha = 1 - j / 7; P(Math.round(hx + j * 1.8), Math.round(hy - j), 1, 1, C.cream); }
+        bg.globalAlpha = 1; bg.restore();
+      }
+    }
+
+    // saat kadranı + gerçek saat
+    disc(bg, 92, 24, 9, C.ink); disc(bg, 92, 24, 8, C.cream);
+    P(91, 16, 2, 2, C.ink); P(91, 30, 2, 2, C.ink); P(84, 23, 2, 2, C.ink); P(98, 23, 2, 2, C.ink);
+    const d = new Date();
+    const ma = (d.getMinutes() + d.getSeconds() / 60) / 60 * Math.PI * 2;
+    const ha = ((d.getHours() % 12) + d.getMinutes() / 60) / 12 * Math.PI * 2;
+    line(bg, 91.5, 23.5, 91.5 + Math.sin(ma) * 6, 23.5 - Math.cos(ma) * 6, C.ink);
+    line(bg, 91.5, 23.5, 91.5 + Math.sin(ha) * 4, 23.5 - Math.cos(ha) * 4, C.red);
+    P(91, 23, 2, 2, C.ink);
+    // sarkaç
+    const th = reduce ? 0 : 0.11 * Math.sin(now / 2000 * Math.PI * 2);
+    const bx = 91.5 + Math.sin(th) * 22, by = 37 + Math.cos(th) * 22;
+    bg.save(); bg.beginPath(); bg.rect(86, 37, 11, 30); bg.clip();
+    line(bg, 91.5, 37, bx, by, C.yellow);
+    disc(bg, Math.round(bx) + 1, Math.round(by), 4, C.ink);
+    disc(bg, Math.round(bx) + 1, Math.round(by), 3, C.yellow);
+    P(Math.round(bx) - 1, Math.round(by) - 2, 1, 1, C.cream);
+    bg.restore();
+
+    // Newton beşiği
+    const xs = [148, 153, 158, 163, 168], pyv = 95, L = 12;
+    let A = 0, ph = 0;
+    if (crT0 >= 0) {
+      const t = (now - crT0) / 1000;
+      A = 0.62 * Math.exp(-t / 3.5); ph = Math.sin(2 * Math.PI * t / 0.9);
+      if (A < 0.03) { crT0 = -1; A = 0; }
+      const sg = ph >= 0 ? 1 : -1;
+      if (crSign !== 0 && sg !== crSign) tone(2600, .03, 'triangle', .035 * Math.min(1, A * 2));
+      crSign = sg;
+    }
+    for (let i = 0; i < 5; i++) {
+      let a = 0;
+      if (i === 0 && ph < 0) a = A * ph;
+      if (i === 4 && ph > 0) a = A * ph;
+      const cx = Math.round(xs[i] + Math.sin(a) * L), cy = Math.round(pyv + Math.cos(a) * L);
+      line(bg, xs[i], pyv, cx, cy - 2, 'rgba(243,230,196,.7)');
+      P(cx - 1, cy - 2, 3, 1, C.cream); P(cx - 2, cy - 1, 5, 3, C.cream); P(cx - 1, cy + 2, 3, 1, C.blue);
+      P(cx + 1, cy, 1, 2, C.blue); P(cx - 1, cy - 1, 1, 1, '#ffffff');
+    }
+
+    // kupa buharı
+    if (!reduce) for (let i = 0; i < 3; i++) {
+      const k = ((now / 1400) + i / 3) % 1;
+      bg.globalAlpha = .55 * (1 - k);
+      P(Math.round(183 + i * 2 + Math.sin(now / 320 + i * 2)), Math.round(105 - k * 12), 1, 2, C.cream);
+    }
+    bg.globalAlpha = 1;
+
+    // anahtar (kedi kalkınca görünür)
+    if (keySt === 'shown') {
+      keySprite(bg, KEY_AT.x, KEY_AT.y);
+      if (!reduce && Math.floor(now / 300) % 3 === 0) { P(KEY_AT.x + 12, KEY_AT.y - 3, 1, 3, C.cream); P(KEY_AT.x + 11, KEY_AT.y - 2, 3, 1, C.cream); }
+    }
+
+    // kedi Schrödinger
+    if (cat.st === 'sleep') drawCatSleep(now);
+    else {
+      let cx = CAT_SIT.x, cy = CAT_SIT.y;
+      if (cat.st === 'jump') {
+        const k = Math.min(1, (now - cat.t0) / 500);
+        cx = Math.round(CAT_SLEEP.x + (CAT_SIT.x - CAT_SLEEP.x) * k);
+        cy = Math.round(CAT_SLEEP.y - 6 + (CAT_SIT.y - CAT_SLEEP.y + 6) * k - Math.sin(Math.PI * k) * 12);
+      }
+      drawCatSit(now, cx, cy);
+    }
+    for (const h of hearts) if (h.t >= 0) {
+      bg.globalAlpha = Math.max(0, 1 - h.t / 60);
+      const x = Math.round(h.x + Math.sin(h.t / 8) * 2), y = Math.round(h.y - h.t * .3);
+      P(x, y, 1, 1, C.red); P(x + 2, y, 1, 1, C.red); P(x, y + 1, 3, 1, C.red); P(x + 1, y + 2, 1, 1, C.red);
+    }
+    bg.globalAlpha = 1;
+  }
+  function drawCatSleep(now) {
+    const ox = CAT_SLEEP.x, oy = CAT_SLEEP.y, br = reduce ? 0 : Math.floor(now / 900) % 2;
+    const L = (x, y, w, h, c) => { bg.fillStyle = c; bg.fillRect(ox + x, oy + y, w, h); };
+    L(4, 3 - br, 15, 7 + br, C.ink); L(3, 4 - br, 17, 6 + br, C.ink);
+    L(5, 4 - br, 13, 5 + br, C.woodL); L(4, 5 - br, 15, 4 + br, C.woodL);
+    L(10, 4 - br, 1, 2, C.wood); L(13, 4 - br, 1, 2, C.wood); L(16, 5 - br, 1, 2, C.wood);
+    L(0, 4, 8, 6, C.ink); L(1, 5, 6, 4, C.woodL); L(1, 2, 2, 3, C.ink); L(5, 2, 2, 3, C.ink);
+    L(2, 7, 2, 1, C.ink); L(5, 7, 1, 1, C.ink); L(4, 8, 1, 1, C.red);
+    const f = !reduce && Math.floor(now / 1700) % 3 === 0 ? 1 : 0;
+    L(6, 9, 13, 1, C.ink); L(17, 7 - f, 3, 3, C.ink); L(18, 8 - f, 1, 1, C.cream);
+    if (on && !reduce && Math.floor(now / 1600) % 2) { bg.fillStyle = C.cream; bg.fillRect(ox - 3, oy - 1, 3, 1); bg.fillRect(ox - 2, oy, 1, 1); bg.fillRect(ox - 3, oy + 1, 3, 1); }
+  }
+  function drawCatSit(now, cx, cy) {
+    const L = (x, y, w, h, c) => { bg.fillStyle = c; bg.fillRect(cx + x, cy + y, w, h); };
+    const tw = !reduce && Math.floor(now / 600) % 4 === 0 ? 1 : 0;
+    L(11, 11, 4, 2, C.ink); L(13, 5 + tw, 2, 7 - tw, C.ink); L(14, 4 + tw, 2, 2, C.ink);
+    L(1, 7, 11, 10, C.ink); L(2, 8, 9, 8, C.woodL); L(4, 10, 5, 6, C.cream);
+    L(0, 0, 13, 8, C.ink); L(1, 1, 11, 6, C.woodL);
+    L(0, -2, 3, 3, C.ink); L(10, -2, 3, 3, C.ink);
+    L(5, 1, 1, 1, C.wood); L(7, 1, 1, 1, C.wood);
+    if (now % 3600 < 140) { L(3, 4, 2, 1, C.ink); L(8, 4, 2, 1, C.ink); }
+    else { L(3, 3, 2, 2, C.greenL); L(8, 3, 2, 2, C.greenL); L(4, 3, 1, 2, C.ink); L(9, 3, 1, 2, C.ink); }
+    L(6, 5, 1, 1, C.red);
+    L(3, 16, 3, 1, C.cream); L(7, 16, 3, 1, C.cream);
+  }
+
+  /* ---------- Dosya önizlemeleri (160x96) ---------- */
+  function pvBase(g) {
+    g.fillStyle = C.navy; g.fillRect(0, 0, 160, 96);
+    g.fillStyle = C.wall;
+    for (let x = 4; x < 160; x += 8) for (let y = 4; y < 96; y += 8) g.fillRect(x, y, 1, 1);
+    g.textBaseline = 'alphabetic'; g.textAlign = 'left';
+    g.font = '8px Silkscreen, monospace';
+  }
+  function pvSym(g, t) {
+    pvBase(g);
+    g.fillStyle = C.yellow; g.fillText('XPBD', 6, 12);
+    g.fillStyle = C.cream; g.fillRect(0, 86, 160, 1);
+    for (let x = 8; x <= 84; x++) {
+      const y = Math.round(44 + (x - 8) * 42 / 76);
+      g.fillStyle = C.woodL; g.fillRect(x, y, 1, 86 - y);
+      g.fillStyle = C.cream; g.fillRect(x, y, 1, 1);
+    }
+    const Lr = Math.hypot(76, 42), dx = 76 / Lr, dy = 42 / Lr, nx = dy, ny = -dx, r = 4;
+    const cyc = t % 4, T1 = 1.4;
+    let cx, cy, dist;
+    if (cyc < T1) {
+      const s = Math.pow(cyc / T1, 2) * Lr;
+      cx = 8 + dx * s + nx * r; cy = 44 + dy * s + ny * r; dist = s;
+    } else {
+      const v = 2 * Lr / T1, a = v * v / (2 * 60), ts = Math.min(cyc - T1, v / a);
+      const xx = v * ts - .5 * a * ts * ts;
+      cx = 86 + xx; cy = 82; dist = Lr + xx;
+    }
+    disc(g, Math.round(cx), Math.round(cy), 4, C.red);
+    const an = dist / 4;
+    g.fillStyle = C.cream; g.fillRect(Math.round(cx + Math.cos(an) * 2.5) - 1, Math.round(cy + Math.sin(an) * 2.5) - 1, 1, 1);
+    // sarkaç
+    g.fillStyle = C.cream; g.fillRect(114, 8, 30, 2);
+    const th = .55 * Math.sin(2 * Math.PI * t / 1.6), L = 40;
+    const bx = 129 + Math.sin(th) * L, by = 10 + Math.cos(th) * L;
+    line(g, 129, 10, bx, by, C.cream);
+    disc(g, Math.round(bx), Math.round(by), 5, C.ink);
+    disc(g, Math.round(bx), Math.round(by), 4, C.yellow);
+    // kuvvet oku
+    g.fillStyle = C.greenL;
+    g.fillRect(Math.round(bx), Math.round(by) + 5, 1, 12);
+    g.fillRect(Math.round(bx) - 1, Math.round(by) + 15, 3, 1);
+    g.fillText('F=ma', 112, 82);
+  }
+  function stegoCell(r, c) {
+    if (r === 0) return C.wall;
+    if (r === 1) return C.blue;
+    if (r <= 3) return c >= 6 && c <= 7 ? C.yellow : (r === 2 ? C.blue : C.red);
+    if (r <= 5) return (c + r) % 3 === 0 ? C.greenL : C.greenD;
+    return (c + r) % 2 ? C.blue : C.navy;
+  }
+  function pvStego(g, t) {
+    pvBase(g);
+    g.fillStyle = C.cream; g.fillRect(6, 6, 64, 52);
+    for (let r = 0; r < 8; r++) for (let c = 0; c < 10; c++) { g.fillStyle = stegoCell(r, c); g.fillRect(8 + c * 6, 8 + r * 6, 6, 6); }
+    const i = Math.floor(t * 6) % 80, sr = Math.floor(i / 10), sc = i % 10;
+    g.fillStyle = C.yellow;
+    g.fillRect(7 + sc * 6, 7 + sr * 6, 8, 1); g.fillRect(7 + sc * 6, 14 + sr * 6, 8, 1);
+    g.fillRect(7 + sc * 6, 7 + sr * 6, 1, 8); g.fillRect(14 + sc * 6, 7 + sr * 6, 1, 8);
+    let bits = ''; for (let b = 0; b < 7; b++) bits += ((i * 37 + b * 11) >> (b % 3)) & 1;
+    g.fillStyle = C.greenL; g.fillText(bits, 78, 18);
+    g.fillStyle = C.yellow; g.fillText(String(i % 2), 78 + g.measureText(bits).width, 18);
+    g.fillStyle = C.cream; g.fillText('LSB', 78, 32);
+    g.fillStyle = C.blue; g.fillText('AES-256', 78, 44);
+    const msg = 'merhaba osi :)', n = Math.min(msg.length, Math.floor((t % 8) / 0.3));
+    g.fillStyle = C.greenL; g.fillText('> ' + msg.slice(0, n) + (Math.floor(t * 3) % 2 ? '_' : ''), 8, 78);
+    // kilit
+    const open = n >= msg.length;
+    g.fillStyle = C.ink; g.fillRect(138, 12, 14, 11);
+    g.fillStyle = C.yellow; g.fillRect(139, 13, 12, 9);
+    g.fillStyle = C.ink; g.fillRect(144, 16, 2, 3);
+    g.fillStyle = C.cream;
+    g.fillRect(140, open ? 3 : 6, 2, open ? 4 : 7); g.fillRect(148, 6, 2, 7); g.fillRect(140, open ? 3 : 5, 10, 2);
+  }
+  function pvRepos(g, t) {
+    pvBase(g);
+    const names = ['symphys-3d', 'ENCRYPT-TEXT', 'mehdiuslu.github.io', 'GameFiles', '...'];
+    const act = Math.floor(t / 1.1) % names.length;
+    names.forEach((nm, i) => {
+      const y = 10 + i * 16, x = i === act ? 18 : 10, col = i === act ? C.yellow : C.cream;
+      g.fillStyle = C.ink; g.fillRect(x - 1, y - 1, 132, 14); g.fillRect(x + 3, y - 4, 26, 4);
+      g.fillStyle = col; g.fillRect(x, y, 130, 12); g.fillRect(x + 4, y - 3, 24, 3);
+      g.fillStyle = C.ink; g.fillText(nm, x + 5, y + 9);
+    });
+  }
+  function pvSecret(g, t) {
+    pvBase(g);
+    const cols = [C.red, C.yellow, C.greenL, C.blue, C.cream];
+    for (let i = 0; i < 34; i++) {
+      g.fillStyle = cols[i % 5];
+      g.fillRect((i * 37 + Math.round(Math.sin(t * 2 + i) * 3)) % 160, Math.round((t * 26 + i * 23) % 106) - 8, 2, 2);
+    }
+    keySprite(g, 56, 22 + Math.round(Math.sin(t * 3) * 2), 4);
+    g.textAlign = 'center'; g.fillStyle = C.yellow; g.fillText('DEDEKTIF!', 80, 82); g.textAlign = 'left';
+    if (Math.floor(t * 4) % 2) { g.fillStyle = C.cream; g.fillRect(110, 18, 1, 5); g.fillRect(108, 20, 5, 1); g.fillRect(46, 50, 1, 5); g.fillRect(44, 52, 5, 1); }
+  }
+  const PV = {symphys:pvSym, stego:pvStego, repos:pvRepos, secret:pvSecret};
+
   /* ---------- Ana döngü ---------- */
   let last = performance.now(), acc = 0;
   function frame(now) {
@@ -1101,7 +1773,6 @@
     acc += dt;
     while (acc >= 16.67) {
       step(now);
-      // robot zıplaması
       jv += .25; jy += jv; if (jy > 0) { jy = 0; jv = 0; }
       for (const s of sparks) { s.x += s.vx; s.y += s.vy; s.vy += .15; s.life--; }
       sparks = sparks.filter(s => s.life > 0);
@@ -1109,6 +1780,8 @@
       zs = zs.filter(z => z.t < 110);
       for (const p of pulses) p.t += .03;
       pulses = pulses.filter(p => p.t < 1);
+      for (const h of hearts) h.t++;
+      hearts = hearts.filter(h => h.t < 60);
       acc -= 16.67;
     }
 
@@ -1121,7 +1794,9 @@
       if (now - lastPulse > 220) { pulses.push({t:0}); lastPulse = now; }
       if (charge >= 5) powerOn(now);
     }
-    if (!on && !plugged && !reduce && now - lastZ > 1500) { zs.push({x:RX + 34, y:RY - 8, t:0, big:zs.length % 2 === 0}); lastZ = now; }
+    if (!on && !plugged && !reduce && now - lastZ > 1500) { zs.push({x:RX + 36, y:RY - 10, t:0, big:zs.length % 2 === 0}); lastZ = now; }
+
+    drawBg(now);
 
     ctx.clearRect(0, 0, W, H);
     drawRobot(now);
@@ -1140,6 +1815,14 @@
     for (const z of zs) { ctx.globalAlpha = Math.max(0, 1 - z.t / 110); glyphZ(Math.round(z.x), Math.round(z.y), z.big); }
     ctx.globalAlpha = 1;
 
+    // uçan anahtar
+    if (keySt === 'fly') {
+      const k = Math.min(1, (now - keyT0) / (reduce ? 1 : 750));
+      const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      keySprite(ctx, Math.round(KEY_AT.x + (KEYHOLE.x - KEY_AT.x) * e), Math.round(KEY_AT.y + (KEYHOLE.y - KEY_AT.y) * e - Math.sin(Math.PI * k) * 26));
+      if (k >= 1) unlock();
+    }
+
     // ipucu oku: fişe henüz dokunulmadıysa
     if (!touched && !plugged) {
       const b = reduce ? 0 : Math.floor(now / 320) % 2 * 2;
@@ -1149,7 +1832,7 @@
     }
     // konuşma balonu
     if (typing) {
-      const bx = RX + 38, by = RY - 16 + Math.round(jy);
+      const bx = RX + 44, by = RY - 22 + Math.round(jy);
       ctx.fillStyle = C.ink; ctx.fillRect(bx, by, 13, 8); ctx.fillRect(bx + 1, by + 8, 3, 2);
       ctx.fillStyle = C.cream; ctx.fillRect(bx + 1, by + 1, 11, 6); ctx.fillRect(bx + 2, by + 7, 1, 1);
       ctx.fillStyle = C.ink;
@@ -1157,13 +1840,15 @@
       for (let i = 0; i < n; i++) ctx.fillRect(bx + 3 + i * 3, by + 4, 1, 1);
     }
 
+    if (pvKey) PV[pvKey](pg, (now - pvT0) / 1000);
+
     // fiş butonunu fişin üstünde tut
     plugBtn.style.left = ((o.x + 6) / W * 100) + '%';
     plugBtn.style.top = ((o.y + 3) / H * 100) + '%';
     requestAnimationFrame(frame);
   }
 
-  say('Zzz… zzz… (Kuark’ın şarjı bitmiş. Yerdeki kırmızı kablonun fişini tut, robotun sağ yanındaki prize sürükle.)', '???');
+  say('Zzz… (Ekranında dümdüz bir çizgi var: Osi’nin şarjı bitmiş. Yerdeki kırmızı kablonun fişini tut, robotun sağ yanındaki prize sürükle.)', '???');
   requestAnimationFrame(frame);
 })();
 </script>
