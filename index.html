@@ -9,6 +9,12 @@
 <meta property="og:title" content="Mehdi Uslu">
 <meta property="og:description" content="Fizik, kod ve notlar. Fişi tak, çekmeceleri aç.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://mehdiuslu.github.io/">
+<meta property="og:image" content="https://mehdiuslu.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Piksel-art gece çalışma odası: robot Osi, proje dolabı ve masa">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%231b1a3a'/%3E%3Crect x='1' y='1' width='6' height='5' fill='%23f3e6c4'/%3E%3Crect x='2' y='2' width='4' height='3' fill='%232f6b4f'/%3E%3Crect x='2' y='4' width='1' height='1' fill='%237fd18b'/%3E%3Crect x='3' y='3' width='1' height='1' fill='%237fd18b'/%3E%3Crect x='4' y='4' width='1' height='1' fill='%237fd18b'/%3E%3Crect x='5' y='3' width='1' height='1' fill='%237fd18b'/%3E%3Crect x='2' y='6' width='1' height='1' fill='%23f3e6c4'/%3E%3Crect x='5' y='6' width='1' height='1' fill='%23f3e6c4'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -392,6 +398,15 @@
     letter-spacing:.06em;
     color:var(--yellow);
   }
+  /* ?shot: paylaşım görseli (1200x630) için düzen */
+  .shot body{min-height:0;overflow:hidden}
+  .shot main{max-width:none;width:1200px;height:630px;padding:0 44px 0 56px;display:flex;align-items:center;gap:44px}
+  .shot header{flex:1;text-align:left;margin:0}
+  .shot h1{font-size:74px}
+  .shot .sub{margin-left:0;font-size:22px}
+  .shot .frame{flex:none;width:640px}
+  .shot .dialog,.shot .controls,.shot .foot{display:none}
+  .shot .on .scr{animation:none}
   .sr-only{
     position:absolute!important;
     width:1px;height:1px;
@@ -1848,7 +1863,13 @@
     requestAnimationFrame(frame);
   }
 
-  say('Zzz… (Ekranında dümdüz bir çizgi var: Osi’nin şarjı bitmiş. Yerdeki kırmızı kablonun fişini tut, robotun sağ yanındaki prize sürükle.)', '???');
+  if (/[?&]shot\b/.test(location.search)) {          // paylaşım görseli: ışıklar açık, fiş takılı
+    document.documentElement.classList.add('shot');
+    plugged = touched = on = true; charge = 5; happy = true;
+    scene.classList.remove('off'); scene.classList.add('on');
+  } else {
+    say('Zzz… (Ekranında dümdüz bir çizgi var: Osi’nin şarjı bitmiş. Yerdeki kırmızı kablonun fişini tut, robotun sağ yanındaki prize sürükle.)', '???');
+  }
   requestAnimationFrame(frame);
 })();
 </script>
