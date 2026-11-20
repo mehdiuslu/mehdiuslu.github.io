@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mehdi Uslu</title>
-<meta name="description" content="Mehdi Uslu — fizik, kod ve notlar. Piksel-art bir gece çalışma odası: her eşya GitHub, Medium, Instagram ve LinkedIn'e açılan bir kapı.">
+<meta name="description" content="Mehdi Uslu — fizik, kod ve notlar. Karanlık bir piksel-art çalışma odası: fişi robot Kuark'a tak, ışıklar yansın, her eşya GitHub, Medium, Instagram ve LinkedIn'e açılan bir kapıya dönüşsün.">
 <meta name="theme-color" content="#1b1a3a">
 <meta property="og:title" content="Mehdi Uslu">
 <meta property="og:description" content="Fizik, kod ve notlar. Odadaki eşyaya bas, kapı açılsın.">
@@ -150,21 +150,129 @@
     margin-top:2px;
     background:var(--ink);
   }
+  .tag{z-index:6}
   @media (hover:hover){
-    .item:hover svg{transform:translateY(-2px);filter:brightness(1.18)}
-    .item:hover .tag{opacity:1}
+    .scene:not(.off) .item:hover svg{transform:translateY(-2px);filter:brightness(1.18)}
+    .scene:not(.off) .item:hover .tag{opacity:1}
   }
   .item:focus{outline:none}
   .item:focus-visible{
     outline:3px dashed var(--yellow);
     outline-offset:3px;
-    z-index:3;
+    z-index:7;
   }
   .item:focus-visible svg{transform:translateY(-2px);filter:brightness(1.18)}
   .item:focus-visible .tag{opacity:1}
   @media (hover:none){
-    .tag{opacity:1}
+    .scene:not(.off) .tag{opacity:1}
   }
+  .scene.reveal .tag{opacity:1;transition-delay:var(--d,0s)}
+  .off .item{pointer-events:none;cursor:default}
+
+  /* Elektrik kesik: karanlık oda */
+  .shade{
+    position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(circle at 15% 22%,
+      rgba(9,8,24,.30) 0 8%, rgba(9,8,24,.52) 8% 13%,
+      rgba(9,8,24,.68) 13% 19%, rgba(9,8,24,.80) 19%);
+    display:none;
+  }
+  .off .shade{display:block}
+  .flick .shade{animation:lightson .9s steps(1) forwards}
+  @keyframes lightson{
+    0%{opacity:1} 12%{opacity:.25} 22%{opacity:.95} 36%{opacity:.1}
+    48%{opacity:.75} 62%{opacity:.05} 74%{opacity:.4} 86%,100%{opacity:0}
+  }
+  .off .glow{visibility:hidden}
+  .off .scr{visibility:hidden}
+  .on .scr{animation:boot 1.2s steps(10) both}
+  @keyframes boot{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+
+  #fx{
+    position:absolute;inset:0;z-index:3;
+    width:100%;height:100%;
+    image-rendering:pixelated;
+    pointer-events:none;
+    display:none;
+  }
+  .hit{
+    position:absolute;z-index:4;
+    left:calc(var(--x) / 320 * 100%);
+    top:calc(var(--y) / 200 * 100%);
+    width:calc(var(--w) / 320 * 100%);
+    height:calc(var(--h) / 200 * 100%);
+    margin:0;padding:0;border:0;
+    background:transparent;
+    cursor:pointer;
+    display:none;
+    -webkit-tap-highlight-color:transparent;
+  }
+  #plug{
+    z-index:5;
+    width:max(44px, 8cqw);
+    height:max(44px, 8cqw);
+    transform:translate(-50%,-50%);
+    touch-action:none;
+    cursor:grab;
+  }
+  #plug.grab{cursor:grabbing}
+  .hit:focus{outline:none}
+  .hit:focus-visible{outline:3px dashed var(--yellow);outline-offset:-3px}
+  .js #fx,.js .hit{display:block}
+  .scene{-webkit-user-select:none;user-select:none}
+
+  /* Diyalog kutusu (RPG) */
+  .dialog{
+    position:relative;
+    margin-top:30px;
+    padding:18px 20px 16px;
+    min-height:calc(3 * 1.45em + 34px);
+    background:var(--navy);
+    border:4px solid var(--cream);
+    box-shadow:0 0 0 4px var(--ink), 8px 8px 0 4px var(--ink);
+    font-size:clamp(15px,2vw,18px);
+    line-height:1.45;
+    cursor:pointer;
+  }
+  .dname{
+    position:absolute;
+    left:14px;top:-14px;
+    padding:3px 8px 2px;
+    font-family:"Silkscreen", monospace;
+    font-size:12px;
+    letter-spacing:.12em;
+    color:var(--ink);
+    background:var(--yellow);
+    box-shadow:0 0 0 2px var(--ink);
+  }
+  .dtext{margin:0;color:var(--cream);min-height:1.45em}
+  .more{
+    display:inline-block;
+    width:.6em;height:.45em;margin-left:.4em;
+    background:var(--yellow);
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    animation:blink 1s steps(1) infinite;
+  }
+  .typing .more{visibility:hidden}
+  .controls{
+    display:flex;flex-wrap:wrap;gap:14px;justify-content:center;
+    margin-top:24px;
+  }
+  .controls[hidden]{display:none}
+  .btn{
+    font:inherit;
+    font-size:15px;
+    padding:8px 14px 7px;
+    color:var(--cream);
+    background:var(--wall);
+    border:0;
+    box-shadow:0 0 0 2px var(--cream), 4px 4px 0 2px var(--ink);
+    cursor:pointer;
+  }
+  .btn:hover{background:#3a3872}
+  .btn:active{transform:translate(2px,2px);box-shadow:0 0 0 2px var(--cream), 2px 2px 0 2px var(--ink)}
+  .btn:focus{outline:none}
+  .btn:focus-visible{outline:3px dashed var(--yellow);outline-offset:5px}
 
   /* ANİMASYONLAR */
   .star{animation:twinkle 3.2s steps(1) infinite}
@@ -180,7 +288,8 @@
   .cursor{animation:blink 1.1s steps(1) infinite}
   @keyframes blink{50%{opacity:0}}
   @media (prefers-reduced-motion:reduce){
-    .star,.glow,.cursor{animation:none}
+    .star,.glow,.cursor,.more,.on .scr{animation:none}
+    .flick .shade{animation:none;opacity:0}
     .item svg{transition:none}
   }
 
@@ -209,11 +318,11 @@
   <header>
     <p class="eyebrow">GECE ÇALIŞMA ODASI</p>
     <h1>Mehdi Uslu</h1>
-    <p class="sub">Fizik, kod ve notlar. Odadaki eşyaya bas, kapı açılsın.</p>
+    <p class="sub">Fizik, kod ve notlar. Odada elektrik yok: fişi Kuark'a tak, kapılar açılsın.</p>
   </header>
 
   <div class="frame">
-    <div class="scene" role="group" aria-label="Piksel-art gece çalışma odası: eşyalar bağlantıdır">
+    <div class="scene" id="scene" role="group" aria-label="Piksel-art gece çalışma odası: eşyalar bağlantıdır">
 
       <!-- ===== ARKA PLAN: duvar, pencere, zemin, masa, lamba (dekor) ===== -->
       <svg class="bg" viewBox="0 0 320 200" aria-hidden="true" focusable="false">
@@ -304,10 +413,20 @@
         <path class="y" d="M264 95h10v1h2v3h2v3h2v3h-22v-3h2v-3h2v-3h2z"/>
         <rect class="c" x="265" y="96" width="4" height="1"/>
         <rect class="c" x="262" y="99" width="2" height="1"/>
+
+        <!-- uzatma kablosu (priz) -->
+        <rect class="o" x="306" y="192" width="14" height="2"/>
+        <rect class="o" x="284" y="189" width="24" height="9"/>
+        <rect class="c" x="285" y="190" width="22" height="7"/>
+        <rect class="wl" x="285" y="195" width="22" height="2"/>
+        <rect class="o" x="298" y="191" width="4" height="4"/>
+        <rect class="r" x="303" y="191" width="3" height="3"/>
+        <rect class="o" x="291" y="185" width="6" height="6"/>
+        <rect class="c" x="292" y="186" width="4" height="4"/>
       </svg>
 
       <!-- ===== 2. KARA TAHTA → SymPhys ===== -->
-      <a class="item" style="--x:110;--y:16;--w:100;--h:72"
+      <a class="item" style="--x:110;--y:16;--w:100;--h:72;--d:0s" data-say="Kara tahta → SymPhys: tarayıcıda çalışan 3B fizik simülasyonu. Sarkaç oradan kaçtı."
          href="https://github.com/mehdiuslu/symphys-3d" target="_blank" rel="noopener"
          aria-label="SymPhys 3D fizik simülasyonu – GitHub (yeni sekmede açılır)">
         <svg viewBox="110 16 100 72" aria-hidden="true" focusable="false">
@@ -344,7 +463,7 @@
       </a>
 
       <!-- ===== 3. MONİTÖR → GitHub ===== -->
-      <a class="item" style="--x:18;--y:84;--w:68;--h:54"
+      <a class="item" style="--x:18;--y:84;--w:68;--h:54;--d:.15s" data-say="Monitör → GitHub. Mehdi’nin bütün kodları orada."
          href="https://github.com/mehdiuslu" target="_blank" rel="noopener"
          aria-label="GitHub profilim (yeni sekmede açılır)">
         <svg viewBox="18 84 68 54" aria-hidden="true" focusable="false">
@@ -352,12 +471,14 @@
           <rect class="c" x="21" y="87" width="62" height="42"/>
           <rect class="o" x="25" y="90" width="54" height="33"/>
           <rect class="n" x="26" y="91" width="52" height="31"/>
-          <path class="gl" d="M28 93h18v1H28zM31 96h26v1H31zM45 99h14v1H45zM34 102h20v1H34zM44 105h16v1H44zM31 108h22v1H31zM28 111h6v1h-6z"/>
-          <path class="y"  d="M31 99h12v1H31zM28 114h14v1H28z"/>
-          <path class="c"  d="M34 105h8v1h-8z"/>
-          <rect class="gl cursor" x="28" y="117" width="3" height="2"/>
-          <rect class="c" x="27" y="92" width="6" height="1" opacity=".18"/>
-          <rect class="gl" x="76" y="125" width="2" height="1"/>
+          <g class="scr">
+            <path class="gl" d="M28 93h18v1H28zM31 96h26v1H31zM45 99h14v1H45zM34 102h20v1H34zM44 105h16v1H44zM31 108h22v1H31zM28 111h6v1h-6z"/>
+            <path class="y"  d="M31 99h12v1H31zM28 114h14v1H28z"/>
+            <path class="c"  d="M34 105h8v1h-8z"/>
+            <rect class="gl cursor" x="28" y="117" width="3" height="2"/>
+            <rect class="c" x="27" y="92" width="6" height="1" opacity=".18"/>
+            <rect class="gl" x="76" y="125" width="2" height="1"/>
+          </g>
           <rect class="wl" x="23" y="125" width="10" height="1" opacity=".6"/>
           <!-- ayak -->
           <rect class="o" x="47" y="130" width="10" height="5"/>
@@ -369,7 +490,7 @@
       </a>
 
       <!-- ===== 4. DEFTER → Medium ===== -->
-      <a class="item" style="--x:94;--y:122;--w:56;--h:26"
+      <a class="item" style="--x:94;--y:122;--w:56;--h:26;--d:.3s" data-say="Defter → Medium. Fizik ve kod üzerine yazılar."
          href="https://medium.com/@mehdiphysics" target="_blank" rel="noopener"
          aria-label="Medium yazılarım (yeni sekmede açılır)">
         <svg viewBox="94 122 56 26" aria-hidden="true" focusable="false">
@@ -392,7 +513,7 @@
       </a>
 
       <!-- ===== 5. FOTOĞRAF + KİLİT → Stego ===== -->
-      <a class="item" style="--x:152;--y:98;--w:48;--h:40"
+      <a class="item" style="--x:152;--y:98;--w:48;--h:40;--d:.45s" data-say="Kilit → STEGO: resimlerin içine gizli mesaj saklayan proje. Şşş."
          href="https://github.com/mehdiuslu/ENCRYPT-TEXT" target="_blank" rel="noopener"
          aria-label="ENCRYPT-TEXT: resme metin gizleme (steganografi) projesi – GitHub (yeni sekmede açılır)">
         <svg viewBox="152 98 48 40" aria-hidden="true" focusable="false">
@@ -421,7 +542,7 @@
       </a>
 
       <!-- ===== 6. FOTOĞRAF MAKİNESİ → Instagram ===== -->
-      <a class="item" style="--x:204;--y:112;--w:40;--h:26"
+      <a class="item" style="--x:204;--y:112;--w:40;--h:26;--d:.6s" data-say="Fotoğraf makinesi → Instagram. Gülümse!"
          href="https://www.instagram.com/mehdiuslw/" target="_blank" rel="noopener"
          aria-label="Instagram hesabım (yeni sekmede açılır)">
         <svg viewBox="204 112 40 26" aria-hidden="true" focusable="false">
@@ -447,7 +568,7 @@
       </a>
 
       <!-- ===== 8. KİMLİK KARTI → LinkedIn ===== -->
-      <a class="item" style="--x:236;--y:20;--w:56;--h:70"
+      <a class="item" style="--x:236;--y:20;--w:56;--h:70;--d:.75s" data-say="Kimlik kartı → LinkedIn. Odanın resmî köşesi."
          href="https://www.linkedin.com/in/mehdi-uslu-0988b8347/" target="_blank" rel="noopener"
          aria-label="LinkedIn profilim (yeni sekmede açılır)">
         <svg viewBox="236 20 56 70" aria-hidden="true" focusable="false"><g transform="translate(0 8)">
@@ -477,7 +598,23 @@
         <span class="tag" aria-hidden="true">LINKEDIN</span>
       </a>
 
+      <!-- karanlık, efekt katmanı, robot ve fiş -->
+      <div class="shade" aria-hidden="true"></div>
+      <canvas id="fx" width="320" height="200" aria-hidden="true"></canvas>
+      <button class="hit" id="bot" type="button" style="--x:130;--y:128;--w:56;--h:71" aria-label="Kuark ile konuş"></button>
+      <button class="hit" id="plug" type="button" aria-label="Fişi Kuark'a tak, odanın ışıklarını aç"></button>
     </div>
+  </div>
+
+  <section class="dialog" id="dialog" aria-label="Kuark ile konuşma">
+    <span class="dname" id="dname">???</span>
+    <p class="dtext"><span id="dtext" aria-hidden="true">Odadaki her eşya bir kapı.</span><span class="more" aria-hidden="true"></span></p>
+    <p class="sr-only" id="dlive" aria-live="polite"></p>
+  </section>
+
+  <div class="controls" id="controls" hidden>
+    <button class="btn" id="auto" type="button">⚡ Fişi benim yerime tak</button>
+    <button class="btn" id="mute" type="button" aria-pressed="false">♪ Ses: Açık</button>
   </div>
 
   <p class="foot">Odadaki her eşya bir kapı.</p>
@@ -494,12 +631,541 @@
   </nav>
 </main>
 <script>
-  // Dokunmatik + hover'lı hibrit cihazlarda ilk dokunuşta etiketleri göster.
-  window.addEventListener('touchstart', function once(){
-    document.documentElement.classList.add('touch');
-    window.removeEventListener('touchstart', once);
-  }, {passive:true});
+(() => {
+  'use strict';
+  const scene = document.getElementById('scene');
+  const cv = document.getElementById('fx');
+  const ctx = cv.getContext('2d');
+  if (!ctx) return;
+  scene.classList.add('js', 'off');
+
+  const items = [...scene.querySelectorAll('.item')];
+  const plugBtn = document.getElementById('plug');
+  const botBtn = document.getElementById('bot');
+  const dialog = document.getElementById('dialog');
+  const nameEl = document.getElementById('dname');
+  const textEl = document.getElementById('dtext');
+  const liveEl = document.getElementById('dlive');
+  const controls = document.getElementById('controls');
+  const autoBtn = document.getElementById('auto');
+  const muteBtn = document.getElementById('mute');
+  controls.hidden = false;
+  items.forEach(a => a.tabIndex = -1);
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const C = {
+    ink:'#0e0d22', navy:'#1b1a3a', wall:'#2d2b5a', cream:'#f3e6c4', yellow:'#f2c14e',
+    woodL:'#b77b4f', wood:'#8a5a3b', woodD:'#5e3b27', greenD:'#2f6b4f', greenL:'#7fd18b',
+    red:'#d9473f', blue:'#4a7fb5'
+  };
+  const W = 320, H = 200;
+
+  /* ---------- Robot & priz geometrisi (sahne birimi) ---------- */
+  const RX = 134, RY = 139;                 // robot sol-üst (gövde kutusu)
+  const ATT = {x:12, y:3};                  // fiş görselinde kablonun bağlandığı nokta
+  const PORT_O = {x:RX + 41, y:RY + 41};    // fiş takılıyken fişin orijini
+  const PORT_C = {x:RX + 42, y:RY + 44};    // priz ağzı
+  const ANCHOR = {x:294, y:188};            // uzatma kablosundaki uç
+
+  /* ---------- Halat (Verlet) ---------- */
+  const N = 28, SEG = 5, G = 0.2, DAMP = 0.985, ITER = 14;
+  const FLOOR = 198, END_FLOOR = 195;
+  const pts = [];
+  for (let i = 0; i < N; i++) {
+    const x = i === 0 ? ANCHOR.x : ANCHOR.x - 4 - i * SEG * 0.6;
+    const y = i === 0 ? ANCHOR.y : (i === N - 1 ? END_FLOOR : FLOOR);
+    pts.push({x, y, px:x, py:y});
+  }
+  const end = pts[N - 1];
+
+  let held = false, plugged = false, tween = null, target = {x:end.x, y:end.y};
+  let on = false, charge = 0, touched = false, nearPort = false;
+  let jy = 0, jv = 0, waveUntil = 0, happy = false, lookLock = false;
+  let look = {x:RX + 24, y:RY + 40};
+  let pulses = [], sparks = [], zs = [], lastZ = 0, lastPulse = 0;
+  let typing = false;
+
+  const maxReach = (N - 1) * SEG * 0.97;
+  function clampT(x, y) {
+    let dx = x - ANCHOR.x, dy = y - ANCHOR.y;
+    const d = Math.hypot(dx, dy);
+    if (d > maxReach) { dx *= maxReach / d; dy *= maxReach / d; }
+    return {x:Math.max(14, Math.min(W - 2, ANCHOR.x + dx)), y:Math.max(6, Math.min(END_FLOOR, ANCHOR.y + dy))};
+  }
+  const pluggedEnd = () => ({x:PORT_O.x + ATT.x, y:PORT_O.y + ATT.y + Math.round(jy)});
+
+  function step(now) {
+    for (let i = 1; i < N; i++) {
+      const p = pts[i];
+      if (i === N - 1 && (held || plugged || tween)) continue;
+      const vx = (p.x - p.px) * DAMP, vy = (p.y - p.py) * DAMP;
+      p.px = p.x; p.py = p.y;
+      p.x += vx; p.y += vy + G;
+      const f = i === N - 1 ? END_FLOOR : FLOOR;
+      if (p.y > f) { p.y = f; p.px = p.x - vx * 0.55; }
+    }
+    if (tween) {
+      const k = Math.min(1, (now - tween.t0) / tween.dur);
+      const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      const to = pluggedEnd();
+      end.px = end.x; end.py = end.y;
+      end.x = tween.fx + (to.x - tween.fx) * e;
+      end.y = tween.fy + (to.y - tween.fy) * e - Math.sin(Math.PI * k) * 30;
+      if (k >= 1) { tween = null; plugIn(); }
+    } else if (plugged) {
+      const p = pluggedEnd();
+      end.x = end.px = p.x; end.y = end.py = p.y;
+    } else if (held) {
+      end.px = end.x; end.py = end.y;
+      end.x = target.x; end.y = target.y;
+    }
+    const endPinned = held || plugged || !!tween;
+    for (let k = 0; k < ITER; k++) {
+      for (let i = 0; i < N - 1; i++) {
+        const a = pts[i], b = pts[i + 1];
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const d = Math.hypot(dx, dy) || 1e-4;
+        if (d <= SEG) continue;                      // halat: sadece gerilmeye direnir
+        const diff = (d - SEG) / d;
+        const aPin = i === 0, bPin = i + 1 === N - 1 && endPinned;
+        if (aPin && bPin) continue;
+        if (aPin) { b.x -= dx * diff; b.y -= dy * diff; }
+        else if (bPin) { a.x += dx * diff; a.y += dy * diff; }
+        else { a.x += dx * diff * .5; a.y += dy * diff * .5; b.x -= dx * diff * .5; b.y -= dy * diff * .5; }
+      }
+      for (let i = 1; i < N; i++) {
+        const p = pts[i];
+        if (i === N - 1 && endPinned) continue;
+        const f = i === N - 1 ? END_FLOOR : FLOOR;
+        if (p.y > f) p.y = f;
+        if (p.x < 1) p.x = 1; if (p.x > W - 1) p.x = W - 1;
+      }
+    }
+  }
+
+  /* ---------- Ses (Web Audio, küçük çiptün sesler) ---------- */
+  let AC = null, sound = true;
+  try { sound = localStorage.getItem('kuark-ses') !== '0'; } catch (e) {}
+  function audio() {
+    if (!sound) return;
+    try {
+      AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+      if (AC.state === 'suspended') AC.resume();
+    } catch (e) { AC = null; }
+  }
+  function tone(f, d = .08, type = 'square', v = .045, slide = 1, delay = 0) {
+    if (!sound || !AC) return;
+    const t = AC.currentTime + delay;
+    const o = AC.createOscillator(), g = AC.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(f, t);
+    if (slide !== 1) o.frequency.exponentialRampToValueAtTime(f * slide, t + d);
+    g.gain.setValueAtTime(v, t);
+    g.gain.exponentialRampToValueAtTime(.0001, t + d);
+    o.connect(g); g.connect(AC.destination);
+    o.start(t); o.stop(t + d + .03);
+  }
+  function setMute() {
+    muteBtn.textContent = sound ? '♪ Ses: Açık' : '♪ Ses: Kapalı';
+    muteBtn.setAttribute('aria-pressed', String(!sound));
+  }
+  setMute();
+  muteBtn.addEventListener('click', () => {
+    sound = !sound;
+    try { localStorage.setItem('kuark-ses', sound ? '1' : '0'); } catch (e) {}
+    setMute();
+    if (sound) { audio(); tone(880, .06); }
+  });
+
+  /* ---------- Diyalog (daktilo efekti) ---------- */
+  let typeTimer = null, sayId = 0;
+  function say(text, name = 'KUARK') {
+    sayId++;
+    clearInterval(typeTimer);
+    nameEl.textContent = name;
+    liveEl.textContent = text;
+    if (reduce) { textEl.textContent = text; typing = false; dialog.classList.remove('typing'); return sayId; }
+    let i = 0;
+    typing = true;
+    dialog.classList.add('typing');
+    textEl.textContent = '';
+    typeTimer = setInterval(() => {
+      i++;
+      textEl.textContent = text.slice(0, i);
+      if (i % 3 === 0 && text[i] !== ' ') tone(520 + Math.random() * 260, .025, 'square', .018);
+      if (i >= text.length) { clearInterval(typeTimer); typing = false; dialog.classList.remove('typing'); }
+    }, 22);
+    return sayId;
+  }
+  dialog.addEventListener('click', () => {
+    if (typing) { clearInterval(typeTimer); textEl.textContent = liveEl.textContent; typing = false; dialog.classList.remove('typing'); }
+  });
+
+  const jokes = [
+    "Bir nötron kafede hesabı sorar. Garson: “Sizden ücret yok, sizde yük yok.”",
+    "Schrödinger'in kedisini gördün mü? Ben hem gördüm hem görmedim.",
+    "Heisenberg'i trafikte durdurmuşlar: “Ne kadar hızlı gittiğinizi biliyor musunuz?” — “Hayır, ama tam olarak nerede olduğumu biliyorum.”",
+    "Sarkaç sallanıyorsa suçlu ben değilim. Yerçekimi.",
+    "Bana çok dokunursan entropim artar. Geri dönüşü yok, bilirsin.",
+    "F = ma. Ben de az önce epey ivmelendim.",
+    "İpucu: monitör GitHub'a, defter Medium'a, kimlik kartı LinkedIn'e açılıyor."
+  ];
+  let jokeI = 0;
+
+  /* ---------- Etkileşim: fiş ---------- */
+  function toScene(e) {
+    const r = scene.getBoundingClientRect();
+    return {x:(e.clientX - r.left) / r.width * W, y:(e.clientY - r.top) / r.height * H};
+  }
+  const plugOrigin = () => plugged ? {x:PORT_O.x, y:PORT_O.y + Math.round(jy)} : {x:Math.round(end.x - ATT.x), y:Math.round(end.y - ATT.y)};
+  const portDist = (o) => Math.hypot(o.x - PORT_C.x, o.y + 3 - PORT_C.y);
+
+  function updatePlugLabel() {
+    plugBtn.setAttribute('aria-label', plugged ? 'Fişi Kuark’tan çek' : 'Fişi Kuark’a tak, odanın ışıklarını aç');
+  }
+
+  function plugIn() {
+    plugged = true; held = false; tween = null; nearPort = false; touched = true;
+    updatePlugLabel();
+    tone(140, .05, 'square', .06); tone(1400, .04, 'square', .03, 1, .03);
+    for (let i = 0; i < 14; i++) sparks.push({
+      x:PORT_C.x + 1, y:PORT_C.y, vx:(Math.random() - .3) * 2.2, vy:-Math.random() * 2.4 - .3,
+      life:22 + Math.random() * 12, c:Math.random() < .5 ? C.yellow : C.cream
+    });
+    if (!on) say(charge > 0.05 ? 'Hah, geri geldi! Elektronlar akmaya devam ediyor…' : 'Bzzt! Elektronlar akıyor… şarj oluyorum.');
+    else say('Ooh, ekstra enerji. Teşekkürler!');
+  }
+  function unplug() {
+    plugged = false;
+    updatePlugLabel();
+    tone(330, .09, 'square', .05, .5);
+    if (!on) say('Hey! Daha dolmamıştı (%' + Math.round(charge / 5 * 100) + '). Tekrar tak lütfen.');
+    else say('Fiş çıktı ama merak etme, bataryam dolu.');
+  }
+  function autoPlug() {
+    if (plugged || tween) return;
+    touched = true; held = false;
+    tween = {fx:end.x, fy:end.y, t0:performance.now(), dur:reduce ? 1 : 900};
+  }
+
+  let drag = null;
+  plugBtn.addEventListener('pointerdown', (e) => {
+    if (e.button > 0) return;
+    e.preventDefault();
+    audio(); touched = true; tween = null;
+    try { plugBtn.setPointerCapture(e.pointerId); } catch (err) {}
+    const p = toScene(e);
+    drag = {id:e.pointerId, sx:p.x, sy:p.y, ox:end.x - p.x, oy:end.y - p.y, moved:false, vx:0, vy:0, lt:performance.now(), lx:p.x, ly:p.y};
+    if (!plugged) { held = true; target = {x:end.x, y:end.y}; }
+    plugBtn.classList.add('grab');
+  });
+  plugBtn.addEventListener('pointermove', (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const p = toScene(e), now = performance.now();
+    const dist = Math.hypot(p.x - drag.sx, p.y - drag.sy);
+    if (dist > 3) drag.moved = true;
+    const dt = Math.max(1, now - drag.lt);
+    drag.vx = drag.vx * .5 + (p.x - drag.lx) / dt * 16.7 * .5;
+    drag.vy = drag.vy * .5 + (p.y - drag.ly) / dt * 16.7 * .5;
+    drag.lt = now; drag.lx = p.x; drag.ly = p.y;
+    if (plugged) {
+      if (dist < 7) return;
+      unplug(); held = true;
+    }
+    target = clampT(p.x + drag.ox, p.y + drag.oy);
+    const d = portDist({x:target.x - ATT.x, y:target.y - ATT.y});
+    nearPort = d < 18;
+    if (d < 7) { finishDrag(); plugIn(); }
+  });
+  function finishDrag() {
+    if (!drag) return;
+    try { plugBtn.releasePointerCapture(drag.id); } catch (err) {}
+    drag = null;
+    plugBtn.classList.remove('grab');
+  }
+  function release(e) {
+    if (!drag || (e && e.pointerId !== drag.id)) return;
+    const d = drag;
+    finishDrag();
+    nearPort = false;
+    if (held) {
+      held = false;
+      if (portDist({x:end.x - ATT.x, y:end.y - ATT.y}) < 13) { plugIn(); return; }
+      const s = Math.hypot(d.vx, d.vy), k = s > 6 ? 6 / s : 1;
+      end.px = end.x - d.vx * k; end.py = end.y - d.vy * k;
+      if (!d.moved) {
+        end.py = end.y + 3;                          // küçük zıplama
+        say('Fişe dokunmak yetmez, sürüklemen lazım! Kuark’ın sağ yanındaki prize götür.', on ? 'KUARK' : '???');
+      }
+    } else if (plugged && !d.moved) {
+      say(on ? 'Fiş takılı. Çekmek istersen sürükle.' : 'Şarj oluyorum… biraz sabır.');
+    }
+  }
+  plugBtn.addEventListener('pointerup', release);
+  plugBtn.addEventListener('pointercancel', release);
+  plugBtn.addEventListener('click', (e) => {
+    if (e.detail !== 0) return;                      // yalnızca klavye (Enter/Space)
+    audio();
+    if (plugged) { unplug(); end.px = end.x - 2; end.py = end.y + 2; }
+    else autoPlug();
+  });
+  autoBtn.addEventListener('click', () => { audio(); autoPlug(); });
+
+  /* ---------- Etkileşim: robot & eşyalar ---------- */
+  botBtn.addEventListener('click', () => {
+    audio();
+    jv = -1.9;
+    tone(660, .05); tone(990, .06, 'square', .04, 1, .06);
+    if (!on) say(charge > 0 ? 'Mmh… biraz daha enerji lazım.' : 'Zzz… zzz… (Önce şarj etmen lazım. Fişi tak!)', '???');
+    else { say(jokes[jokeI++ % jokes.length]); waveUntil = performance.now() + 900; }
+  });
+  items.forEach((a) => {
+    const enter = () => {
+      if (!on) return;
+      happy = true; lookLock = true;
+      const r = a.getBoundingClientRect(), s = scene.getBoundingClientRect();
+      look = {x:(r.left + r.width / 2 - s.left) / s.width * W, y:(r.top + r.height / 2 - s.top) / s.height * H};
+      if (liveEl.textContent !== a.dataset.say) say(a.dataset.say);
+    };
+    const leave = () => { happy = false; lookLock = false; };
+    a.addEventListener('mouseenter', enter);
+    a.addEventListener('focus', enter);
+    a.addEventListener('mouseleave', leave);
+    a.addEventListener('blur', leave);
+  });
+  window.addEventListener('pointermove', (e) => { if (!lookLock) look = toScene(e); }, {passive:true});
+
+  /* ---------- Elektrik geldi ---------- */
+  function powerOn(now) {
+    on = true; charge = 5;
+    jv = -2.6; waveUntil = now + 2200;
+    [523, 659, 784, 1047].forEach((f, i) => tone(f, .12, 'square', .045, 1, i * .09));
+    const id = say('Şarj tamam! Merhaba, ben Kuark: Mehdi’nin gece çalışma odasının bekçisi.');
+    const t1 = reduce ? 0 : 1000, t2 = reduce ? 0 : 1900;
+    setTimeout(() => {
+      scene.classList.add('flick');
+      if (!reduce) [0, .14, .3, .5].forEach(d => tone(90 + Math.random() * 40, .05, 'sawtooth', .03, 1, d));
+    }, t1);
+    setTimeout(() => {
+      scene.classList.remove('off', 'flick');
+      scene.classList.add('on', 'reveal');
+      items.forEach(a => a.removeAttribute('tabindex'));
+      tone(1568, .08, 'triangle', .04);
+      autoBtn.hidden = true;
+      setTimeout(() => scene.classList.remove('reveal'), reduce ? 4000 : 3600);
+    }, t2);
+    setTimeout(() => {
+      if (sayId === id) say('Işıkları açtım. Odadaki her eşya artık bir kapı: birine dokun, seni oraya götüreyim.');
+    }, t2 + 1500);
+  }
+
+  /* ---------- Çizim yardımcıları ---------- */
+  const RC = document.createElement('canvas');
+  RC.width = 64; RC.height = 84;
+  const rg = RC.getContext('2d');
+  const OX = 8, OY = 14;
+
+  function disc(g, cx, cy, r, col, dx, dy) {
+    g.fillStyle = col;
+    for (let y = -r; y < r; y++) {
+      const w = Math.round(Math.sqrt(r * r - (y + .5) * (y + .5)));
+      g.fillRect(cx - w + dx, cy + y + dy, w * 2, 1);
+    }
+  }
+
+  function drawRobot(now) {
+    rg.clearRect(0, 0, RC.width, RC.height);
+    const awake = on;
+    const hy = awake ? (Math.floor(now / 520) % 2 ? 0 : -1) : (Math.floor(now / 1300) % 2);
+    const R = (x, y, w, h, c) => { rg.fillStyle = c; rg.fillRect(x + OX, y + OY, w, h); };
+    const Hd = (x, y, w, h, c) => { rg.fillStyle = c; rg.fillRect(x + OX, y + OY + hy, w, h); };
+    const waving = awake && (happy || now < waveUntil);
+    const wf = Math.floor(now / 180) % 2;
+
+    // paletler
+    R(4, 50, 40, 10, C.ink); R(5, 51, 38, 8, C.wall); R(5, 58, 38, 1, C.navy);
+    for (let x = 6; x < 43; x += 3) R(x, 51, 1, 1, C.ink);
+    for (const wx of [8, 16, 24, 32]) { R(wx, 53, 6, 4, C.ink); R(wx + 1, 54, 4, 2, C.cream); R(wx + 2, 54, 2, 2, C.woodD); }
+    // gövde
+    R(6, 25, 36, 26, C.ink); R(7, 26, 34, 24, C.yellow); R(34, 26, 7, 24, C.woodL);
+    R(8, 27, 2, 9, C.cream); R(7, 48, 27, 2, C.woodL);
+    R(9, 46, 1, 1, C.woodD); R(32, 46, 1, 1, C.woodD); R(9, 27, 1, 1, C.woodD);
+    // panel
+    R(12, 29, 20, 14, C.ink); R(13, 30, 18, 12, C.navy);
+    for (let i = 0; i < 5; i++) R(15 + i * 3, 32, 2, 8, C.wall);
+    R(13, 44, 5, 4, C.ink); R(14, 45, 3, 2, C.woodD);
+    R(21, 45, 10, 1, C.woodD); R(21, 47, 10, 1, C.woodD);
+    // priz
+    R(39, 40, 5, 9, C.ink); R(40, 41, 3, 7, C.navy); R(41, 42, 1, 1, C.ink); R(41, 45, 1, 1, C.ink);
+    // kollar
+    R(1, 31, 6, 4, C.ink); R(2, 32, 5, 2, C.wall);
+    R(-3, 33, 5, 6, C.ink); R(-2, 34, 3, 4, C.woodL);
+    if (waving) {
+      const s = wf ? 2 : 0;
+      R(41, 28, 5, 5, C.ink); R(41, 29, 4, 3, C.wall);
+      R(43, 19, 5, 11, C.ink); R(44, 20, 3, 9, C.wall);
+      R(41 + s, 13, 7, 7, C.ink); R(42 + s, 14, 5, 5, C.woodL);
+    } else {
+      R(41, 31, 6, 4, C.ink); R(41, 32, 5, 2, C.wall);
+      R(45, 33, 5, 6, C.ink); R(46, 34, 3, 4, C.woodL);
+    }
+    // boyun
+    R(20, 20, 8, 6, C.ink); R(21, 20, 6, 5, C.wall);
+    // kafa: cam kubbe
+    disc(rg, 24 + OX, 9 + OY, 12, C.ink, 0, hy);
+    disc(rg, 24 + OX, 9 + OY, 11, awake ? C.wall : C.navy, 0, hy);
+    Hd(10, 17, 28, 4, C.ink); Hd(11, 18, 26, 1, C.yellow); Hd(11, 19, 26, 1, C.woodL);
+    Hd(15, 0, 3, 1, C.cream); Hd(13, 1, 2, 1, C.cream); Hd(12, 2, 1, 2, C.cream);
+    // anten
+    Hd(23, -6, 2, 4, C.ink); Hd(22, -10, 4, 4, C.ink); Hd(23, -9, 2, 2, C.woodD);
+
+    // karanlıkta robot da loş
+    if (!on) {
+      rg.globalCompositeOperation = 'source-atop';
+      rg.fillStyle = 'rgba(9,8,24,.45)';
+      rg.fillRect(0, 0, RC.width, RC.height);
+      rg.globalCompositeOperation = 'source-over';
+    }
+
+    // ---- ışık katmanı (karartılmaz) ----
+    const full = Math.floor(charge);
+    const chargingNow = plugged && !on;
+    if (chargingNow && Math.floor(now / 250) % 2) { R(12, 29, 20, 1, C.yellow); R(12, 42, 20, 1, C.yellow); R(12, 29, 1, 14, C.yellow); R(31, 29, 1, 14, C.yellow); }
+    for (let i = 0; i < 5; i++) {
+      if (i < full) R(15 + i * 3, 32, 2, 8, full === 1 && !on ? C.red : C.greenL);
+      else if (i === full && chargingNow && Math.floor(now / 200) % 2) R(15 + i * 3, 32, 2, 8, C.greenD);
+    }
+    if (nearPort) { R(39, 40, 5, 1, C.yellow); R(39, 48, 5, 1, C.yellow); R(39, 40, 1, 9, C.yellow); R(43, 40, 1, 9, C.yellow); }
+    if (on) {
+      R(14, 45, 3, 2, C.red);
+      Hd(23, -9, 2, 2, C.red);
+      const a = now / 170;
+      for (const ph of [0, Math.PI]) {
+        const ex = Math.round(24 + Math.cos(a + ph) * 5) - 1, ey = Math.round(-8 + Math.sin(a + ph) * 2);
+        Hd(ex, ey, 1, 1, C.yellow);
+      }
+      // gözler
+      const hx = RX + 24, hyG = RY + 9 + jy;
+      const dx = look.x - hx, dy = look.y - hyG;
+      const lx = dx > 12 ? 1 : dx < -12 ? -1 : 0, ly = dy > 14 ? 1 : dy < -14 ? -1 : 0;
+      const blink = now % 4200 < 130;
+      for (const ex of [17, 27]) {
+        if (happy) { Hd(ex, 9, 1, 1, C.greenL); Hd(ex + 1, 8, 2, 1, C.greenL); Hd(ex + 3, 9, 1, 1, C.greenL); }
+        else if (blink) Hd(ex, 9, 4, 1, C.greenL);
+        else { Hd(ex, 7, 4, 4, C.greenL); Hd(ex + 1 + lx, 8 + ly, 2, 2, C.ink); }
+      }
+      if (happy || now < waveUntil) { Hd(21, 13, 1, 1, C.greenL); Hd(22, 14, 4, 1, C.greenL); Hd(26, 13, 1, 1, C.greenL); }
+      else Hd(22, 14, 4, 1, C.greenD);
+    } else {
+      Hd(17, 10, 4, 1, C.wall); Hd(27, 10, 4, 1, C.wall);
+    }
+    ctx.drawImage(RC, RX - OX, RY - OY + Math.round(jy));
+  }
+
+  function bres(x0, y0, x1, y1, plot) {
+    x0 = Math.round(x0); y0 = Math.round(y0); x1 = Math.round(x1); y1 = Math.round(y1);
+    const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+    let err = dx + dy;
+    for (let guard = 0; guard < 400; guard++) {
+      plot(x0, y0);
+      if (x0 === x1 && y0 === y1) break;
+      const e2 = 2 * err;
+      if (e2 >= dy) { err += dy; x0 += sx; }
+      if (e2 <= dx) { err += dx; y0 += sy; }
+    }
+  }
+  function drawRope() {
+    ctx.fillStyle = C.ink;
+    for (let i = 0; i < N - 1; i++) bres(pts[i].x, pts[i].y, pts[i + 1].x, pts[i + 1].y, (x, y) => ctx.fillRect(x - 1, y - 1, 4, 4));
+    ctx.fillStyle = C.red;
+    for (let i = 0; i < N - 1; i++) bres(pts[i].x, pts[i].y, pts[i + 1].x, pts[i + 1].y, (x, y) => ctx.fillRect(x, y, 2, 2));
+  }
+  function drawPlug(o) {
+    const P = (x, y, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(o.x + x, o.y + y, w, h); };
+    P(3, -1, 9, 8, C.ink); P(4, 0, 7, 6, C.cream); P(4, 4, 7, 2, C.woodL);
+    P(6, 1, 1, 3, C.woodL); P(8, 1, 1, 3, C.woodL);
+    P(11, 1, 2, 4, C.ink);
+    P(0, 1, 4, 1, C.cream); P(0, 4, 4, 1, C.cream);
+  }
+  function glyphZ(x, y, big) {
+    const s = big ? 4 : 3;
+    ctx.fillRect(x, y, s, 1); ctx.fillRect(x + s - 2, y + 1, 1, 1);
+    if (big) ctx.fillRect(x + 1, y + 2, 1, 1);
+    ctx.fillRect(x, y + s - 1, s, 1);
+  }
+
+  /* ---------- Ana döngü ---------- */
+  let last = performance.now(), acc = 0;
+  function frame(now) {
+    const dt = Math.min(100, now - last); last = now;
+    acc += dt;
+    while (acc >= 16.67) {
+      step(now);
+      // robot zıplaması
+      jv += .25; jy += jv; if (jy > 0) { jy = 0; jv = 0; }
+      for (const s of sparks) { s.x += s.vx; s.y += s.vy; s.vy += .15; s.life--; }
+      sparks = sparks.filter(s => s.life > 0);
+      for (const z of zs) { z.y -= .22; z.x += Math.sin(z.t / 14) * .25; z.t++; }
+      zs = zs.filter(z => z.t < 110);
+      for (const p of pulses) p.t += .03;
+      pulses = pulses.filter(p => p.t < 1);
+      acc -= 16.67;
+    }
+
+    // şarj
+    if (plugged && !on) {
+      const before = Math.floor(charge);
+      charge = Math.min(5, charge + dt / 420);
+      const after = Math.floor(charge);
+      if (after > before) tone(330 + after * 110, .07, 'square', .04);
+      if (now - lastPulse > 220) { pulses.push({t:0}); lastPulse = now; }
+      if (charge >= 5) powerOn(now);
+    }
+    if (!on && !plugged && !reduce && now - lastZ > 1500) { zs.push({x:RX + 34, y:RY - 8, t:0, big:zs.length % 2 === 0}); lastZ = now; }
+
+    ctx.clearRect(0, 0, W, H);
+    drawRobot(now);
+    drawRope();
+    const o = plugOrigin();
+    drawPlug(o);
+
+    ctx.fillStyle = C.cream;
+    for (const p of pulses) {
+      const f = p.t * (N - 1), i = Math.floor(f), k = f - i;
+      const a = pts[i], b = pts[Math.min(N - 1, i + 1)];
+      ctx.fillRect(Math.round(a.x + (b.x - a.x) * k), Math.round(a.y + (b.y - a.y) * k), 2, 2);
+    }
+    for (const s of sparks) { ctx.fillStyle = s.c; ctx.fillRect(Math.round(s.x), Math.round(s.y), 1, 1); }
+    ctx.fillStyle = C.cream;
+    for (const z of zs) { ctx.globalAlpha = Math.max(0, 1 - z.t / 110); glyphZ(Math.round(z.x), Math.round(z.y), z.big); }
+    ctx.globalAlpha = 1;
+
+    // ipucu oku: fişe henüz dokunulmadıysa
+    if (!touched && !plugged) {
+      const b = reduce ? 0 : Math.floor(now / 320) % 2 * 2;
+      const ax = o.x + 4, ay = o.y - 14 + b;
+      ctx.fillStyle = C.ink; ctx.fillRect(ax + 1, ay - 1, 3, 5); ctx.fillRect(ax - 1, ay + 3, 7, 2); ctx.fillRect(ax, ay + 5, 5, 1); ctx.fillRect(ax + 1, ay + 6, 3, 1);
+      ctx.fillStyle = C.yellow; ctx.fillRect(ax + 2, ay, 1, 4); ctx.fillRect(ax, ay + 4, 5, 1); ctx.fillRect(ax + 1, ay + 5, 3, 1); ctx.fillRect(ax + 2, ay + 6, 1, 1);
+    }
+    // konuşma balonu
+    if (typing) {
+      const bx = RX + 38, by = RY - 16 + Math.round(jy);
+      ctx.fillStyle = C.ink; ctx.fillRect(bx, by, 13, 8); ctx.fillRect(bx + 1, by + 8, 3, 2);
+      ctx.fillStyle = C.cream; ctx.fillRect(bx + 1, by + 1, 11, 6); ctx.fillRect(bx + 2, by + 7, 1, 1);
+      ctx.fillStyle = C.ink;
+      const n = reduce ? 3 : 1 + Math.floor(now / 200) % 3;
+      for (let i = 0; i < n; i++) ctx.fillRect(bx + 3 + i * 3, by + 4, 1, 1);
+    }
+
+    // fiş butonunu fişin üstünde tut
+    plugBtn.style.left = ((o.x + 6) / W * 100) + '%';
+    plugBtn.style.top = ((o.y + 3) / H * 100) + '%';
+    requestAnimationFrame(frame);
+  }
+
+  say('Zzz… zzz… (Kuark’ın şarjı bitmiş. Yerdeki kırmızı kablonun fişini tut, robotun sağ yanındaki prize sürükle.)', '???');
+  requestAnimationFrame(frame);
+})();
 </script>
-<style>.touch .tag{opacity:1}</style>
 </body>
 </html>
