@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mehdi Uslu</title>
+<meta name="description" content="Mehdi Uslu — fizik, kod ve notlar. Piksel-art bir gece çalışma odası: her eşya GitHub, Medium, Instagram ve LinkedIn'e açılan bir kapı.">
+<meta name="theme-color" content="#1b1a3a">
+<meta property="og:title" content="Mehdi Uslu">
+<meta property="og:description" content="Fizik, kod ve notlar. Odadaki eşyaya bas, kapı açılsın.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%231b1a3a'/%3E%3Crect x='3' y='1' width='2' height='1' fill='%23f2c14e'/%3E%3Crect x='2' y='2' width='4' height='2' fill='%23f2c14e'/%3E%3Crect x='3' y='4' width='2' height='1' fill='%23f3e6c4'/%3E%3Crect x='1' y='6' width='6' height='1' fill='%238a5a3b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&family=Silkscreen&display=swap" rel="stylesheet">
+<style>
+  /* Palet: 12 renk */
+  :root{
+    --ink:#0e0d22;   /* kontur / en koyu */
+    --navy:#1b1a3a;  /* gece */
+    --wall:#2d2b5a;  /* duvar */
+    --cream:#f3e6c4; /* kağıt, çerçeve, tebeşir */
+    --yellow:#f2c14e;/* ışık, yıldız */
+    --wood-l:#b77b4f;
+    --wood:#8a5a3b;
+    --wood-d:#5e3b27;
+    --green-d:#2f6b4f;
+    --green-l:#7fd18b;
+    --red:#d9473f;
+    --blue:#4a7fb5;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    min-height:100vh;
+    color:var(--cream);
+    background-color:var(--ink);
+    background-image:radial-gradient(ellipse 120% 90% at 50% 0%, var(--navy) 0%, #15142e 45%, var(--ink) 100%);
+    background-attachment:fixed;
+    font-family:"Pixelify Sans", ui-monospace, monospace;
+    overflow-x:hidden;
+  }
+  main{
+    max-width:1000px;
+    margin:0 auto;
+    padding:clamp(28px,6vw,64px) 16px 48px;
+  }
+
+  /* ÜST KISIM */
+  header{text-align:center;margin-bottom:clamp(24px,4vw,40px)}
+  .eyebrow{
+    margin:0 0 14px;
+    font-family:"Silkscreen", monospace;
+    font-size:clamp(11px,1.6vw,13px);
+    letter-spacing:.32em;
+    color:var(--yellow);
+  }
+  h1{
+    margin:0;
+    font-weight:700;
+    font-size:clamp(42px,9vw,88px);
+    line-height:1;
+    letter-spacing:.02em;
+    color:var(--cream);
+    text-shadow:4px 4px 0 var(--ink), 4px 4px 0 var(--ink);
+  }
+  .sub{
+    margin:16px auto 0;
+    max-width:34em;
+    font-size:clamp(16px,2.2vw,20px);
+    line-height:1.4;
+    color:#cfc4a6;
+  }
+
+  /* SAHNE */
+  .frame{
+    border:6px solid var(--cream);
+    box-shadow:
+      0 0 0 4px var(--ink),
+      10px 10px 0 4px var(--ink);
+    background:var(--ink);
+  }
+  .scene{
+    position:relative;
+    width:100%;
+    aspect-ratio:320 / 200;
+    container-type:inline-size;
+    overflow:hidden;
+    image-rendering:pixelated;
+  }
+  .scene svg{
+    display:block;
+    width:100%;
+    height:100%;
+    shape-rendering:crispEdges;
+    overflow:visible;
+  }
+  .bg{position:absolute;inset:0}
+
+  /* SVG renk sınıfları */
+  .o{fill:var(--ink)}   .n{fill:var(--navy)}  .w{fill:var(--wall)}
+  .c{fill:var(--cream)} .y{fill:var(--yellow)}
+  .wl{fill:var(--wood-l)} .wm{fill:var(--wood)} .wd{fill:var(--wood-d)}
+  .gd{fill:var(--green-d)} .gl{fill:var(--green-l)}
+  .r{fill:var(--red)} .b{fill:var(--blue)}
+
+  /* EŞYALAR (kapılar) */
+  .item{
+    position:absolute;
+    left:calc(var(--x) / 320 * 100%);
+    top:calc(var(--y) / 200 * 100%);
+    width:calc(var(--w) / 320 * 100%);
+    height:calc(var(--h) / 200 * 100%);
+    display:block;
+    cursor:pointer;
+    color:inherit;
+    text-decoration:none;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .item svg{transition:transform .12s steps(2), filter .12s steps(2)}
+  .tag{
+    position:absolute;
+    left:50%;
+    bottom:100%;
+    transform:translate(-50%, -0.35em);
+    padding:.3em .5em .25em;
+    font-family:"Silkscreen", monospace;
+    font-size:clamp(8px, 2.5cqw, 14px);
+    line-height:1;
+    letter-spacing:.06em;
+    white-space:nowrap;
+    color:var(--ink);
+    background:var(--yellow);
+    box-shadow:
+      0 0 0 2px var(--ink),
+      3px 3px 0 2px var(--ink);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .1s steps(1);
+    z-index:2;
+  }
+  .tag::after{ /* küçük piksel ok */
+    content:"";
+    position:absolute;
+    left:50%;
+    top:100%;
+    width:.5em;height:.35em;
+    margin-left:-.25em;
+    margin-top:2px;
+    background:var(--ink);
+  }
+  @media (hover:hover){
+    .item:hover svg{transform:translateY(-2px);filter:brightness(1.18)}
+    .item:hover .tag{opacity:1}
+  }
+  .item:focus{outline:none}
+  .item:focus-visible{
+    outline:3px dashed var(--yellow);
+    outline-offset:3px;
+    z-index:3;
+  }
+  .item:focus-visible svg{transform:translateY(-2px);filter:brightness(1.18)}
+  .item:focus-visible .tag{opacity:1}
+  @media (hover:none){
+    .tag{opacity:1}
+  }
+
+  /* ANİMASYONLAR */
+  .star{animation:twinkle 3.2s steps(1) infinite}
+  .star:nth-child(2n){animation-duration:4.1s;animation-delay:-1.3s}
+  .star:nth-child(3n){animation-duration:2.7s;animation-delay:-.6s}
+  .star:nth-child(5n){animation-duration:5.3s;animation-delay:-2.2s}
+  @keyframes twinkle{0%,100%{opacity:1}45%{opacity:.25}70%{opacity:.7}}
+  .glow{animation:flicker 5s steps(1) infinite}
+  @keyframes flicker{
+    0%,100%{opacity:1} 18%{opacity:.86} 21%{opacity:1}
+    52%{opacity:.92} 55%{opacity:.8} 58%{opacity:1} 83%{opacity:.9}
+  }
+  .cursor{animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  @media (prefers-reduced-motion:reduce){
+    .star,.glow,.cursor{animation:none}
+    .item svg{transition:none}
+  }
+
+  /* ALT KISIM */
+  .foot{
+    margin:clamp(28px,4vw,40px) 0 0;
+    text-align:center;
+    font-size:clamp(16px,2vw,19px);
+    letter-spacing:.06em;
+    color:var(--yellow);
+  }
+  .sr-only{
+    position:absolute!important;
+    width:1px;height:1px;
+    padding:0;margin:-1px;
+    overflow:hidden;
+    clip:rect(0 0 0 0);
+    clip-path:inset(50%);
+    white-space:nowrap;
+    border:0;
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">GECE ÇALIŞMA ODASI</p>
+    <h1>Mehdi Uslu</h1>
+    <p class="sub">Fizik, kod ve notlar. Odadaki eşyaya bas, kapı açılsın.</p>
+  </header>
+
+  <div class="frame">
+    <div class="scene" role="group" aria-label="Piksel-art gece çalışma odası: eşyalar bağlantıdır">
+
+      <!-- ===== ARKA PLAN: duvar, pencere, zemin, masa, lamba (dekor) ===== -->
+      <svg class="bg" viewBox="0 0 320 200" aria-hidden="true" focusable="false">
+        <defs>
+          <pattern id="wp" width="16" height="16" patternUnits="userSpaceOnUse">
+            <rect class="n" x="0" y="0" width="1" height="1"/>
+            <rect class="n" x="8" y="8" width="1" height="1"/>
+          </pattern>
+        </defs>
+
+        <!-- duvar -->
+        <rect class="w" x="0" y="0" width="320" height="151"/>
+        <rect fill="url(#wp)" x="0" y="0" width="320" height="148"/>
+        <rect class="o" x="0" y="0" width="320" height="3" opacity=".35"/>
+
+        <!-- pencere -->
+        <rect class="wd" x="16" y="16" width="64" height="56"/>
+        <rect class="wm" x="18" y="18" width="60" height="52"/>
+        <rect class="n"  x="21" y="21" width="54" height="46"/>
+        <g>
+          <rect class="y star" x="26" y="26" width="1" height="1"/>
+          <path class="c star" d="M38 30h1v1h1v1h-1v1h-1v-1h-1v-1h1z"/>
+          <rect class="y star" x="55" y="24" width="1" height="1"/>
+          <rect class="c star" x="70" y="38" width="1" height="1"/>
+          <path class="y star" d="M30 51h1v1h1v1h-1v1h-1v-1h-1v-1h1z"/>
+          <rect class="c star" x="60" y="56" width="1" height="1"/>
+          <rect class="y star" x="40" y="61" width="1" height="1"/>
+          <rect class="c star" x="69" y="51" width="1" height="1"/>
+          <rect class="y star" x="25" y="38" width="1" height="1"/>
+          <rect class="c star" x="44" y="24" width="1" height="1"/>
+        </g>
+        <!-- hilal -->
+        <path class="c" d="M67 25h3v1h-3zM65 26h2v1h-2zM64 27h2v4h-2zM65 31h2v1h-2zM67 32h3v1h-3z"/>
+        <!-- cam yansıması -->
+        <rect class="c" x="52" y="48" width="1" height="3" opacity=".25"/>
+        <rect class="c" x="53" y="46" width="1" height="2" opacity=".25"/>
+        <!-- kayıt (kayıt çıtaları) -->
+        <rect class="wm" x="47" y="21" width="2" height="46"/>
+        <rect class="wm" x="21" y="43" width="54" height="2"/>
+        <rect class="wl" x="18" y="18" width="60" height="1"/>
+        <!-- denizlik -->
+        <rect class="wl" x="13" y="72" width="70" height="3"/>
+        <rect class="wd" x="13" y="75" width="70" height="2"/>
+
+        <!-- süpürgelik + zemin -->
+        <rect class="wd" x="0" y="147" width="320" height="4"/>
+        <rect class="wl" x="0" y="147" width="320" height="1"/>
+        <rect class="wm" x="0" y="151" width="320" height="49"/>
+        <path class="wl" d="M0 151h320v1H0zM0 158h320v1H0zM0 165h320v1H0zM0 172h320v1H0zM0 179h320v1H0zM0 186h320v1H0zM0 193h320v1H0z" opacity=".55"/>
+        <path class="wd" d="M0 157h320v1H0zM0 164h320v1H0zM0 171h320v1H0zM0 178h320v1H0zM0 185h320v1H0zM0 192h320v1H0zM0 199h320v1H0z"/>
+        <path class="wd" d="M40 152h1v5h-1zM130 152h1v5h-1zM210 152h1v5h-1zM290 152h1v5h-1zM80 159h1v5h-1zM170 159h1v5h-1zM250 159h1v5h-1zM20 166h1v5h-1zM110 166h1v5h-1zM200 166h1v5h-1zM280 166h1v5h-1zM60 173h1v5h-1zM150 173h1v5h-1zM235 173h1v5h-1zM30 180h1v5h-1zM120 180h1v5h-1zM215 180h1v5h-1zM300 180h1v5h-1zM75 187h1v5h-1zM165 187h1v5h-1zM255 187h1v5h-1zM45 194h1v5h-1zM140 194h1v5h-1zM225 194h1v5h-1z"/>
+        <rect class="o" x="0" y="151" width="320" height="6" opacity=".35"/>
+
+        <!-- masa -->
+        <rect class="o" x="12" y="196" width="14" height="3" opacity=".4"/>
+        <rect class="o" x="294" y="196" width="14" height="3" opacity=".4"/>
+        <rect class="wd" x="14" y="147" width="10" height="50"/>
+        <rect class="wm" x="15" y="147" width="7" height="50"/>
+        <rect class="wl" x="15" y="147" width="1" height="50"/>
+        <rect class="wd" x="296" y="147" width="10" height="50"/>
+        <rect class="wm" x="297" y="147" width="7" height="50"/>
+        <rect class="wl" x="297" y="147" width="1" height="50"/>
+        <rect class="wl" x="0" y="138" width="320" height="2"/>
+        <rect class="wm" x="0" y="140" width="320" height="6"/>
+        <rect class="wd" x="0" y="146" width="320" height="2"/>
+        <path class="wd" d="M60 142h18v1H60zM150 143h24v1h-24zM230 141h14v1h-14z" opacity=".6"/>
+
+        <!-- lamba: sıcak ışık -->
+        <g class="glow">
+          <rect class="y" x="249" y="84" width="40" height="28" opacity=".07"/>
+          <rect class="y" x="253" y="80" width="32" height="36" opacity=".07"/>
+          <rect class="y" x="259" y="108" width="20" height="6" opacity=".16"/>
+          <rect class="y" x="255" y="114" width="28" height="6" opacity=".14"/>
+          <rect class="y" x="251" y="120" width="36" height="6" opacity=".12"/>
+          <rect class="y" x="247" y="126" width="44" height="6" opacity=".10"/>
+          <rect class="y" x="243" y="132" width="52" height="6" opacity=".09"/>
+          <rect class="y" x="240" y="138" width="58" height="2" opacity=".35"/>
+          <rect class="c" x="263" y="106" width="12" height="2"/>
+        </g>
+        <!-- lamba gövdesi -->
+        <rect class="o" x="264" y="134" width="26" height="4"/>
+        <rect class="w" x="265" y="134" width="24" height="1"/>
+        <path class="o" d="M277 132h2v2h-2zM278 130h2v2h-2zM279 128h2v2h-2zM280 126h2v2h-2zM281 124h2v2h-2zM282 122h2v2h-2zM283 120h2v2h-2zM284 118h2v2h-2zM285 116h2v2h-2zM286 114h2v2h-2zM287 112h2v2h-2z"/>
+        <path class="o" d="M286 110h2v2h-2zM284 109h2v2h-2zM282 107h2v2h-2zM280 106h2v2h-2zM278 104h2v2h-2zM276 103h2v2h-2zM274 101h2v2h-2zM272 100h2v2h-2z"/>
+        <rect class="o" x="285" y="109" width="4" height="4"/>
+        <rect class="c" x="286" y="110" width="2" height="2"/>
+        <path class="o" d="M263 94h12v2h2v3h2v3h2v4h-24v-4h2v-3h2v-3h2z"/>
+        <path class="y" d="M264 95h10v1h2v3h2v3h2v3h-22v-3h2v-3h2v-3h2z"/>
+        <rect class="c" x="265" y="96" width="4" height="1"/>
+        <rect class="c" x="262" y="99" width="2" height="1"/>
+      </svg>
+
+      <!-- ===== 2. KARA TAHTA → SymPhys ===== -->
+      <a class="item" style="--x:110;--y:16;--w:100;--h:72"
+         href="https://github.com/mehdiuslu/symphys-3d" target="_blank" rel="noopener"
+         aria-label="SymPhys 3D fizik simülasyonu – GitHub (yeni sekmede açılır)">
+        <svg viewBox="110 16 100 72" aria-hidden="true" focusable="false">
+          <rect class="wd" x="112" y="18" width="96" height="64"/>
+          <rect class="wm" x="113" y="19" width="94" height="62"/>
+          <rect class="wl" x="113" y="19" width="94" height="1"/>
+          <rect class="gd" x="116" y="22" width="88" height="56"/>
+          <rect class="o" x="116" y="22" width="88" height="1" opacity=".35"/>
+          <!-- silinmiş tebeşir izleri -->
+          <path class="c" d="M120 44h10v1h-10zM186 28h12v1h-12zM190 31h8v1h-8z" opacity=".12"/>
+          <!-- sarkaç -->
+          <path class="c" d="M124 28h32v1h-32zM126 26h1v2h-1zM130 26h1v2h-1zM134 26h1v2h-1zM138 26h1v2h-1zM142 26h1v2h-1zM146 26h1v2h-1zM150 26h1v2h-1zM154 26h1v2h-1z"/>
+          <path class="c" d="M140 33h1v2h-1zM140 37h1v2h-1zM140 41h1v2h-1zM140 45h1v2h-1zM140 49h1v2h-1zM140 53h1v2h-1zM140 57h1v2h-1z" opacity=".7"/>
+          <path class="c" d="M140 29h1v3h-1zM141 32h1v3h-1zM142 35h1v3h-1zM143 38h1v3h-1zM144 41h1v3h-1zM145 44h1v3h-1zM146 47h1v3h-1zM147 50h1v3h-1zM148 53h1v3h-1zM149 56h1v3h-1z"/>
+          <path class="c" d="M141 38h1v1h-1zM142 37h1v1h-1z"/>
+          <path class="c" d="M123 58h1v1h-1zM128 61h1v1h-1zM134 62h1v1h-1zM140 63h1v1h-1z" opacity=".7"/>
+          <path class="r" d="M149 59h4v1h1v1h1v4h-1v1h-1v1h-4v-1h-1v-1h-1v-4h1v-1h1z"/>
+          <rect class="c" x="149" y="60" width="2" height="1"/>
+          <!-- eğik düzlem -->
+          <path class="c" d="M164 70h31v1h-31zM194 50h1v20h-1z"/>
+          <path class="c" d="M164 69h2v1h-2zM166 68h1v1h-1zM167 67h2v1h-2zM169 66h1v1h-1zM170 65h2v1h-2zM172 64h1v1h-1zM173 63h2v1h-2zM175 62h1v1h-1zM176 61h2v1h-2zM178 60h1v1h-1zM179 59h2v1h-2zM181 58h1v1h-1zM182 57h2v1h-2zM184 56h1v1h-1zM185 55h2v1h-2zM187 54h1v1h-1zM188 53h2v1h-2zM190 52h1v1h-1zM191 51h2v1h-2zM193 50h1v1h-1z"/>
+          <path class="c" d="M171 56h2v1h1v2h-1v1h-2v-1h-1v-2h1z"/>
+          <path class="c" d="M170 67h1v2h-1zM169 66h1v1h-1z" opacity=".8"/>
+          <text x="121" y="76" font-family="Silkscreen, monospace" font-size="6" class="c" opacity=".85">F=ma</text>
+          <!-- tebeşir rafı -->
+          <rect class="wd" x="110" y="82" width="100" height="4"/>
+          <rect class="wl" x="110" y="82" width="100" height="1"/>
+          <rect class="c" x="128" y="80" width="8" height="2"/>
+          <rect class="c" x="140" y="81" width="4" height="1"/>
+          <rect class="o" x="186" y="79" width="12" height="3"/>
+          <rect class="wl" x="187" y="79" width="10" height="2"/>
+        </svg>
+        <span class="tag" aria-hidden="true">SYMPHYS</span>
+      </a>
+
+      <!-- ===== 3. MONİTÖR → GitHub ===== -->
+      <a class="item" style="--x:18;--y:84;--w:68;--h:54"
+         href="https://github.com/mehdiuslu" target="_blank" rel="noopener"
+         aria-label="GitHub profilim (yeni sekmede açılır)">
+        <svg viewBox="18 84 68 54" aria-hidden="true" focusable="false">
+          <rect class="o" x="20" y="86" width="64" height="44"/>
+          <rect class="c" x="21" y="87" width="62" height="42"/>
+          <rect class="o" x="25" y="90" width="54" height="33"/>
+          <rect class="n" x="26" y="91" width="52" height="31"/>
+          <path class="gl" d="M28 93h18v1H28zM31 96h26v1H31zM45 99h14v1H45zM34 102h20v1H34zM44 105h16v1H44zM31 108h22v1H31zM28 111h6v1h-6z"/>
+          <path class="y"  d="M31 99h12v1H31zM28 114h14v1H28z"/>
+          <path class="c"  d="M34 105h8v1h-8z"/>
+          <rect class="gl cursor" x="28" y="117" width="3" height="2"/>
+          <rect class="c" x="27" y="92" width="6" height="1" opacity=".18"/>
+          <rect class="gl" x="76" y="125" width="2" height="1"/>
+          <rect class="wl" x="23" y="125" width="10" height="1" opacity=".6"/>
+          <!-- ayak -->
+          <rect class="o" x="47" y="130" width="10" height="5"/>
+          <rect class="c" x="48" y="130" width="8" height="5"/>
+          <rect class="o" x="38" y="134" width="28" height="4"/>
+          <rect class="c" x="39" y="134" width="26" height="3"/>
+        </svg>
+        <span class="tag" aria-hidden="true">GITHUB</span>
+      </a>
+
+      <!-- ===== 4. DEFTER → Medium ===== -->
+      <a class="item" style="--x:94;--y:122;--w:56;--h:26"
+         href="https://medium.com/@mehdiphysics" target="_blank" rel="noopener"
+         aria-label="Medium yazılarım (yeni sekmede açılır)">
+        <svg viewBox="94 122 56 26" aria-hidden="true" focusable="false">
+          <rect class="o" x="95" y="133" width="54" height="5"/>
+          <rect class="b" x="96" y="134" width="52" height="3"/>
+          <path class="o" d="M99 125h46v1h1v10H98v-10h1z"/>
+          <path class="c" d="M100 126h21v1h-21zM99 127h22v8H99zM123 126h21v1h-21zM123 127h22v8h-22z"/>
+          <rect class="o" x="121" y="125" width="2" height="11"/>
+          <path class="w" d="M101 129h17v1h-17zM101 131h18v1h-18zM101 133h12v1h-12zM126 129h17v1h-17zM126 131h15v1h-15zM126 133h17v1h-17z"/>
+          <rect class="r" x="124" y="133" width="2" height="12"/>
+          <rect class="r" x="124" y="145" width="1" height="1"/>
+          <rect class="r" x="125" y="146" width="1" height="1"/>
+          <!-- kalem -->
+          <path class="y" d="M131 127h9v2h-9z"/>
+          <rect class="r" x="140" y="127" width="2" height="2"/>
+          <rect class="c" x="129" y="127" width="2" height="2"/>
+          <rect class="o" x="128" y="128" width="1" height="1"/>
+        </svg>
+        <span class="tag" aria-hidden="true">MEDIUM</span>
+      </a>
+
+      <!-- ===== 5. FOTOĞRAF + KİLİT → Stego ===== -->
+      <a class="item" style="--x:152;--y:98;--w:48;--h:40"
+         href="https://github.com/mehdiuslu/ENCRYPT-TEXT" target="_blank" rel="noopener"
+         aria-label="ENCRYPT-TEXT: resme metin gizleme (steganografi) projesi – GitHub (yeni sekmede açılır)">
+        <svg viewBox="152 98 48 40" aria-hidden="true" focusable="false">
+          <rect class="wd" x="166" y="134" width="8" height="4"/>
+          <rect class="o" x="156" y="100" width="28" height="34"/>
+          <rect class="wm" x="157" y="101" width="26" height="32"/>
+          <rect class="wl" x="157" y="101" width="26" height="1"/>
+          <rect class="o" x="159" y="103" width="22" height="24"/>
+          <rect class="b" x="160" y="104" width="20" height="22"/>
+          <path class="y" d="M174 107h3v3h-3z"/>
+          <path class="c" d="M163 109h4v1h-4zM165 108h3v1h-3z" opacity=".8"/>
+          <path class="gd" d="M168 116h12v10h-12zM170 114h6v2h-6zM172 113h2v1h-2z"/>
+          <path class="c" d="M172 113h2v1h-2zM171 114h1v1h-1z"/>
+          <path class="gl" d="M160 119h9v7h-9zM162 117h5v2h-5z"/>
+          <path class="b" d="M163 124h9v1h-9z" opacity=".9"/>
+          <!-- kilit -->
+          <path class="c" d="M188 120h6v2h1v6h-2v-6h-4v6h-2v-6h1z"/>
+          <rect class="o" x="184" y="126" width="14" height="12"/>
+          <rect class="y" x="185" y="127" width="12" height="10"/>
+          <rect class="c" x="186" y="128" width="1" height="4"/>
+          <rect class="o" x="190" y="130" width="2" height="2"/>
+          <rect class="o" x="190" y="132" width="2" height="3"/>
+          <rect class="wd" x="185" y="136" width="12" height="1" opacity=".5"/>
+        </svg>
+        <span class="tag" aria-hidden="true">STEGO</span>
+      </a>
+
+      <!-- ===== 6. FOTOĞRAF MAKİNESİ → Instagram ===== -->
+      <a class="item" style="--x:204;--y:112;--w:40;--h:26"
+         href="https://www.instagram.com/mehdiuslw/" target="_blank" rel="noopener"
+         aria-label="Instagram hesabım (yeni sekmede açılır)">
+        <svg viewBox="204 112 40 26" aria-hidden="true" focusable="false">
+          <rect class="o" x="211" y="113" width="12" height="6"/>
+          <rect class="w" x="212" y="114" width="10" height="4"/>
+          <rect class="c" x="214" y="115" width="4" height="2"/>
+          <rect class="o" x="229" y="115" width="7" height="4"/>
+          <rect class="r" x="230" y="116" width="5" height="2"/>
+          <rect class="o" x="206" y="118" width="34" height="20"/>
+          <rect class="w" x="207" y="119" width="32" height="18"/>
+          <rect class="n" x="207" y="124" width="32" height="9"/>
+          <path class="o" d="M209 125h1v1h-1zM211 127h1v1h-1zM209 129h1v1h-1zM211 131h1v1h-1zM235 125h1v1h-1zM237 127h1v1h-1zM235 129h1v1h-1zM237 131h1v1h-1z"/>
+          <rect class="c" x="207" y="119" width="32" height="1" opacity=".25"/>
+          <rect class="r" x="234" y="121" width="2" height="2"/>
+          <path class="o" d="M220 120h8v1h2v2h1v8h-1v2h-2v1h-8v-1h-2v-2h-1v-8h1v-2h2z"/>
+          <path class="c" d="M221 121h6v1h2v2h1v6h-1v2h-2v1h-6v-1h-2v-2h-1v-6h1v-2h2z"/>
+          <path class="o" d="M221 123h6v1h1v1h1v4h-1v1h-1v1h-6v-1h-1v-1h-1v-4h1v-1h1z"/>
+          <path class="b" d="M222 124h4v1h1v4h-1v1h-4v-1h-1v-4h1z"/>
+          <rect class="c" x="222" y="125" width="2" height="1"/>
+          <rect class="c" x="222" y="126" width="1" height="1"/>
+        </svg>
+        <span class="tag" aria-hidden="true">INSTA</span>
+      </a>
+
+      <!-- ===== 8. KİMLİK KARTI → LinkedIn ===== -->
+      <a class="item" style="--x:236;--y:20;--w:56;--h:70"
+         href="https://www.linkedin.com/in/mehdi-uslu-0988b8347/" target="_blank" rel="noopener"
+         aria-label="LinkedIn profilim (yeni sekmede açılır)">
+        <svg viewBox="236 20 56 70" aria-hidden="true" focusable="false"><g transform="translate(0 8)">
+          <rect class="o" x="242" y="20" width="46" height="58" opacity=".45"/>
+          <rect class="c" x="240" y="18" width="46" height="58"/>
+          <path class="wl" d="M281 71h5v5h-5z"/>
+          <rect class="o" x="243" y="25" width="16" height="18"/>
+          <rect class="b" x="244" y="26" width="14" height="16"/>
+          <rect class="wl" x="248" y="30" width="6" height="6"/>
+          <rect class="o" x="247" y="28" width="8" height="3"/>
+          <rect class="o" x="249" y="32" width="1" height="1"/>
+          <rect class="o" x="252" y="32" width="1" height="1"/>
+          <rect class="r" x="246" y="37" width="10" height="5"/>
+          <rect class="o" x="262" y="27" width="20" height="2"/>
+          <path class="w" d="M262 31h16v1h-16zM262 34h18v1h-18zM262 37h12v1h-12z"/>
+          <rect class="y" x="262" y="40" width="10" height="2"/>
+          <rect class="o" x="244" y="47" width="14" height="2"/>
+          <path class="w" d="M244 51h38v1h-38zM244 54h34v1h-34zM244 57h38v1h-38zM244 60h26v1h-26z"/>
+          <rect class="o" x="244" y="64" width="16" height="2"/>
+          <path class="w" d="M244 68h30v1h-30zM244 71h34v1h-34z"/>
+          <!-- raptiye -->
+          <rect class="o" x="260" y="13" width="6" height="6"/>
+          <rect class="r" x="261" y="14" width="4" height="4"/>
+          <rect class="c" x="261" y="14" width="1" height="1"/>
+          <rect class="o" x="262" y="19" width="2" height="1" opacity=".5"/>
+        </g></svg>
+        <span class="tag" aria-hidden="true">LINKEDIN</span>
+      </a>
+
+    </div>
+  </div>
+
+  <p class="foot">Odadaki her eşya bir kapı.</p>
+
+  <nav class="sr-only" aria-label="Bağlantılar (metin listesi)">
+    <ul>
+      <li><a href="https://github.com/mehdiuslu/symphys-3d" target="_blank" rel="noopener">SymPhys 3D fizik simülasyonu – GitHub</a></li>
+      <li><a href="https://github.com/mehdiuslu" target="_blank" rel="noopener">GitHub profilim</a></li>
+      <li><a href="https://medium.com/@mehdiphysics" target="_blank" rel="noopener">Medium yazılarım</a></li>
+      <li><a href="https://github.com/mehdiuslu/ENCRYPT-TEXT" target="_blank" rel="noopener">ENCRYPT-TEXT steganografi projesi – GitHub</a></li>
+      <li><a href="https://www.instagram.com/mehdiuslw/" target="_blank" rel="noopener">Instagram hesabım</a></li>
+      <li><a href="https://www.linkedin.com/in/mehdi-uslu-0988b8347/" target="_blank" rel="noopener">LinkedIn profilim</a></li>
+    </ul>
+  </nav>
+</main>
+<script>
+  // Dokunmatik + hover'lı hibrit cihazlarda ilk dokunuşta etiketleri göster.
+  window.addEventListener('touchstart', function once(){
+    document.documentElement.classList.add('touch');
+    window.removeEventListener('touchstart', once);
+  }, {passive:true});
+</script>
+<style>.touch .tag{opacity:1}</style>
+</body>
+</html>
